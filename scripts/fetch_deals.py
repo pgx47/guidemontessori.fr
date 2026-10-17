@@ -78,7 +78,17 @@ def main() -> int:
                 timeout=90)
             if r.ok:
                 txt = r.json()["choices"][0]["message"]["content"]
-                noms = json.loads(txt[txt.index("{"):txt.rindex("}") + 1]).get("noms", {})
+                if "{" in txt:
+                    noms = json.loads(txt[txt.index("{"):txt.rindex("}") + 1]).get("noms", {})
+                else:
+                    noms = {}
+                    for line in txt.splitlines():
+                        if ":" in line:
+                            k, _, v = line.partition(":")
+                            k = k.strip().strip('"')
+                            if k.isdigit() or k.startswith("B0"):
+                                noms[k] = v.strip().strip('"').strip(",")
+                print(f"traduction : {len(noms)} noms")
                 for d in deals:
                     if noms.get(d["asin"]):
                         d["name"] = noms[d["asin"]]

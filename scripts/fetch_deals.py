@@ -66,6 +66,24 @@ def main() -> int:
     if not deals:
         print("aucun résultat, deals.json inchangé", file=sys.stderr)
         return 0
+    if key := os.environ.get("DEEPSEEK_API_KEY"):
+        try:
+            r = requests.post("https://api.deepseek.com/chat/completions",
+                headers={"Authorization": f"Bearer {key}"},
+                json={"model": "deepseek-flash", "temperature": 0.2, "max_tokens": 2000,
+                      "messages": [{"role": "user", "content":
+                        "Traduis chaque titre produit Amazon en français concis (max 10 mots), "
+                        "garde les marques. Réponds en JSON {\"noms\": {\"asin\": \"titre fr\"}}.\n"
+                        + json.dumps({d["asin"]: d["name"] for d in deals}, ensure_ascii=False)}]},
+                timeout=90)
+            if r.ok:
+                txt = r.json()["choices"][0]["message"]["content"]
+                noms = json.loads(txt[txt.index("{"):txt.rindex("}") + 1]).get("noms", {})
+                for d in deals:
+                    if noms.get(d["asin"]):
+                        d["name"] = noms[d["asin"]]
+        except Exception as e:
+            print(f"⚠ traduction : {e}", file=sys.stderr)
     OUT.write_text(json.dumps({"updated": date.today().isoformat(), "deals": deals}, ensure_ascii=False, indent=2) + "\n")
     print(f"{len(deals)} offres écrites dans {OUT}")
     return 0

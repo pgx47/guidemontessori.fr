@@ -21,6 +21,8 @@ ROOT = Path(__file__).resolve().parent.parent
 TOPICS = ROOT / "scripts" / "topics.json"
 CONTENT = ROOT / "src" / "content"
 DIRS = {"guide": CONTENT / "guides", "news": CONTENT / "news"}
+IMAGES_DIR = ROOT / "public" / "images" / "generated"
+R2_PUBLIC_URL = os.environ.get("R2_PUBLIC_URL", "https://images.guidemontessori.fr")
 API_URL = "https://api.anthropic.com/v1/messages"
 MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-5")
 
@@ -59,6 +61,10 @@ TOOL = {
                     "required": ["question", "answer"],
                     "properties": {"question": {"type": "string"}, "answer": {"type": "string"}},
                 },
+            },
+            "imagePrompt": {
+                "type": "string",
+                "description": "Prompt EN anglais pour une illustration photo éditoriale de l'article : scène Montessori, bois naturel, tons chauds neutres, lumière douce, photoréaliste, sans texte ni personnage identifiable.",
             },
             "products": {
                 "type": "array",
@@ -182,8 +188,65 @@ def jsx_list(items: list[str]) -> str:
     return "{" + json.dumps(items, ensure_ascii=False) + "}"
 
 
-def render_mdx(a: dict, topic: dict, kind: str, today: str) -> str:
+def generate_image(prompt: str, slug: str) -> bytes | None:
+    """Image 1024x1024 : DALL-E 3 si OPENAI_API_KEY, sinon pollinations.ai (gratuit)."""
+    try:
+        if key := os.environ.get("OPENAI_API_KEY"):
+            r = requests.post(
+                "https://api.openai.com/v1/images/generations",
+                headers={"Authorization": f"Bearer {key}"},
+                json={"model": "dall-e-3", "prompt": prompt, "size": "1024x1024", "quality": "standard", "n": 1},
+                timeout=180,
+            )
+            r.raise_for_status()
+            img = requests.get(r.json()["data"][0]["url"], timeout=120)
+        else:
+            img = requests.get(
+                f"https://image.pollinations.ai/prompt/{requests.utils.quote(prompt)}",
+                params={"width": 1024, "height": 768, "model": "flux", "nologo": "true", "seed": abs(hash(slug)) % 10**6},
+                timeout=180,
+            )
+        img.raise_for_status()
+        from io import BytesIO
+        from PIL import Image
+        buf = BytesIO()
+        Image.open(BytesIO(img.content)).convert("RGB").save(buf, "WEBP", quality=82, method=6)
+        return buf.getvalue()
+    except Exception as e:
+        print(f"⚠ image non générée : {e}", file=sys.stderr)
+        return None
+
+
+def store_image(data: bytes, slug: str) -> str | None:
+    """R2 si configuré, sinon public/images/generated/ (webp léger)."""
+    fname = f"{slug}.webp"
+    ak, sk, acct = (os.environ.get(k) for k in ("R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY", "CLOUDFLARE_ACCOUNT_ID"))
+    if ak and sk and acct:
+        try:
+            import boto3
+            from io import BytesIO
+            boto3.client(
+                "s3",
+                endpoint_url=f"https://{acct}.r2.cloudflarestorage.com",
+                aws_access_key_id=ak,
+                aws_secret_access_key=sk,
+                region_name="auto",
+            ).upload_fileobj(BytesIO(data), os.environ.get("R2_BUCKET", "images-montessori"), fname,
+                             ExtraArgs={"ContentType": "image/webp"})
+            return f"{R2_PUBLIC_URL}/{fname}"
+        except Exception as e:
+            print(f"⚠ upload R2 impossible, fallback local : {e}", file=sys.stderr)
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    (IMAGES_DIR / fname).write_bytes(data)
+    return f"/images/generated/{fname}"
+
+
+def render_mdx(a: dict, topic: dict, kind: str, today: str, slug: str) -> str:
     products = topic.get("products", [])
+    image = topic.get("image")
+    if not image and a.get("imagePrompt"):
+        if data := generate_image(a["imagePrompt"], slug):
+            image = store_image(data, slug)
     fm = {
         "title": a["title"].strip(),
         "description": a["description"].strip(),
@@ -194,8 +257,8 @@ def render_mdx(a: dict, topic: dict, kind: str, today: str) -> str:
         "emoji": a["emoji"],
         "faq": a["faq"],
     }
-    if topic.get("image"):
-        fm["image"] = topic["image"]
+    if image:
+        fm["image"] = image
     if products:
         fm["asin"] = products[0]["asin"]
     lines = ["---"] + [f"{k}: {json.dumps(v, ensure_ascii=False)}" for k, v in fm.items()] + ["---", ""]
@@ -271,7 +334,7 @@ def main() -> int:
     taken = {s for s, _ in existing_articles()}
     if slug in taken:
         slug = f"{slug}-{today[:7]}"
-    mdx = render_mdx(a, topic, kind, today)
+    mdx = render_mdx(a, topic, kind, today, slug)
 
     if args.dry_run:
         print(mdx)

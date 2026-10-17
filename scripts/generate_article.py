@@ -24,11 +24,11 @@ DIRS = {"guide": CONTENT / "guides", "news": CONTENT / "news"}
 API_URL = "https://api.anthropic.com/v1/messages"
 MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-5")
 
-SYSTEM = """Tu es rédacteur web senior pour GuideMontessori.fr, site français destiné aux parents qui appliquent la pédagogie Montessori à la maison.
+SYSTEM = """Tu es rédacteur web senior pour GuideMontessori.fr, site français destiné aux jeunes parents qui appliquent la pédagogie Montessori à la maison.
 
 Style :
-- Français impeccable avec accents, ton chaleureux mais précis, phrases variées.
-- Interdits : "dans un monde où", "plongeons", "il est crucial", "en conclusion", "n'hésitez pas", "véritable", "incontournable", "que vous soyez", listes à rallonge, emojis dans le corps.
+- Français impeccable avec accents, ton bienveillant, clair et rassurant, phrases variées. Pas de jargon clinique : tu écris pour des parents, pas pour un mémo.
+- Interdits : "dans un monde où", "plongeons", "il est crucial", "en conclusion", "n'hésitez pas", "il convient de noter", "véritable", "incontournable", "que vous soyez", listes à rallonge, emojis dans le corps.
 - Concret : âges, dimensions, matériaux, normes (EN 71, FSC), gestes de présentation, erreurs fréquentes.
 - Jamais de prix précis, jamais de promesse médicale, jamais d'invention de marque ou de référence produit.
 - Cite Maria Montessori seulement avec des citations réelles et connues.
@@ -91,10 +91,26 @@ def existing_articles() -> list[tuple[str, str]]:
     return out
 
 
+def llm_config() -> tuple[str, str, str, str]:
+    """(base_url, key, model, api): api = 'openai' | 'anthropic'."""
+    for env in ("DEEPSEEK_API_KEY", "OPENROUTER_API_KEY", "LLM_API_KEY"):
+        if key := os.environ.get(env):
+            default_base = "https://openrouter.ai/api/v1" if "OPENROUTER" in env else "https://api.deepseek.com"
+            default_model = "deepseek/deepseek-v4.1-flash" if "OPENROUTER" in env else "deepseek-flash"
+            return (os.environ.get("LLM_BASE_URL", default_base), key, os.environ.get("LLM_MODEL", default_model), "openai")
+    if key := os.environ.get("ANTHROPIC_API_KEY"):
+        return (API_URL, key, MODEL, "anthropic")
+    sys.exit("Aucune clé LLM : DEEPSEEK_API_KEY, OPENROUTER_API_KEY ou ANTHROPIC_API_KEY requis")
+
+
+def tool_for(api: str) -> list:
+    if api == "anthropic":
+        return [TOOL]
+    return [{"type": "function", "function": {"name": TOOL["name"], "description": TOOL["description"], "parameters": TOOL["input_schema"]}}]
+
+
 def call_llm(topic: dict, kind: str) -> dict:
-    key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key:
-        sys.exit("ANTHROPIC_API_KEY manquant")
+    url, key, model, api = llm_config()
     products = topic.get("products", [])
     links = "\n".join(f"- /articles/{s}/ : {t}" for s, t in existing_articles())
     prompt = f"""Type : {"guide evergreen / comparatif" if kind == "guide" else "brève d'actualité"}
@@ -108,23 +124,54 @@ Articles existants pour 2 à 4 liens internes Markdown pertinents :
 {links}
 
 Appelle l'outil publish_article."""
-    r = requests.post(
-        API_URL,
-        headers={"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"},
-        json={
-            "model": MODEL,
-            "max_tokens": 8000,
-            "system": SYSTEM,
-            "tools": [TOOL],
-            "tool_choice": {"type": "tool", "name": TOOL["name"]},
-            "messages": [{"role": "user", "content": prompt}],
-        },
-        timeout=300,
-    )
-    if not r.ok:
-        sys.exit(f"Erreur API {r.status_code}: {r.text[:500]}")
-    block = next(b for b in r.json()["content"] if b["type"] == "tool_use")
-    return block["input"]
+    if api == "anthropic":
+        r = requests.post(
+            url,
+            headers={"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"},
+            json={
+                "model": model,
+                "max_tokens": 8000,
+                "system": SYSTEM,
+                "tools": tool_for(api),
+                "tool_choice": {"type": "tool", "name": TOOL["name"]},
+                "messages": [{"role": "user", "content": prompt}],
+            },
+            timeout=300,
+        )
+        if not r.ok:
+            sys.exit(f"Erreur API {r.status_code}: {r.text[:500]}")
+        block = next(b for b in r.json()["content"] if b["type"] == "tool_use")
+        return block["input"]
+
+    messages = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": prompt}]
+    for attempt in range(3):
+        r = requests.post(
+            f"{url.rstrip('/')}/chat/completions",
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+            json={
+                "model": model,
+                "temperature": 0.4,
+                "max_tokens": 16000,
+                "tools": tool_for(api),
+                "tool_choice": "auto",
+                "messages": messages,
+            },
+            timeout=300,
+        )
+        if not r.ok:
+            sys.exit(f"Erreur API {r.status_code}: {r.text[:500]}")
+        msg = r.json()["choices"][0]["message"]
+        if calls := msg.get("tool_calls"):
+            for c in calls:
+                if c["function"]["name"] == TOOL["name"]:
+                    try:
+                        return json.loads(c["function"]["arguments"])
+                    except json.JSONDecodeError:
+                        print("arguments tronqués, retry", file=sys.stderr)
+                        break
+        print(f"pas de tool_call (tentative {attempt + 1})", file=sys.stderr)
+        messages += [msg, {"role": "user", "content": "Réponds uniquement via l'outil publish_article, sans texte libre."}]
+    sys.exit("3 tentatives sans tool_call")
 
 
 def esc(s: str) -> str:
@@ -214,7 +261,7 @@ def main() -> int:
     else:
         ap.error("--topic ou --auto requis")
 
-    print(f"→ {kind} : {topic['keyword']} ({MODEL})")
+    print(f"→ {kind} : {topic['keyword']} ({llm_config()[2]})")
     a = call_llm(topic, kind)
     if errs := validate(a):
         print("⚠ " + ", ".join(errs), file=sys.stderr)

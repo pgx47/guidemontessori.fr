@@ -1,0 +1,61 @@
+{
+  "_doc": "status: pending | published. products: ASIN réels uniquement (vérifiés sur amazon.fr). type: guide | news.",
+  "topics": [
+    {
+      "keyword": "meilleur lit cabane montessori",
+      "type": "guide",
+      "angle": "critères de sécurité, âge d'entrée, hauteur au sol, bois et finitions, comparatif",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "tour d'observation montessori",
+      "type": "guide",
+      "angle": "à partir de quel âge, stabilité, modèles évolutifs, erreurs à éviter",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "étagère montessori jouets",
+      "type": "guide",
+      "angle": "rotation des jouets, hauteur, nombre d'activités par âge",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "triangle de pikler",
+      "type": "guide",
+      "angle": "motricité libre, Pikler vs Montessori, sécurité, âge",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "chambre montessori bébé",
+      "type": "guide",
+      "angle": "lit au sol, miroir, mobiles, organisation par zones",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "planche d'équilibre montessori",
+      "type": "guide",
+      "angle": "usages, âge, bois vs plastique, charge maximale",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "activités montessori 18 mois",
+      "type": "guide",
+      "angle": "vie pratique, motricité fine, langage, matériel fait maison",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "boîte à permanence de l'objet",
+      "type": "guide",
+      "angle": "fonctionnement, âge, présentation, progression",
+      "status": "pending",
+      "products": []
+    }
+  ]
+}

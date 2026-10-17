@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate } from '../site.config';
+import data from '../data/deals.json';
+
+interface Deal {
+  asin: string;
+  name: string;
+  image: string;
+  url: string;
+  price: string;
+  stars: number | null;
+  totalReviews: number | null;
+  isPrime: boolean;
+  isLimitedDeal: boolean;
+  isBestSeller: boolean;
+  isAmazonChoice: boolean;
+}
+
+const deals = data.deals as Deal[];
+const updated = data.updated ? formatDate(new Date(data.updated)) : null;
+---
+
+<BaseLayout
+  title="Bons Plans Montessori – Promos du Jour"
+  description="Les meilleures offres et promotions Montessori sur Amazon. Matériel, livres et jouets éducatifs à prix réduit, mis à jour chaque jour."
+  keywords={['bons plans montessori', 'promotions montessori', 'réductions jouets éducatifs', 'offres montessori amazon']}
+>
+  <div class="min-h-screen bg-gradient-to-b from-[#faf7f2] to-[#f5f0e8]">
+    <section class="py-16 text-center">
+      <div class="mx-auto max-w-4xl px-4">
+        <span class="mb-4 inline-block text-5xl">🏷️</span>
+        <h1 class="mb-4 font-serif text-4xl font-bold text-sage-800 md:text-5xl">Bons Plans Montessori</h1>
+        <p class="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600">
+          Les meilleures offres du moment sur le matériel, les livres et les jeux Montessori. Mis à jour automatiquement chaque jour.
+        </p>
+        {updated && <p class="mt-3 text-sm text-gray-400">Dernière mise à jour&nbsp;: {updated}</p>}
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-4 pb-20">
+      {
+        deals.length === 0 ? (
+          <div class="py-20 text-center">
+            <span class="mb-4 block text-5xl">📦</span>
+            <p class="text-lg text-gray-500">Aucune offre disponible pour le moment.</p>
+            <p class="mt-2 text-sm text-gray-400">Revenez demain pour découvrir les nouvelles promotions !</p>
+          </div>
+        ) : (
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {deals.map((d) => (
+              <a
+                href={d.url}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                class="group relative flex flex-col overflow-hidden rounded-2xl border border-sage-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div class="absolute left-3 top-3 z-10 flex flex-col gap-1.5">
+                  {d.isLimitedDeal && <span class="rounded-full bg-red-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-lg">⚡ Offre limitée</span>}
+                  {d.isBestSeller && <span class="rounded-full bg-amber-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-lg">🏆 Best-seller</span>}
+                  {d.isAmazonChoice && <span class="rounded-full bg-blue-600 px-2.5 py-1 text-[11px] font-bold text-white shadow-lg">✓ Amazon's Choice</span>}
+                </div>
+                {d.isPrime && <div class="absolute right-3 top-3 z-10 rounded bg-blue-500 px-2 py-0.5 text-[10px] font-bold text-white shadow">Prime</div>}
+                <div class="relative flex aspect-square items-center justify-center overflow-hidden bg-gray-50 p-6">
+                  {d.image ? (
+                    <img src={d.image} alt={d.name} loading="lazy" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" />
+                  ) : (
+                    <span class="text-6xl text-gray-200">📦</span>
+                  )}
+                </div>
+                <div class="flex flex-1 flex-col p-4">
+                  <h2 class="mb-2 line-clamp-2 text-sm font-semibold text-gray-800 transition-colors group-hover:text-sage-700">{d.name}</h2>
+                  {d.stars && (
+                    <div class="mb-2 flex items-center gap-1.5">
+                      <div class="flex text-sm text-amber-400">
+                        {[0, 1, 2, 3, 4].map((i) => <span class={i < Math.round(d.stars!) ? 'opacity-100' : 'opacity-25'}>★</span>)}
+                      </div>
+                      <span class="text-xs text-gray-400">
+                        {d.stars}
+                        {d.totalReviews !== null && ` (${d.totalReviews.toLocaleString('fr-FR')})`}
+                      </span>
+                    </div>
+                  )}
+                  <div class="mt-auto">
+                    <span class="text-xl font-bold text-terracotta-600">{d.price || 'Voir le prix'}</span>
+                  </div>
+                  <div class="mt-3 rounded-xl bg-sage-50 py-2.5 text-center text-sm font-medium text-sage-700 transition-colors duration-200 group-hover:bg-sage-600 group-hover:text-white">
+                    Voir l'offre →
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        )
+      }
+
+      <div class="mt-16 rounded-2xl border border-sage-200 bg-white/60 p-6 text-center backdrop-blur">
+        <p class="text-xs leading-relaxed text-gray-400">
+          🔗 Les liens ci-dessus sont des liens affiliés Amazon. En effectuant un achat via ces liens, vous soutenez GuideMontessori.fr sans aucun surcoût pour
+          vous. Les prix affichés sont ceux relevés au moment de la mise à jour et peuvent varier.
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

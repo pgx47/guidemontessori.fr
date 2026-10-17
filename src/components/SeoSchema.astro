@@ -1,0 +1,54 @@
+---
+import { SITE } from '../site.config';
+
+interface Props {
+  type: 'website' | 'article';
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  publishDate?: Date;
+  updatedDate?: Date;
+  author?: string;
+  faq?: { question: string; answer: string }[];
+  breadcrumbs?: { name: string; url: string }[];
+}
+
+const { type, title, description, url, image, publishDate, updatedDate, author, faq, breadcrumbs } = Astro.props;
+const abs = (p?: string) => (p ? new URL(p, SITE.url).toString() : undefined);
+const publisher = { '@type': 'Organization', name: SITE.name, url: SITE.url };
+
+const graph: Record<string, unknown>[] =
+  type === 'website'
+    ? [{ '@type': 'WebSite', name: SITE.name, url: SITE.url, inLanguage: 'fr-FR', publisher }]
+    : [
+        {
+          '@type': 'Article',
+          headline: title,
+          description,
+          image: abs(image),
+          datePublished: publishDate?.toISOString(),
+          dateModified: (updatedDate ?? publishDate)?.toISOString(),
+          author: { '@type': 'Organization', name: author ?? SITE.author },
+          publisher,
+          mainEntityOfPage: abs(url),
+          inLanguage: 'fr-FR',
+        },
+      ];
+
+if (faq?.length)
+  graph.push({
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+  });
+
+if (breadcrumbs?.length)
+  graph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: abs(b.url) })),
+  });
+
+const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+
+<script type="application/ld+json" set:html={json} />

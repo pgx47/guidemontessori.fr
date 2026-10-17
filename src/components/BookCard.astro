@@ -1,0 +1,32 @@
+---
+import type { Book } from '../data/books';
+
+interface Props {
+  book: Book;
+  badgeClass?: string;
+}
+
+const { book, badgeClass = 'bg-sage-100 text-sage-700' } = Astro.props;
+const isParent = book.targetAudience === 'parent';
+---
+
+<article class="rounded-xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+  <div class="mb-3 flex items-start justify-between gap-4">
+    <div>
+      <h3 class="text-xl font-semibold text-gray-900">{book.title}</h3>
+      {isParent ? <p class="text-sm text-gray-500">{book.author}</p> : <p class="text-sm font-medium text-terracotta-600">{book.ageRange}</p>}
+    </div>
+    {
+      isParent ? (
+        <span class:list={['shrink-0 rounded-full px-3 py-1 text-sm font-medium', badgeClass]}>{book.level}</span>
+      ) : (
+        <span class="shrink-0 text-lg font-bold text-gray-900">{book.price}</span>
+      )
+    }
+  </div>
+  <p class="mb-4 text-gray-600">{book.description}</p>
+  <div class="flex items-center justify-between">
+    {isParent && <span class="text-lg font-bold text-gray-900">{book.price}</span>}
+    <a href={book.amazonUrl} target="_blank" rel="nofollow sponsored noopener" class="btn-cta text-sm">Voir sur Amazon →</a>
+  </div>
+</article>

@@ -1,0 +1,29 @@
+name: Refresh Bons Plans
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  deals:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r scripts/requirements.txt
+      - env:
+          SCRAPER_API_KEY: ${{ secrets.SCRAPER_API_KEY }}
+          AMAZON_TAG: ${{ vars.AMAZON_TAG }}
+        run: python scripts/fetch_deals.py
+      - run: |
+          git config user.name "bot-montessori"
+          git config user.email "bot@guidemontessori.fr"
+          git add src/data/deals.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: bons plans du jour"
+          git push

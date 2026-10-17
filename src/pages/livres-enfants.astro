@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/BookCard.astro';
+import { booksFor } from '../data/books';
+
+const categories = ['Éveil', 'Lecture', 'Mathématiques', 'Grands Récits'];
+const books = booksFor('child');
+---
+
+<BaseLayout title={'Livres pour Enfants | Albums et Histoires Montessori'} description={"Découvrez notre sélection de livres Montessori pour enfants : albums des Grands Récits, imagiers, premières lectures et livres d'activités."} keywords={['livres enfants montessori', 'albums montessori', 'grands récits', 'premières lectures']}>
+<div class="py-12 bg-warm">
+    <div class="max-w-4xl mx-auto px-4">
+        {/* Header */}
+        <header class="text-center mb-12">
+            <span class="text-5xl mb-4 block">📕</span>
+            <h1 class="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4">
+                Livres pour Enfants
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Albums, imagiers, cahiers d'activités et Grands Récits :
+                notre sélection de livres Montessori pour accompagner votre enfant.
+            </p>
+        </header>
+
+        {/* Introduction */}
+        <section class="bg-white rounded-xl p-6 mb-10 shadow-sm">
+            <blockquote class="text-lg italic text-gray-600 border-l-4 border-terracotta-400 pl-4">
+                "Sème en l'enfant des idées bonnes, même s'il ne les comprend pas.
+                Les années se chargeront de les lui expliquer." — Maria Montessori
+            </blockquote>
+        </section>
+
+        {/* Books by Category */}
+        {categories.map(category => (
+            <section class="mb-12">
+                <h2 class="text-2xl font-serif font-bold text-sage-700 mb-6 flex items-center gap-2">
+                    {category === "Éveil" && "🌱"}
+                    {category === "Lecture" && "📖"}
+                    {category === "Mathématiques" && "🔢"}
+                    {category === "Grands Récits" && "🌍"}
+                    {category}
+                </h2>
+                <div class="grid gap-6">
+                    {books.filter((b) => b.category === category).map((book) => <BookCard book={book} />)}
+                </div>
+            </section>
+        ))}
+
+        {/* Les Grands Récits Expliqués */}
+        <section class="bg-sage-50 rounded-xl p-8 mb-10">
+            <h3 class="text-xl font-serif font-bold text-gray-900 mb-4">
+                🎓 Que sont les Grands Récits Montessori ?
+            </h3>
+            <p class="text-gray-700 mb-4">
+                Les <strong>5 Grands Récits</strong> sont des histoires épiques racontées aux enfants
+                de 6-12 ans dans les écoles Montessori. Ils donnent une vision globale de l'univers,
+                de la vie et de l'humanité :
+            </p>
+            <ol class="list-decimal list-inside text-gray-700 space-y-2 mb-4">
+                <li><strong>L'Histoire de l'Univers</strong> — Du Big Bang à la Terre</li>
+                <li><strong>L'Histoire de la Vie</strong> — L'apparition et l'évolution de la vie</li>
+                <li><strong>L'Histoire de l'Homme</strong> — De la préhistoire aux civilisations</li>
+                <li><strong>L'Histoire de l'Écriture</strong> — Comment l'homme a appris à écrire</li>
+                <li><strong>L'Histoire des Nombres</strong> — L'invention des mathématiques</li>
+            </ol>
+            <p class="text-gray-600 text-sm">
+                Ces récits éveillent la curiosité et donnent un cadre pour toutes les matières scolaires.
+            </p>
+        </section>
+
+        {/* CTA */}
+        <section class="bg-terracotta-50 rounded-xl p-8 text-center">
+            <h3 class="text-xl font-serif font-bold text-gray-900 mb-3">
+                Notre Recommandation par Âge
+            </h3>
+            <div class="grid md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-white rounded-lg p-4">
+                    <p class="font-bold text-terracotta-600">0-3 ans</p>
+                    <p class="text-sm text-gray-600">Imagiers et livres tactiles</p>
+                </div>
+                <div class="bg-white rounded-lg p-4">
+                    <p class="font-bold text-terracotta-600">3-6 ans</p>
+                    <p class="text-sm text-gray-600">Coffrets Lettres et Chiffres</p>
+                </div>
+                <div class="bg-white rounded-lg p-4">
+                    <p class="font-bold text-terracotta-600">6-12 ans</p>
+                    <p class="text-sm text-gray-600">Les 5 Grands Récits</p>
+                </div>
+            </div>
+        </section>
+
+        {/* Navigation */}
+        <div class="mt-10 text-center">
+            <a href="/lectures-parents/" class="text-sage-600 hover:underline mr-6">
+                ← Lectures pour Parents
+            </a>
+            <a href="/articles/" class="text-sage-600 hover:underline">
+                Retour aux articles
+            </a>
+        </div>
+    </div>
+</div>
+</BaseLayout>

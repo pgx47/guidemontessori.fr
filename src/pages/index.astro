@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
+import SectionDecorations from '../components/SectionDecorations.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getGuides } from '../lib/content';
+
+const guides = await getGuides();
+const featured = guides.slice(0, 3);
+const more = guides.slice(3, 6);
+---
+
+<BaseLayout>
+    {/* Hero Carousel */}
+    <HeroCarousel />
+
+    {/* Decorative transition wave */}
+    <div class="relative -mt-1">
+        <svg viewBox="0 0 1440 60" class="w-full" preserveAspectRatio="none">
+            <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,60 L0,60 Z" fill="#fef6f0" />
+        </svg>
+    </div>
+
+    {/* Value Proposition - Pastel cards */}
+    <section class="py-12 relative overflow-hidden bg-pattern" style="background-color: #fce8d5">
+        <SectionDecorations count={20} seed={1} />
+
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="grid md:grid-cols-3 gap-6">
+                {/* Card 1 - Peach pastel */}
+                <div class="rounded-3xl p-6 text-center border-2 border-orange-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style="background-color: #fff5ee">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm" style="background-color: #ffe4cc">
+                        <span class="text-3xl">🌱</span>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2 text-gray-800">
+                        Apprentissage au Rythme de l'Enfant
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Chaque enfant est unique. Nos guides respectent les périodes sensibles et le développement naturel.
+                    </p>
+                    <div class="mt-3 text-xl opacity-30">🐢</div>
+                </div>
+
+                {/* Card 2 - Mint pastel */}
+                <div class="rounded-3xl p-6 text-center border-2 border-emerald-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style="background-color: #f0faf4">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm" style="background-color: #d1f0dd">
+                        <span class="text-3xl">✋</span>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2 text-gray-800">
+                        L'Approche Sensorielle
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Apprendre par le toucher, la vue, le mouvement. Le matériel Montessori engage tous les sens.
+                    </p>
+                    <div class="mt-3 text-xl opacity-30">🐝</div>
+                </div>
+
+                {/* Card 3 - Lavender pastel */}
+                <div class="rounded-3xl p-6 text-center border-2 border-violet-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style="background-color: #f8f4ff">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm" style="background-color: #e8ddf7">
+                        <span class="text-3xl">💜</span>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold mb-2 text-gray-800">
+                        Bienveillance & Autonomie
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        &ldquo;Aide-moi à faire seul&rdquo; : construire la confiance en soi dès le plus jeune âge.
+                    </p>
+                    <div class="mt-3 text-xl opacity-30">🦊</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {/* Featured Articles */}
+    <section class="py-12 relative overflow-hidden bg-pattern" style="background-color: #f5e6d0">
+        <SectionDecorations count={15} seed={2} />
+
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-10">
+                <span class="text-3xl mb-2 block">🌟</span>
+                <h2 class="text-2xl md:text-3xl font-serif font-bold mb-2 text-gray-800">
+                    Nos Guides les Plus Populaires
+                </h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-sm">
+                    Des guides complets pour comprendre et choisir le matériel Montessori adapté à chaque étape du développement de votre enfant.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                {featured.map((g) => <ArticleCard entry={g} />)}
+            </div>
+        </div>
+    </section>
+
+    {/* Age Categories - Pastel cards with animals */}
+    <section class="py-12 relative overflow-hidden bg-pattern" style="background-color: #fce8d5">
+        <SectionDecorations count={18} seed={3} />
+
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-8">
+                <span class="text-3xl mb-2 block">🎯</span>
+                <h2 class="text-2xl md:text-3xl font-serif font-bold mb-2 text-gray-800">
+                    Matériel par Tranche d&lsquo;Âge
+                </h2>
+                <p class="text-gray-500 text-sm">
+                    Trouvez le matériel adapté à l&lsquo;âge de votre enfant
+                </p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+                <div class="rounded-3xl p-5 text-center border-2 border-pink-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" style="background: linear-gradient(160deg, #fff0f3, #ffe0e6)">
+                    <div class="text-4xl mb-2">👶</div>
+                    <div class="text-lg opacity-30 mb-1">🐰</div>
+                    <h3 class="font-serif font-bold text-base mb-1 text-gray-800">0-12 mois</h3>
+                    <p class="text-xs text-gray-500">Mobiles, hochets, éveil</p>
+                </div>
+                <div class="rounded-3xl p-5 text-center border-2 border-sky-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" style="background: linear-gradient(160deg, #eef6ff, #dceefb)">
+                    <div class="text-4xl mb-2">🧒</div>
+                    <div class="text-lg opacity-30 mb-1">🐻</div>
+                    <h3 class="font-serif font-bold text-base mb-1 text-gray-800">1-3 ans</h3>
+                    <p class="text-xs text-gray-500">Vie pratique, motricité</p>
+                </div>
+                <div class="rounded-3xl p-5 text-center border-2 border-emerald-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" style="background: linear-gradient(160deg, #eefaf3, #d5f0e0)">
+                    <div class="text-4xl mb-2">👧</div>
+                    <div class="text-lg opacity-30 mb-1">🦋</div>
+                    <h3 class="font-serif font-bold text-base mb-1 text-gray-800">3-6 ans</h3>
+                    <p class="text-xs text-gray-500">Sensoriel, langage, maths</p>
+                </div>
+                <div class="rounded-3xl p-5 text-center border-2 border-violet-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" style="background: linear-gradient(160deg, #f5f0ff, #e8ddf7)">
+                    <div class="text-4xl mb-2">👦</div>
+                    <div class="text-lg opacity-30 mb-1">🦉</div>
+                    <h3 class="font-serif font-bold text-base mb-1 text-gray-800">6+ ans</h3>
+                    <p class="text-xs text-gray-500">Abstraction, sciences</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {/* More Articles */}
+    <section class="py-12 relative overflow-hidden bg-pattern" style="background-color: #f5e6d0">
+        <SectionDecorations count={15} seed={4} />
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-8">
+                <span class="text-3xl mb-2 block">📚</span>
+                <h2 class="text-2xl md:text-3xl font-serif font-bold text-gray-800">
+                    Continuez votre Découverte
+                </h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                {more.map((g) => <ArticleCard entry={g} border="border-emerald-100" fallbackBg="linear-gradient(135deg, #d1f0dd, #b8e6c9)" />)}
+            </div>
+            <div class="text-center mt-10">
+                <a href="/articles/" class="inline-block font-semibold py-3 px-8 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5" style="background: linear-gradient(135deg, #e8956a, #d4764e)">
+                    Voir tous les articles →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {/* Quote - soft pastel gradient */}
+    <section class="py-14 relative overflow-hidden" style="background: linear-gradient(135deg, #e8ddf7, #d1f0dd)">
+        <SectionDecorations count={12} seed={5} />
+
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <div class="text-4xl mb-4 opacity-40">✨</div>
+            <blockquote class="text-xl md:text-2xl font-serif italic mb-4 text-gray-700 leading-relaxed">
+                &ldquo;L&lsquo;enfant n&lsquo;est pas un vase que l&lsquo;on remplit, mais une source que l&lsquo;on laisse jaillir.&rdquo;
+            </blockquote>
+            <cite class="text-gray-500 text-sm font-medium">— Maria Montessori</cite>
+        </div>
+    </section>
+
+    {/* Newsletter - pastel card */}
+    <section class="py-12 bg-pattern overflow-hidden relative" style="background-color: #fce8d5">
+        <SectionDecorations count={10} seed={6} />
+        <div class="max-w-3xl mx-auto px-4 relative z-10">
+            <div class="rounded-3xl p-8 md:p-10 text-center border-2 border-sky-200 relative overflow-hidden" style="background: linear-gradient(135deg, #d6eaff, #d1f0dd)">
+                <div class="absolute top-3 left-4 text-2xl opacity-25 animate-bounce">🐝</div>
+                <div class="absolute bottom-3 right-4 text-2xl opacity-25 animate-pulse">🌼</div>
+                <div class="absolute top-1/2 left-8 text-xl opacity-20">🐞</div>
+                <div class="absolute bottom-1/2 right-8 text-xl opacity-20">🦋</div>
+                <div class="absolute top-4 right-1/3 text-2xl opacity-15">🐌</div>
+                <div class="absolute bottom-4 left-1/3 text-2xl opacity-15">🐜</div>
+
+                <span class="text-4xl mb-3 block">📬</span>
+                <h2 class="text-xl md:text-2xl font-serif font-bold mb-2 text-gray-800">
+                    Restez Informé
+                </h2>
+                <p class="text-gray-500 mb-5 max-w-lg mx-auto text-sm">
+                    Nouveaux guides et brèves Montessori publiés chaque semaine.
+                </p>
+                <a href="/actualites/" class="inline-block py-3 px-6 rounded-2xl font-semibold text-white text-sm shadow-md hover:shadow-lg transition-all" style="background: linear-gradient(135deg, #e8956a, #d4764e)">Voir les actualités →</a>
+            </div>
+        </div>
+    </section>
+
+    {/* Trust Badges - soft rounded */}
+    <section class="py-10 pb-20 border-t border-orange-200 bg-pattern relative overflow-hidden" style="background-color: #f5e6d0">
+        <SectionDecorations count={10} seed={7} />
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="flex flex-wrap justify-center items-center gap-6 md:gap-10">
+                <div class="text-center rounded-2xl p-4 border border-pink-100 hover:shadow-md transition-all" style="background-color: #fff5f7">
+                    <div class="text-2xl mb-1">📚</div>
+                    <span class="text-xs font-semibold text-gray-600">{guides.length}+ Guides</span>
+                </div>
+                <div class="text-center rounded-2xl p-4 border border-emerald-100 hover:shadow-md transition-all" style="background-color: #f0faf4">
+                    <div class="text-2xl mb-1">✅</div>
+                    <span class="text-xs font-semibold text-gray-600">Contenu Vérifié</span>
+                </div>
+                <div class="text-center rounded-2xl p-4 border border-sky-100 hover:shadow-md transition-all" style="background-color: #eef6ff">
+                    <div class="text-2xl mb-1">🇫🇷</div>
+                    <span class="text-xs font-semibold text-gray-600">Site Français</span>
+                </div>
+                <div class="text-center rounded-2xl p-4 border border-violet-100 hover:shadow-md transition-all" style="background-color: #f8f4ff">
+                    <div class="text-2xl mb-1">💯</div>
+                    <span class="text-xs font-semibold text-gray-600">100% Gratuit</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

@@ -1,0 +1,3 @@
+/articles.html /articles/ 301
+/admin /articles/ 301
+/admin/* /articles/ 301

@@ -1,0 +1,45 @@
+---
+import { amazonUrl } from '../site.config';
+
+interface Props {
+  asin: string;
+  nom: string;
+  pointsForts: string[];
+  pointsFaibles: string[];
+  image?: string;
+  prix?: string;
+  ctaUrl?: string;
+}
+
+const { asin, nom, pointsForts, pointsFaibles, image, prix, ctaUrl } = Astro.props;
+const href = ctaUrl || amazonUrl(asin);
+---
+
+<div class="not-prose my-8 rounded-2xl border-2 border-orange-100 bg-white p-6 shadow-sm">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+    {image && <img src={image} alt={nom} loading="lazy" class="h-32 w-32 shrink-0 self-center rounded-xl object-contain" />}
+    <div class="flex-1">
+      <p class="font-serif text-xl font-bold text-gray-900">{nom}</p>
+      {prix && <p class="mt-1 text-sm font-semibold text-terracotta-600">{prix}</p>}
+    </div>
+  </div>
+  <div class="my-4 grid gap-4 md:grid-cols-2">
+    <div class="rounded-xl bg-sage-50 p-4 text-sage-800">
+      <p class="mb-2 font-semibold">Points forts</p>
+      <ul class="space-y-1 text-sm">{pointsForts.map((pt) => <li>+ {pt}</li>)}</ul>
+    </div>
+    <div class="rounded-xl bg-red-50 p-4 text-red-800">
+      <p class="mb-2 font-semibold">Points faibles</p>
+      <ul class="space-y-1 text-sm">{pointsFaibles.map((pt) => <li>− {pt}</li>)}</ul>
+    </div>
+  </div>
+  <a
+    href={href}
+    target="_blank"
+    rel="nofollow sponsored noopener"
+    class="inline-block rounded-full px-6 py-3 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg"
+    style="background: linear-gradient(135deg, #e8956a, #d4764e)"
+  >
+    Voir la disponibilité et le prix sur Amazon
+  </a>
+</div>

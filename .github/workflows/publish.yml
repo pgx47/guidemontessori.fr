@@ -1,0 +1,64 @@
+name: Auto Content Publisher
+
+on:
+  schedule:
+    - cron: '0 6 * * 1,4'
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Mot-clé (vide = prochain sujet pending de topics.json)'
+        required: false
+      type:
+        description: 'guide ou news'
+        default: guide
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: pip install -r scripts/requirements.txt
+      - run: npm ci
+
+      - name: Generate article
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          TOPIC: ${{ inputs.topic }}
+          TYPE: ${{ inputs.type }}
+        run: |
+          if [ -n "$TOPIC" ]; then
+            python scripts/generate_article.py --topic "$TOPIC" --type "${TYPE:-guide}"
+          else
+            python scripts/generate_article.py --auto
+          fi
+
+      - name: Validate build (schema Zod + MDX)
+        run: npm run build
+
+      - name: Commit and push
+        run: |
+          git config user.name "bot-montessori"
+          git config user.email "bot@guidemontessori.fr"
+          git add src/content/ scripts/topics.json
+          git diff --cached --quiet && exit 0
+          git commit -m "content: nouvel article"
+          git push

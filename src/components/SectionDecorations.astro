@@ -1,0 +1,27 @@
+---
+interface Props {
+  count?: number;
+  seed?: number;
+}
+
+const EMOJIS = [
+  '🦋', '🌸', '🧸', '🚂', '🧩', '🎨', '🏰', '🖌️', '🎭', '🪁', '🎈', '☀️', '☁️',
+  '🐞', '🐝', '🐌', '🐜', '🐢', '🦄', '🍄', '🥁', '🚗', '🎲', '🎸', '🍦', '🍩',
+  '🦕', '🐘', '🐙', '🐠', '🐬', '🐳', '🐊', '🐅', '🐆', '🦓', '🦍', '🦧', '🦣',
+  '🍼', '🧊', '🪐', '🚀', '🛸', '⭐', '🌟', '✨', '⚡', '🔥', '🌈', '☂️',
+];
+
+const { count = 15, seed = 1 } = Astro.props;
+
+let s = seed * 9301 + 49297;
+const rand = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
+
+const items = Array.from({ length: count }, () => ({
+  emoji: EMOJIS[Math.floor(rand() * EMOJIS.length)],
+  style: `left:${(rand() * 100).toFixed(1)}%;top:${(rand() * 100).toFixed(1)}%;transform:rotate(${Math.round(rand() * 360)}deg) scale(${(0.5 + rand() * 1.5).toFixed(2)});opacity:${(0.05 + rand() * 0.15).toFixed(2)};font-size:2rem`,
+}));
+---
+
+<div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+  {items.map((d) => <div class="absolute select-none" style={d.style}>{d.emoji}</div>)}
+</div>

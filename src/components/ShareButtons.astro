@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+}
+
+const { title, description, url } = Astro.props;
+const text = `${title} - ${description}`;
+const e = encodeURIComponent;
+const links = [
+  { name: 'Facebook', icon: '📘', href: `https://www.facebook.com/sharer/sharer.php?u=${e(url)}`, color: 'hover:bg-blue-50 hover:border-blue-200' },
+  { name: 'X', icon: '🐦', href: `https://twitter.com/intent/tweet?text=${e(text)}&url=${e(url)}`, color: 'hover:bg-sky-50 hover:border-sky-200' },
+  { name: 'WhatsApp', icon: '💬', href: `https://wa.me/?text=${e(`${title}\n${url}`)}`, color: 'hover:bg-green-50 hover:border-green-200' },
+  { name: 'Pinterest', icon: '📌', href: `https://pinterest.com/pin/create/button/?url=${e(url)}&description=${e(text)}`, color: 'hover:bg-red-50 hover:border-red-200' },
+  { name: 'Email', icon: '✉️', href: `mailto:?subject=${e(title)}&body=${e(`${text}\n\n${url}`)}`, color: 'hover:bg-amber-50 hover:border-amber-200' },
+];
+---
+
+<div class="flex flex-col items-center gap-3">
+  <p class="text-sm font-medium text-gray-500">Partager cet article</p>
+  <div class="flex flex-wrap justify-center gap-2">
+    {
+      links.map((l) => (
+        <a
+          href={l.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={`Partager sur ${l.name}`}
+          class:list={['inline-flex items-center gap-1.5 rounded-full border border-gray-200 px-3 py-2 text-sm text-gray-600 transition-all duration-200', l.color]}
+        >
+          <span>{l.icon}</span>
+          <span class="hidden sm:inline">{l.name}</span>
+        </a>
+      ))
+    }
+    <button
+      type="button"
+      data-copy={url}
+      class="inline-flex items-center gap-1.5 rounded-full border border-gray-200 px-3 py-2 text-sm text-gray-600 transition-all duration-200 hover:border-gray-300 hover:bg-gray-50"
+      title="Copier le lien"
+    >
+      <span>🔗</span><span class="hidden sm:inline">Copier</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('button[data-copy]').forEach((btn) =>
+    btn.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(btn.dataset.copy!);
+      btn.innerHTML = '<span>✅</span><span class="hidden sm:inline">Copié !</span>';
+    }),
+  );
+</script>

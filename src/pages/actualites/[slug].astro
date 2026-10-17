@@ -1,0 +1,18 @@
+---
+import { render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getNews, type Entry } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const all = await getNews();
+  return all.map((entry) => ({ params: { slug: entry.id }, props: { entry, all } }));
+}
+
+const { entry, all } = Astro.props as { entry: Entry; all: Entry[] };
+const related = all.filter((e) => e.id !== entry.id).slice(0, 3);
+const { Content } = await render(entry);
+---
+
+<ArticleLayout entry={entry} related={related} section={{ label: 'Actualités', href: '/actualites/' }}>
+  <Content />
+</ArticleLayout>

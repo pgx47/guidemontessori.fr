@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getNews } from '../../lib/content';
+
+const news = await getNews();
+---
+
+<BaseLayout title="Actualités Montessori" description="Les dernières actualités autour de la pédagogie Montessori : nouveautés matériel, livres, études et conseils pour les parents.">
+  <section class="min-h-screen bg-sand-50 py-16">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="mb-12 text-center">
+        <h1 class="mb-4 font-serif text-4xl font-bold">Actualités Montessori</h1>
+        <p class="mx-auto max-w-2xl text-gray-600">Brèves, nouveautés et tendances autour de la pédagogie Montessori.</p>
+      </div>
+      {
+        news.length ? (
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {news.map((n) => <ArticleCard entry={n} showDate border="border-sky-100" fallbackBg="linear-gradient(135deg, #d6eaff, #d1f0dd)" />)}
+          </div>
+        ) : (
+          <p class="text-center text-gray-500">Les premières actualités arrivent bientôt.</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

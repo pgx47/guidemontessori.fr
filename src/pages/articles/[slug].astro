@@ -1,0 +1,24 @@
+---
+import { render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getGuides, type Entry } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const all = await getGuides();
+  return all.map((entry) => ({ params: { slug: entry.id }, props: { entry, all } }));
+}
+
+const { entry, all } = Astro.props as { entry: Entry; all: Entry[] };
+const kw = new Set(entry.data.keywords.map((k) => k.toLowerCase()));
+const related = all
+  .filter((e) => e.id !== entry.id)
+  .map((e) => ({ e, score: e.data.keywords.filter((k) => kw.has(k.toLowerCase())).length }))
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 3)
+  .map(({ e }) => e);
+const { Content } = await render(entry);
+---
+
+<ArticleLayout entry={entry} related={related} section={{ label: 'Articles', href: '/articles/' }}>
+  <Content />
+</ArticleLayout>

@@ -1,0 +1,30 @@
+---
+const slides = [
+  { image: '/hero-1.png', alt: 'Enfant construisant une tour rose Montessori' },
+  { image: '/hero-2.png', alt: 'Enfant découvrant les lettres rugueuses ABC' },
+  { image: '/hero-3.png', alt: 'Moment de lecture parent-enfant' },
+];
+---
+
+<section class="relative h-[70vh] max-h-[700px] min-h-[500px] overflow-hidden">
+  {
+    slides.map((s, i) => (
+      <div class="hero-slide absolute inset-0">
+        <img src={s.image} alt={s.alt} class="h-full w-full object-cover" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
+        <div class="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-transparent" />
+      </div>
+    ))
+  }
+  <div class="relative z-10 mx-auto flex h-full max-w-6xl items-center px-4">
+    <div class="max-w-xl">
+      <h1 class="mb-6 font-serif text-4xl font-bold leading-tight text-gray-900 md:text-5xl lg:text-6xl">
+        Une Parentalité Éclairée par la<span class="text-sage-500"> Pédagogie Montessori</span>
+      </h1>
+      <p class="mb-8 text-lg text-gray-600 md:text-xl">
+        Accompagnez le développement de votre enfant avec bienveillance. Découvrez nos guides détaillés sur les matériels et les pratiques qui font la
+        différence.
+      </p>
+      <a href="/articles/" class="btn-cta">Explorer nos Guides →</a>
+    </div>
+  </div>
+</section>

@@ -71,6 +71,7 @@ def main() -> int:
             r = requests.post("https://api.deepseek.com/chat/completions",
                 headers={"Authorization": f"Bearer {key}"},
                 json={"model": "deepseek-flash", "temperature": 0.2, "max_tokens": 2000,
+                      "thinking": {"type": "disabled"},
                       "messages": [{"role": "user", "content":
                         "Traduis chaque titre produit Amazon en français concis (max 10 mots), "
                         "garde les marques. Réponds en JSON {\"noms\": {\"asin\": \"titre fr\"}}.\n"

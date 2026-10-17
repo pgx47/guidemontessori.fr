@@ -33,3 +33,12 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: '4.149.0'
           command: pages deploy dist --project-name=guidemontessori --branch=main --commit-dirty=true
+
+      - name: Ping IndexNow
+        if: success()
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: |
+          pip install requests 2>/dev/null || true
+          python scripts/ping_indexnow.py

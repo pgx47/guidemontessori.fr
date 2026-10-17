@@ -13,49 +13,112 @@
       "type": "guide",
       "angle": "à partir de quel âge, stabilité, modèles évolutifs, erreurs à éviter",
       "status": "pending",
-      "products": []
+      "products": [
+        {
+          "asin": "B0GWQXY92V",
+          "nom": "Toddler Standing Tower Anti-Tip Wooden Kitchen Step Stool，Nature"
+        },
+        {
+          "asin": "B0GZV9YM7D",
+          "nom": "Toddler Standing Tower, 4-in-1 Kitchen Stool with Blackboard"
+        }
+      ]
     },
     {
       "keyword": "étagère montessori jouets",
       "type": "guide",
       "angle": "rotation des jouets, hauteur, nombre d'activités par âge",
       "status": "pending",
-      "products": []
+      "products": [
+        {
+          "asin": "B0GS9RBK4V",
+          "nom": "Decorative Wooden Bookshelf with Handle for Kids Rooms - Montessori Shelf"
+        },
+        {
+          "asin": "B0GWJ6HP6C",
+          "nom": "OOOK Montessori Shelf 5-Section, 2-Shelf Toy Organizers and Storage The Forest S"
+        }
+      ]
     },
     {
       "keyword": "triangle de pikler",
       "type": "guide",
       "angle": "motricité libre, Pikler vs Montessori, sécurité, âge",
       "status": "pending",
-      "products": []
+      "products": [
+        {
+          "asin": "B0D635D6R9",
+          "nom": "Pikler Triangle Set with Cushion, 7 in 1 Toddler Climbing Toys Indoor"
+        },
+        {
+          "asin": "B0DF2D5ZXK",
+          "nom": "Tiny Land Pikler Triangle Set, 7-in-1 Foldable Climbing Toys Set for Kids The Fo"
+        }
+      ]
     },
     {
       "keyword": "chambre montessori bébé",
       "type": "guide",
       "angle": "lit au sol, miroir, mobiles, organisation par zones",
       "status": "pending",
-      "products": []
+      "products": [
+        {
+          "asin": "B09QKVDTMC",
+          "nom": "Gobbi Montessori Set - 4 Mobiles: Dancer, Octahedron, Bebe, Hanging"
+        },
+        {
+          "asin": "B0G2TK7386",
+          "nom": "Montessori Baby Mobile Set – 6-Piece Handmade Visual Stimulating Mobiles (Munari"
+        }
+      ]
     },
     {
       "keyword": "planche d'équilibre montessori",
       "type": "guide",
       "angle": "usages, âge, bois vs plastique, charge maximale",
       "status": "pending",
-      "products": []
+      "products": [
+        {
+          "asin": "B0F995MXGZ",
+          "nom": "Balance Board with Maze for Kids, Labyrinth Wobble Board Rocking Seesaw Sensory "
+        },
+        {
+          "asin": "B07DWKNXNY",
+          "nom": "Amazon Basics Wood Wobble Balance Trainer Board, Slip Resistant, for Exercise an"
+        }
+      ]
     },
     {
       "keyword": "activités montessori 18 mois",
       "type": "guide",
       "angle": "vie pratique, motricité fine, langage, matériel fait maison",
       "status": "pending",
-      "products": []
+      "products": [
+        {
+          "asin": "2092787950",
+          "nom": "100 activités d'éveil Montessori: 18 mois"
+        },
+        {
+          "asin": "B0HJNRNSP4",
+          "nom": "Montessori avec Jef — Vie pratique 0-3 ans: 24 activités d'autonomie pour bébé, "
+        }
+      ]
     },
     {
       "keyword": "boîte à permanence de l'objet",
       "type": "guide",
       "angle": "fonctionnement, âge, présentation, progression",
       "status": "pending",
-      "products": []
+      "products": [
+        {
+          "asin": "B0BPC7SZ4S",
+          "nom": "Adena Montessori Object Permanence Box with Tray Three Balls Montessori Toys for"
+        },
+        {
+          "asin": "B0BNH8STQ3",
+          "nom": "Busy edition Montessori Toys for Babies 6-12 Months Object Permanence Box Wooden"
+        }
+      ]
     }
   ]
 }

@@ -381,6 +381,45 @@ def render_mdx(a: dict, topic: dict, kind: str, today: str, slug: str) -> str:
     return "\n".join(lines) + "\n" + re.sub(r"\n{3,}", "\n\n", body) + "\n"
 
 
+def refill_topics(data: dict) -> None:
+    """Si <= 2 sujets pending, génère 15 nouvelles idées via le LLM."""
+    pending = [t for t in data["topics"] if t.get("status") == "pending"]
+    if len(pending) > 2:
+        return
+    url, key, model, api = llm_config()
+    if api != "openai":
+        print("refill: provider sans tool calls, skip", file=sys.stderr)
+        return
+    done = [t["keyword"] for t in data["topics"]]
+    prompt = f"""Propose 15 nouveaux sujets SEO français pour GuideMontessori.fr.
+Règles : mots-clés longue traîne à intention d'achat ou de recherche parentale (mobilier, jouets, activités, âge précis, livres), jamais de doublon avec : {json.dumps(done, ensure_ascii=False)}.
+Appelle l'outil avec topics = liste d'objets {{keyword, type (guide|news), angle}}. 80% guide."""
+    tool = {"type": "function", "function": {"name": "topics", "parameters": {
+        "type": "object", "required": ["topics"], "properties": {"topics": {"type": "array", "items": {
+            "type": "object", "required": ["keyword", "type", "angle"],
+            "properties": {"keyword": {"type": "string"}, "type": {"type": "string"}, "angle": {"type": "string"}}}}}}}}
+    try:
+        r = requests.post(f"{url.rstrip('/')}/chat/completions",
+                          headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                          json={"model": model, "temperature": 0.7, "max_tokens": 4000, "tools": [tool],
+                                "tool_choice": "auto", "messages": [{"role": "user", "content": prompt}]},
+                          timeout=180)
+        calls = r.json()["choices"][0]["message"].get("tool_calls") or []
+        new = json.loads(calls[0]["function"]["arguments"]).get("topics", []) if calls else []
+        lower = {k.lower() for k in done}
+        added = 0
+        for t in new:
+            kw = t["keyword"].strip()
+            if kw.lower() in lower or t.get("type") not in ("guide", "news"):
+                continue
+            data["topics"].append({"keyword": kw, "type": t["type"], "angle": t["angle"], "status": "pending", "products": []})
+            lower.add(kw.lower())
+            added += 1
+        print(f"refill: {added} nouveaux sujets")
+    except Exception as e:
+        print(f"⚠ refill échoué : {e}", file=sys.stderr)
+
+
 def validate(a: dict) -> list[str]:
     errs = []
     if not 10 <= len(a["title"]) <= 110:
@@ -401,6 +440,8 @@ def main() -> int:
     args = ap.parse_args()
 
     data = json.loads(TOPICS.read_text())
+    if not args.dry_run:
+        refill_topics(data)
     if args.auto:
         topic = next((t for t in data["topics"] if t.get("status") == "pending"), None)
         if not topic:

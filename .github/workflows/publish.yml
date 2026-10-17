@@ -2,7 +2,8 @@ name: Auto Content Publisher
 
 on:
   schedule:
-    - cron: '0 6 * * 1,4'
+    # Lun-Ven 6h UTC — la décision de publier est prise par l'étape "decide"
+    - cron: '0 6 * * 1-5'
   workflow_dispatch:
     inputs:
       topic:
@@ -38,6 +39,17 @@ jobs:
       - run: pip install -r scripts/requirements.txt
       - run: npm ci
 
+      - name: Decide publish day (2-4 random weekdays per ISO week)
+        if: github.event_name == 'schedule'
+        run: |
+          python3 - <<'PY'
+          import random, datetime, sys
+          today = datetime.date.today()
+          seed = int(today.strftime('%G%W'))
+          days = sorted(random.Random(seed).sample(range(5), random.Random(seed + 1).randint(2, 4)))
+          print(f"semaine {today.isocalendar()} → jours publiés : {days}, aujourd'hui {today.weekday()}")
+          sys.exit(0 if today.weekday() in days else 78)
+          PY
       - name: Generate article
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
@@ -50,7 +62,6 @@ jobs:
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL }}
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           TOPIC: ${{ inputs.topic }}
           TYPE: ${{ inputs.type }}
         run: |

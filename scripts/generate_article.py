@@ -227,33 +227,53 @@ def inspect_image(data: bytes) -> bool:
         return True
 
 
-def fetch_pexels(query: str, slug: str) -> bytes | None:
-    key = os.environ.get("PEXELS_API_KEY")
-    if not key:
-        return None
+def _to_webp(raw: bytes) -> bytes:
+    from io import BytesIO
+    from PIL import Image
+    buf = BytesIO()
+    Image.open(BytesIO(raw)).convert("RGB").save(buf, "WEBP", quality=82, method=6)
+    return buf.getvalue()
+
+
+def fetch_stock(query: str, slug: str) -> bytes | None:
+    """Fallback photo libre de droits : Openverse puis Wikimedia Commons, sans clé."""
     try:
-        r = requests.get("https://api.pexels.com/v1/search",
-                         headers={"Authorization": key},
-                         params={"query": query, "per_page": 1, "orientation": "landscape"}, timeout=30)
-        photos = r.json().get("photos", [])
-        if not photos:
-            return None
-        img = requests.get(photos[0]["src"]["large"], timeout=60)
-        img.raise_for_status()
-        from io import BytesIO
-        from PIL import Image
-        buf = BytesIO()
-        Image.open(BytesIO(img.content)).convert("RGB").save(buf, "WEBP", quality=82, method=6)
-        return buf.getvalue()
+        r = requests.get("https://api.openverse.org/v1/images/",
+                         params={"q": query, "page_size": 5, "license": "by,by-sa,cc0,pdm", "filter_dead": "false"},
+                         headers={"User-Agent": "guidemontessori/1.0"}, timeout=30)
+        for p in r.json().get("results", []):
+            if (p.get("width") or 0) < 600:
+                continue
+            img = requests.get(p["url"], timeout=60)
+            if img.ok and len(img.content) > 20000:
+                return _to_webp(img.content)
     except Exception as e:
-        print(f"⚠ pexels : {e}", file=sys.stderr)
-        return None
+        print(f"⚠ openverse : {e}", file=sys.stderr)
+    try:
+        r = requests.get("https://commons.wikimedia.org/w/api.php",
+                         params={"action": "query", "list": "search", "srsearch": query + " filetype:bitmap",
+                                 "srnamespace": 6, "srlimit": 5, "format": "json"},
+                         headers={"User-Agent": "guidemontessori/1.0"}, timeout=30)
+        for hit in r.json()["query"]["search"]:
+            info = requests.get("https://commons.wikimedia.org/w/api.php",
+                                params={"action": "query", "titles": hit["title"], "prop": "imageinfo",
+                                        "iiprop": "url|size", "iiurlwidth": 1024, "format": "json"},
+                                headers={"User-Agent": "guidemontessori/1.0"}, timeout=30).json()
+            ii = next(iter(info["query"]["pages"].values())).get("imageinfo", [{}])[0]
+            if ii.get("thumburl"):
+                img = requests.get(ii["thumburl"], timeout=60)
+                if img.ok:
+                    return _to_webp(img.content)
+    except Exception as e:
+        print(f"⚠ wikimedia : {e}", file=sys.stderr)
+    return None
 
 
 def generate_image(prompt: str, slug: str) -> bytes | None:
     """Image réaliste : retry x3 avec vision QC, fallback Pexels."""
     full_prompt = f"{IMG_STYLE} Scene: {prompt}"
     try:
+        if key := os.environ.get("OPENAI_API_KEY"):
             r = requests.post(
                 "https://api.openai.com/v1/images/generations",
                 headers={"Authorization": f"Bearer {key}"},
@@ -273,8 +293,7 @@ def generate_image(prompt: str, slug: str) -> bytes | None:
         from PIL import Image
         buf = BytesIO()
         Image.open(BytesIO(img.content)).convert("RGB").save(buf, "WEBP", quality=82, method=6)
-        data = buf.getvalue()
-        return data if inspect_image(data) else None
+        return buf.getvalue() if inspect_image(buf.getvalue()) else None
     except Exception as e:
         print(f"⚠ image non générée : {e}", file=sys.stderr)
         return None
@@ -284,7 +303,7 @@ def article_image(prompt: str, slug: str, query: str | None = None) -> str | Non
     for attempt in range(3):
         if data := generate_image(prompt, slug):
             return store_image(data, slug)
-    if data := fetch_pexels(query or prompt, slug):
+    if data := fetch_stock(query or prompt, slug):
         return store_image(data, slug)
     return None
 

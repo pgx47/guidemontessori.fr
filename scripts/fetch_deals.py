@@ -28,7 +28,7 @@ def main() -> int:
     if not key:
         print("SCRAPER_API_KEY manquant, deals.json inchangé", file=sys.stderr)
         return 0
-    tag = os.environ.get("AMAZON_TAG", "missstream-21")
+    tag = os.environ.get("AMAZON_TAG", "duckurbate-21")
     deals, seen = [], set()
     for q in QUERIES:
         if len(deals) >= MAX_DEALS:

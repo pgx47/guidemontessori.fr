@@ -6,7 +6,7 @@ export const SITE = {
     'Découvrez les meilleurs matériels Montessori pour accompagner le développement de votre enfant. Guides détaillés, conseils pédagogiques et sélections de produits.',
   author: 'Rédaction GuideMontessori',
   gaId: 'G-SFEFV3XZDZ',
-  amazonTag: import.meta.env.PUBLIC_AMAZON_TAG ?? 'missstream-21',
+  amazonTag: import.meta.env.PUBLIC_AMAZON_TAG ?? 'duckurbate-21',
 };
 
 export const amazonUrl = (asin: string) => `https://www.amazon.fr/dp/${asin}?tag=${SITE.amazonTag}`;

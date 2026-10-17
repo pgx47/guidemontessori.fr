@@ -188,24 +188,57 @@ def jsx_list(items: list[str]) -> str:
     return "{" + json.dumps(items, ensure_ascii=False) + "}"
 
 
-def generate_image(prompt: str, slug: str) -> bytes | None:
-    """Image 1024x1024 : DALL-E 3 si OPENAI_API_KEY, sinon pollinations.ai (gratuit)."""
+IMG_STYLE = (
+    "A candid, real-life photograph, shot indoors on a digital camera, 35mm, natural soft lighting, "
+    "realistic textures, real warm domestic environment. NO illustrations, NO 3D renders, NO cartoon, "
+    "NO cliparts, NO vectors, NO isolated object on flat solid background, NO emojis, NO graphic design, NO text."
+)
+
+
+def inspect_image(data: bytes) -> bool:
+    """Vision QC via deepseek-flash : rejette clipart/emoji/3D. Fallback : accepte."""
+    import base64
+    url, key, model, _api = llm_config()
+    if _api != "openai":
+        return True
+    prompt = (
+        "Image destinée à un blog Montessori. Réponds par OUI ou NON uniquement. "
+        "Cette image ressemble-t-elle à un emoji, un clipart, une illustration 3D, un dessin, "
+        "un objet isolé sur fond uni, ou une image avec du texte lisible ? Réponds NON si c'est une vraie photo naturelle."
+    )
     try:
-        if key := os.environ.get("OPENAI_API_KEY"):
-            r = requests.post(
-                "https://api.openai.com/v1/images/generations",
-                headers={"Authorization": f"Bearer {key}"},
-                json={"model": "dall-e-3", "prompt": prompt, "size": "1024x1024", "quality": "standard", "n": 1},
-                timeout=180,
-            )
-            r.raise_for_status()
-            img = requests.get(r.json()["data"][0]["url"], timeout=120)
-        else:
-            img = requests.get(
-                f"https://image.pollinations.ai/prompt/{requests.utils.quote(prompt)}",
-                params={"width": 1024, "height": 768, "model": "flux", "nologo": "true", "seed": abs(hash(slug)) % 10**6},
-                timeout=180,
-            )
+        r = requests.post(
+            f"{url.rstrip('/')}/chat/completions",
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+            json={"model": model, "temperature": 0, "max_tokens": 5, "messages": [
+                {"role": "user", "content": [
+                    {"type": "text", "text": prompt},
+                    {"type": "image_url", "image_url": {"url": "data:image/webp;base64," + base64.b64encode(data).decode()}},
+                ]}]},
+            timeout=60,
+        )
+        verdict = r.json()["choices"][0]["message"]["content"].strip().upper()
+        ok = "NON" in verdict or "NO" == verdict[:2]
+        if not ok:
+            print("🚨 image rejetée (clipart/emoji détecté)", file=sys.stderr)
+        return ok
+    except Exception as e:
+        print(f"vision QC indisponible, image acceptée : {e}", file=sys.stderr)
+        return True
+
+
+def fetch_pexels(query: str, slug: str) -> bytes | None:
+    key = os.environ.get("PEXELS_API_KEY")
+    if not key:
+        return None
+    try:
+        r = requests.get("https://api.pexels.com/v1/search",
+                         headers={"Authorization": key},
+                         params={"query": query, "per_page": 1, "orientation": "landscape"}, timeout=30)
+        photos = r.json().get("photos", [])
+        if not photos:
+            return None
+        img = requests.get(photos[0]["src"]["large"], timeout=60)
         img.raise_for_status()
         from io import BytesIO
         from PIL import Image
@@ -213,8 +246,47 @@ def generate_image(prompt: str, slug: str) -> bytes | None:
         Image.open(BytesIO(img.content)).convert("RGB").save(buf, "WEBP", quality=82, method=6)
         return buf.getvalue()
     except Exception as e:
+        print(f"⚠ pexels : {e}", file=sys.stderr)
+        return None
+
+
+def generate_image(prompt: str, slug: str) -> bytes | None:
+    """Image réaliste : retry x3 avec vision QC, fallback Pexels."""
+    full_prompt = f"{IMG_STYLE} Scene: {prompt}"
+    try:
+            r = requests.post(
+                "https://api.openai.com/v1/images/generations",
+                headers={"Authorization": f"Bearer {key}"},
+                json={"model": "dall-e-3", "prompt": full_prompt, "size": "1024x1024", "quality": "standard", "n": 1},
+                timeout=180,
+            )
+            r.raise_for_status()
+            img = requests.get(r.json()["data"][0]["url"], timeout=120)
+        else:
+            img = requests.get(
+                f"https://image.pollinations.ai/prompt/{requests.utils.quote(full_prompt)}",
+                params={"width": 1024, "height": 768, "nologo": "true", "seed": abs(hash(slug)) % 10**6},
+                timeout=180,
+            )
+        img.raise_for_status()
+        from io import BytesIO
+        from PIL import Image
+        buf = BytesIO()
+        Image.open(BytesIO(img.content)).convert("RGB").save(buf, "WEBP", quality=82, method=6)
+        data = buf.getvalue()
+        return data if inspect_image(data) else None
+    except Exception as e:
         print(f"⚠ image non générée : {e}", file=sys.stderr)
         return None
+
+
+def article_image(prompt: str, slug: str, query: str | None = None) -> str | None:
+    for attempt in range(3):
+        if data := generate_image(prompt, slug):
+            return store_image(data, slug)
+    if data := fetch_pexels(query or prompt, slug):
+        return store_image(data, slug)
+    return None
 
 
 def store_image(data: bytes, slug: str) -> str | None:
@@ -245,8 +317,7 @@ def render_mdx(a: dict, topic: dict, kind: str, today: str, slug: str) -> str:
     products = topic.get("products", [])
     image = topic.get("image")
     if not image and a.get("imagePrompt"):
-        if data := generate_image(a["imagePrompt"], slug):
-            image = store_image(data, slug)
+        image = article_image(a["imagePrompt"], slug, topic.get("keyword"))
     fm = {
         "title": a["title"].strip(),
         "description": a["description"].strip(),

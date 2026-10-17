@@ -31,13 +31,29 @@ def latest_item() -> tuple[str, str, str] | None:
 
 
 def source_image(link: str) -> str | None:
-    """og:image de l'article d'origine (suit la redirection Google News)."""
+    """og:image via ScraperAPI (passe le mur Google News), sinon Wikimedia, sinon pool local."""
+    if key := os.environ.get("SCRAPER_API_KEY"):
+        try:
+            r = requests.get("http://api.scraperapi.com",
+                             params={"api_key": key, "url": link, "render": "true"}, timeout=60)
+            m = re.search(r'property=["\']og:image["\'][^>]+content=["\']([^"\']+)', r.text)
+            if m and m.group(1).startswith("http"):
+                return m.group(1)
+        except Exception as e:
+            print(f"⚠ scraper og:image : {e}", file=sys.stderr)
     try:
-        r = requests.get(link, timeout=15, headers={"User-Agent": "Mozilla/5.0"}, allow_redirects=True)
-        m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', r.text)
-        return m.group(1) if m and m.group(1).startswith("http") else None
+        r = requests.get("https://en.wikipedia.org/w/api.php",
+                         params={"action": "query", "format": "json", "prop": "pageimages",
+                                 "generator": "search", "gsrsearch": "montessori school", "pithumbsize": 1024},
+                         headers={"User-Agent": "guidemontessori/1.0"}, timeout=20).json()
+        import random
+        pages = [p for p in r.get("query", {}).get("pages", {}).values() if p.get("thumbnail")]
+        if pages:
+            return random.choice(pages)["thumbnail"]["source"]
     except Exception:
-        return None
+        pass
+    import random
+    return random.choice(["/hero-1.png", "/hero-2.png", "/hero-3.png"])
 
 
 def mark_seen(link: str) -> None:
@@ -58,7 +74,7 @@ def main() -> int:
                       "Éclairage Montessori (autonomie, motricité libre) puis impact concret pour les parents. "
                       "Ne rien inventer au-delà des faits fournis.",
              "type": "news", "products": [], "status": "pending",
-             "image": source_image(link) or "/hero-2.png"}
+             "image": source_image(link)}
     data = json.loads(g.TOPICS.read_text())
     a = g.call_llm(topic, "news")
     today = date.today().isoformat()

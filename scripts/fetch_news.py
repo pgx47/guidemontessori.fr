@@ -30,6 +30,16 @@ def latest_item() -> tuple[str, str, str] | None:
     return None
 
 
+def source_image(link: str) -> str | None:
+    """og:image de l'article d'origine (suit la redirection Google News)."""
+    try:
+        r = requests.get(link, timeout=15, headers={"User-Agent": "Mozilla/5.0"}, allow_redirects=True)
+        m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', r.text)
+        return m.group(1) if m and m.group(1).startswith("http") else None
+    except Exception:
+        return None
+
+
 def mark_seen(link: str) -> None:
     st = {"seen": (json.loads(STATE.read_text()).get("seen", []) if STATE.exists() else [])}
     st["seen"] = (st["seen"] + [link])[-200:]
@@ -47,7 +57,8 @@ def main() -> int:
              "angle": f"brève d'actualité. Faits réels : {summary} Source : {link}. "
                       "Éclairage Montessori (autonomie, motricité libre) puis impact concret pour les parents. "
                       "Ne rien inventer au-delà des faits fournis.",
-             "type": "news", "products": [], "status": "pending"}
+             "type": "news", "products": [], "status": "pending",
+             "image": source_image(link) or "/hero-2.png"}
     data = json.loads(g.TOPICS.read_text())
     a = g.call_llm(topic, "news")
     today = date.today().isoformat()

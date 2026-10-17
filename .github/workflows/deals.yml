@@ -27,3 +27,8 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "data: bons plans du jour"
           git push
+
+  deploy:
+    needs: deals
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit

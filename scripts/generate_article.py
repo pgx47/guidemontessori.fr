@@ -230,8 +230,11 @@ def inspect_image(data: bytes) -> bool:
 def _to_webp(raw: bytes) -> bytes:
     from io import BytesIO
     from PIL import Image
+    im = Image.open(BytesIO(raw)).convert("RGB")
+    w, h = im.size
+    im = im.crop((0, 0, w, int(h * 0.93)))  # retire le watermark pollinations en bas
     buf = BytesIO()
-    Image.open(BytesIO(raw)).convert("RGB").save(buf, "WEBP", quality=82, method=6)
+    im.save(buf, "WEBP", quality=82, method=6)
     return buf.getvalue()
 
 
@@ -291,9 +294,8 @@ def generate_image(prompt: str, slug: str) -> bytes | None:
         img.raise_for_status()
         from io import BytesIO
         from PIL import Image
-        buf = BytesIO()
-        Image.open(BytesIO(img.content)).convert("RGB").save(buf, "WEBP", quality=82, method=6)
-        return buf.getvalue() if inspect_image(buf.getvalue()) else None
+        data = _to_webp(img.content)
+        return data if inspect_image(data) else None
     except Exception as e:
         print(f"⚠ image non générée : {e}", file=sys.stderr)
         return None

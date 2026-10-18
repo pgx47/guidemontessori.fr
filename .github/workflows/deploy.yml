@@ -38,7 +38,9 @@ jobs:
         if: success()
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           pip install requests 2>/dev/null || true
           python scripts/ping_indexnow.py
+          python scripts/ping_google.py

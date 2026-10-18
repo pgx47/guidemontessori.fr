@@ -52,7 +52,7 @@ Pages **entièrement automatiques** : articles, actualités, bons-plans, sitemap
 
 | Script | Rôle |
 |---|---|
-| `fetch_deals.py` | Recherche ScraperAPI (amazon.fr) → `deals.json` (20 offres, tag `duckurbate-21`) |
+| `fetch_deals.py` | Recherche ScraperAPI (amazon.fr) → `deals.json` (20 offres, tag `mtssri-21`) |
 | `fix_accents.py` | Restauration des accents legacy via LLM (one-shot fait) |
 | `migrate_legacy.py` | JSON Next.js → MDX (one-shot fait, résout is.gd, ASINs) |
 | `topics.json` | Matrice sujets : keyword, type, angle, produits, statut |
@@ -63,7 +63,7 @@ Pages **entièrement automatiques** : articles, actualités, bons-plans, sitemap
 - `components/SeoSchema.astro` — JSON-LD Article/FAQ/Breadcrumb/WebSite
 - `layouts/BaseLayout.astro` — header/footer, GA `G-SFEFV3XZDZ`, meta OG
 - `layouts/ArticleLayout.astro` — article : breadcrumb, prose, FAQ, partage, CTA Amazon, à-lire-aussi
-- `site.config.ts` — domaine, tag `duckurbate-21` (override `PUBLIC_AMAZON_TAG`)
+- `site.config.ts` — domaine, tag `mtssri-21` (override `PUBLIC_AMAZON_TAG`)
 - `content.config.ts` — schéma Zod frontmatter (rejeté au build si invalide)
 
 ## Secrets GitHub

@@ -9,7 +9,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "data" / "books.json"
-TAG = os.environ.get("AMAZON_TAG", "duckurbate-21")
+TAG = os.environ.get("AMAZON_TAG", "mtssri-21")
 SCRAPER = os.environ.get("SCRAPER_API_KEY")
 
 # (audience, category/level, requête amazon)

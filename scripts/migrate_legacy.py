@@ -12,8 +12,8 @@ DST = ROOT / "src" / "content" / "guides"
 PUBLIC = ROOT / "public"
 
 PLACEHOLDER_FIX = {
-    "amenager-un-coin-lecture-montessori": "https://www.amazon.fr/s?k=bibliotheque+montessori+enfant&tag=duckurbate-21",
-    "la-tour-pink-montessori-developpement-equilibre-enfant": "https://www.amazon.fr/s?k=tour+rose+montessori&tag=duckurbate-21",
+    "amenager-un-coin-lecture-montessori": "https://www.amazon.fr/s?k=bibliotheque+montessori+enfant&tag=mtssri-21",
+    "la-tour-pink-montessori-developpement-equilibre-enfant": "https://www.amazon.fr/s?k=tour+rose+montessori&tag=mtssri-21",
 }
 
 _cache: dict[str, str] = {}

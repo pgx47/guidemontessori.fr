@@ -387,15 +387,25 @@ def render_mdx(a: dict, topic: dict, kind: str, today: str, slug: str) -> str:
     body = esc(a["body"].strip())
     used = set()
 
+    img_by_asin = {}
+    for jf in ("deals.json", "cadeaux.json"):
+        fp = ROOT / "src" / "data" / jf
+        if fp.exists():
+            for x in json.loads(fp.read_text()).get("deals", []) if jf == "deals.json" else json.loads(fp.read_text()):
+                if x.get("asin") and x.get("image"):
+                    img_by_asin[x["asin"]] = x["image"]
+
     def box(i: int) -> str:
         if i >= len(products):
             return ""
         used.add(i)
         p, g = products[i], (a["products"][i] if i < len(a["products"]) else {"pointsForts": [], "pointsFaibles": []})
+        img = p.get("image") or img_by_asin.get(p["asin"])
         return (
             "<AffiliateBox\n"
             f"  asin={json.dumps(p['asin'])}\n"
-            f"  nom={json.dumps(p['nom'], ensure_ascii=False)}\n"
+            + (f"  image={json.dumps(img)}\n" if img else "")
+            + f"  nom={json.dumps(p['nom'], ensure_ascii=False)}\n"
             f"  pointsForts={jsx_list(g['pointsForts'])}\n"
             f"  pointsFaibles={jsx_list(g['pointsFaibles'])}\n"
             "/>"

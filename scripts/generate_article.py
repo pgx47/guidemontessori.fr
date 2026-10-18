@@ -336,11 +336,36 @@ def store_image(data: bytes, slug: str) -> str | None:
     return f"/images/generated/{fname}"
 
 
+def make_pin(img_path: Path, slug: str, title: str) -> None:
+    """Pin Pinterest 1000x1500 : image recadrée 2:3 + bandeau titre."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+        im = Image.open(img_path).convert("RGB")
+        w, h = im.size
+        tw, th = (w, int(w * 1.5)) if h / w >= 1.5 else (int(h / 1.5), h)
+        x, y = (w - tw) // 2, (h - th) // 2
+        pin = im.crop((x, y, x + tw, y + th)).resize((1000, 1500)).convert("RGBA")
+        pin.alpha_composite(Image.new("RGBA", (1000, 170), (44, 62, 45, 210)), (0, 1330))
+        d = ImageDraw.Draw(pin)
+        try:
+            font = ImageFont.truetype("DejaVuSans-Bold.ttf", 46)
+        except OSError:
+            font = ImageFont.load_default()
+        txt = title[:60]
+        bbox = d.textbbox((0, 0), txt, font=font)
+        d.text(((1000 - (bbox[2] - bbox[0])) / 2, 1380), txt, font=font, fill="white")
+        pin.convert("RGB").save(img_path.with_name(f"{slug}-pin.webp"), "WEBP", quality=85)
+    except Exception as e:
+        print(f"⚠ pin : {e}", file=sys.stderr)
+
+
 def render_mdx(a: dict, topic: dict, kind: str, today: str, slug: str) -> str:
     products = topic.get("products", [])
     image = topic.get("image")
     if not image and a.get("imagePrompt"):
         image = article_image(a["imagePrompt"], slug, topic.get("keyword"))
+        if image and image.startswith("/images/generated/"):
+            make_pin(ROOT / "public" / image.lstrip("/"), slug, a["title"])
     fm = {
         "title": a["title"].strip(),
         "description": a["description"].strip(),

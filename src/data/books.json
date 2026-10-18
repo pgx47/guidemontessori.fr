@@ -7,7 +7,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2092789376?tag=duckurbate-21",
     "price": "~9€",
     "category": "Lecture",
-    "targetAudience": "child"
+    "targetAudience": "child",
+    "image": "https://m.media-amazon.com/images/I/81dJR6S8ZpL.jpg",
+    "asin": "2035963435"
   },
   {
     "id": "histoire-univers",
@@ -17,7 +19,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2369402008?tag=duckurbate-21",
     "price": "~14€",
     "category": "Grands Récits",
-    "targetAudience": "child"
+    "targetAudience": "child",
+    "image": "https://m.media-amazon.com/images/I/91CBhu3CoGL.jpg",
+    "asin": "2369402008"
   },
   {
     "id": "histoire-vie",
@@ -27,7 +31,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2369402015?tag=duckurbate-21",
     "price": "~14€",
     "category": "Grands Récits",
-    "targetAudience": "child"
+    "targetAudience": "child",
+    "image": "https://m.media-amazon.com/images/I/71R4BXcDO4L.jpg",
+    "asin": "B0GXDRLCGY"
   },
   {
     "id": "histoire-homme",
@@ -37,7 +43,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2369402022?tag=duckurbate-21",
     "price": "~14€",
     "category": "Grands Récits",
-    "targetAudience": "child"
+    "targetAudience": "child",
+    "image": "https://m.media-amazon.com/images/I/41eUxpKYK2L.jpg",
+    "asin": "2369400056"
   },
   {
     "id": "imagier-montessori",
@@ -47,7 +55,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2092788183?tag=duckurbate-21",
     "price": "~12€",
     "category": "Éveil",
-    "targetAudience": "child"
+    "targetAudience": "child",
+    "image": "https://m.media-amazon.com/images/I/51JTc9lJFjL.jpg",
+    "asin": "B0CH285CV2"
   },
   {
     "id": "livre-tout-petits",
@@ -57,7 +67,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2408029058?tag=duckurbate-21",
     "price": "~14€",
     "category": "Éveil",
-    "targetAudience": "child"
+    "targetAudience": "child",
+    "image": "https://m.media-amazon.com/images/I/71+AdSI-W4L.jpg",
+    "asin": "B0GM1QYC68"
   },
   {
     "id": "chiffres-montessori",
@@ -67,7 +79,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2092788191?tag=duckurbate-21",
     "price": "~23€",
     "category": "Mathématiques",
-    "targetAudience": "child"
+    "targetAudience": "child",
+    "image": "https://m.media-amazon.com/images/I/61e+rKB3saL.jpg",
+    "asin": "2047357063"
   },
   {
     "id": "cahier-operations",
@@ -77,7 +91,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2092789384?tag=duckurbate-21",
     "price": "~9€",
     "category": "Mathématiques",
-    "targetAudience": "child"
+    "targetAudience": "child",
+    "image": "https://m.media-amazon.com/images/I/81dJR6S8ZpL.jpg",
+    "asin": "2035963435"
   },
   {
     "id": "lenfant",
@@ -87,7 +103,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2220057739?tag=duckurbate-21",
     "price": "~8€",
     "level": "Essentiel",
-    "targetAudience": "parent"
+    "targetAudience": "parent",
+    "image": "https://m.media-amazon.com/images/I/A1lfvZ2JgiL.jpg",
+    "asin": "2877679063"
   },
   {
     "id": "esprit-absorbant",
@@ -97,7 +115,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2220053970?tag=duckurbate-21",
     "price": "~9€",
     "level": "Essentiel",
-    "targetAudience": "parent"
+    "targetAudience": "parent",
+    "image": "https://m.media-amazon.com/images/I/81RO2JTMBKL.jpg",
+    "asin": "2220053970"
   },
   {
     "id": "enfant-adolescent",
@@ -107,7 +127,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2220053970?tag=duckurbate-21",
     "price": "~9€",
     "level": "Approfondi",
-    "targetAudience": "parent"
+    "targetAudience": "parent",
+    "image": "https://m.media-amazon.com/images/I/615timC8zsL.jpg",
+    "asin": "B09QZ6R9GL"
   },
   {
     "id": "enfant-avenir",
@@ -117,7 +139,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2220095231?tag=duckurbate-21",
     "price": "~19€",
     "level": "Approfondi",
-    "targetAudience": "parent"
+    "targetAudience": "parent",
+    "image": "https://m.media-amazon.com/images/I/71TAVNnhKKL.jpg",
+    "asin": "2226486941"
   },
   {
     "id": "60-activites",
@@ -127,7 +151,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2092787977?tag=duckurbate-21",
     "price": "~13€",
     "level": "Pratique",
-    "targetAudience": "parent"
+    "targetAudience": "parent",
+    "image": "https://m.media-amazon.com/images/I/61jLBSxi7HL.jpg",
+    "asin": "2092787942"
   },
   {
     "id": "100-activites",
@@ -137,7 +163,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2092787969?tag=duckurbate-21",
     "price": "~13€",
     "level": "Pratique",
-    "targetAudience": "parent"
+    "targetAudience": "parent",
+    "image": "https://m.media-amazon.com/images/I/61am33EQdmL.jpg",
+    "asin": "241203060X"
   },
   {
     "id": "montessori-naissance",
@@ -147,7 +175,9 @@
     "amazonUrl": "https://www.amazon.fr/dp/2212565917?tag=duckurbate-21",
     "price": "~17€",
     "level": "Pratique",
-    "targetAudience": "parent"
+    "targetAudience": "parent",
+    "image": "https://m.media-amazon.com/images/I/7158M08ZL0L.jpg",
+    "asin": "2212574843"
   },
   {
     "id": "b-b0fpqqdz4w",
@@ -159,7 +189,8 @@
     "price": "EUR 16,67 €",
     "category": "Éveil",
     "targetAudience": "child",
-    "asin": "B0FPQQDZ4W"
+    "asin": "B0FPQQDZ4W",
+    "image": "https://m.media-amazon.com/images/I/61Lz9B0p1GL.jpg"
   },
   {
     "id": "b-2218974991",
@@ -171,7 +202,8 @@
     "price": "EUR 10,30 €",
     "category": "Éveil",
     "targetAudience": "child",
-    "asin": "2218974991"
+    "asin": "2218974991",
+    "image": "https://m.media-amazon.com/images/I/81LiUF0KniL.jpg"
   },
   {
     "id": "b-2218990253",
@@ -183,7 +215,8 @@
     "price": "EUR 10,30 €",
     "category": "Éveil",
     "targetAudience": "child",
-    "asin": "2218990253"
+    "asin": "2218990253",
+    "image": "https://m.media-amazon.com/images/I/81wTCP5r3lL.jpg"
   },
   {
     "id": "b-b0cr3fq58c",
@@ -195,7 +228,8 @@
     "price": "EUR 28,46 €",
     "category": "Éveil",
     "targetAudience": "child",
-    "asin": "B0CR3FQ58C"
+    "asin": "B0CR3FQ58C",
+    "image": "https://m.media-amazon.com/images/I/811KaSlfpcL.jpg"
   },
   {
     "id": "b-2016255463",
@@ -207,7 +241,8 @@
     "price": "$8,99 €",
     "category": "Lecture",
     "targetAudience": "child",
-    "asin": "2016255463"
+    "asin": "2016255463",
+    "image": "https://m.media-amazon.com/images/I/81npxTHzQqL.jpg"
   },
   {
     "id": "b-2017151351",
@@ -219,7 +254,8 @@
     "price": "$8,99 €",
     "category": "Lecture",
     "targetAudience": "child",
-    "asin": "2017151351"
+    "asin": "2017151351",
+    "image": "https://m.media-amazon.com/images/I/81x26Y3-E-L.jpg"
   },
   {
     "id": "b-b0fd8dlr6d",
@@ -231,7 +267,8 @@
     "price": "$13,81 €",
     "category": "Lecture",
     "targetAudience": "child",
-    "asin": "B0FD8DLR6D"
+    "asin": "B0FD8DLR6D",
+    "image": "https://m.media-amazon.com/images/I/619RTX5O-FL.jpg"
   },
   {
     "id": "b-b0c6brm9dx",
@@ -243,6 +280,7 @@
     "price": "$10,00 €",
     "category": "Lecture",
     "targetAudience": "child",
-    "asin": "B0C6BRM9DX"
+    "asin": "B0C6BRM9DX",
+    "image": "https://m.media-amazon.com/images/I/610VTg3C57L.jpg"
   }
 ]

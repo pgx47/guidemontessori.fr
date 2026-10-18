@@ -11,6 +11,8 @@ export interface Book {
   category?: string;
   level?: string;
   targetAudience: 'child' | 'parent';
+  image?: string;
+  asin?: string;
 }
 
 export const books = raw as Book[];

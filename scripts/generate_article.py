@@ -33,6 +33,8 @@ Style :
 - Interdits : "dans un monde où", "plongeons", "il est crucial", "en conclusion", "n'hésitez pas", "il convient de noter", "véritable", "incontournable", "que vous soyez", listes à rallonge, emojis dans le corps.
 - Concret : âges, dimensions, matériaux, normes (EN 71, FSC), gestes de présentation, erreurs fréquentes.
 - Jamais de prix précis, jamais de promesse médicale, jamais d'invention de marque ou de référence produit.
+- INTERDIT : mentionner le tag partenaire, "duckurbate", "affilié", "affiliation" ou "commission" dans le texte. Pas de lien HTML texte brut vers Amazon — seuls les marqueurs [[PRODUIT:n]] insèrent des produits.
+- Insert un encadré "> 💡 **L'œil de l'éducateur** :" (astuce maison) et un encadré "> ⚠️ **Erreur fréquente** :" dans chaque guide, en blockquote Markdown.
 - Cite Maria Montessori seulement avec des citations réelles et connues.
 
 Format du corps (champ body) : Markdown pur, sans titre H1, sections en ## et ###, paragraphes courts, au moins un tableau Markdown comparatif pour un guide.

@@ -12,6 +12,9 @@ const isParent = book.targetAudience === 'parent';
 
 <article class="rounded-xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
   <div class="mb-3 flex items-start justify-between gap-4">
+    {book.image && (
+      <img src={book.image} alt="" class="h-28 w-20 shrink-0 rounded-lg object-contain" loading="lazy" />
+    )}
     <div>
       <h3 class="text-xl font-semibold text-gray-900">{book.title}</h3>
       {isParent ? <p class="text-sm text-gray-500">{book.author}</p> : <p class="text-sm font-medium text-terracotta-600">{book.ageRange}</p>}

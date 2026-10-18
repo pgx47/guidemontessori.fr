@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import SeoSchema from '../components/SeoSchema.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import ArticleCard from '../components/ArticleCard.astro';
+import { render } from 'astro:content';
 import { SITE, formatDate } from '../site.config';
 import type { Entry } from '../lib/content';
 
@@ -15,6 +16,8 @@ interface Props {
 const { entry, related, section } = Astro.props;
 const { title, description, keywords, image, emoji, publishDate, updatedDate, author, amazonUrl, faq } = entry.data;
 const url = new URL(Astro.url.pathname, SITE.url).toString();
+const { headings } = await render(entry);
+const toc = headings.filter((h) => h.depth === 2);
 ---
 
 <BaseLayout title={title} description={description} keywords={keywords} image={image} type="article" publishDate={publishDate}>
@@ -50,6 +53,22 @@ const url = new URL(Astro.url.pathname, SITE.url).toString();
           {` · ${author}`}
         </p>
       </header>
+
+      {toc.length > 1 && (
+        <nav class="mb-10 rounded-2xl border border-stone-200 bg-[#FBF9F5] p-6" aria-label="Sommaire">
+          <p class="mb-3 text-xs font-extrabold uppercase tracking-widest text-terracotta-600">Sommaire de l'article</p>
+          <ol class="space-y-2 text-sm text-gray-700">
+            {toc.map((h, i) => (
+              <li>
+                <a href={`#${h.slug}`} class="flex items-baseline gap-2 transition-colors hover:text-terracotta-600">
+                  <span class="text-xs font-bold text-terracotta-500">{i + 1}.</span>
+                  <span>{h.text}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
 
       <div class="prose max-w-none">
         <slot />

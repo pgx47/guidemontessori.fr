@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import cadeaux from '../data/cadeaux.json';
+---
+
+<BaseLayout
+  title="Trouveur de Cadeaux Montessori — Idées par Âge et Budget"
+  description="Trouvez le jouet ou matériel Montessori idéal en bois pour un anniversaire ou une naissance, en trois clics."
+>
+  <div class="mx-auto max-w-5xl px-4 py-12">
+    <div class="mx-auto mb-10 max-w-2xl text-center">
+      <span class="mb-3 inline-block rounded-full border border-terracotta-200 bg-terracotta-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-terracotta-600">
+        Aide au choix express
+      </span>
+      <h1 class="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+        Le Trouveur de Cadeaux Montessori
+      </h1>
+      <p class="text-base text-gray-700">
+        Sélectionnez l'âge de l'enfant et votre budget pour afficher le matériel recommandé, filtré pour exclure le plastique et les jouets à piles.
+      </p>
+    </div>
+
+    <div class="mb-10 space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+      <div>
+        <label class="mb-3 block text-xs font-extrabold uppercase tracking-wider text-gray-500">
+          1. Tranche d'âge de l'enfant
+        </label>
+        <div class="grid grid-cols-3 gap-3" id="filter-age">
+          <button data-age="0-12m" class="filter-btn active rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">0 - 12 mois</button>
+          <button data-age="1-3ans" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">1 - 3 ans</button>
+          <button data-age="3-6ans" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">3 - 6 ans</button>
+        </div>
+      </div>
+      <div>
+        <label class="mb-3 block text-xs font-extrabold uppercase tracking-wider text-gray-500">
+          2. Votre budget
+        </label>
+        <div class="grid grid-cols-3 gap-3" id="filter-budget">
+          <button data-budget="moins-30" class="filter-btn active rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">Moins de 30 €</button>
+          <button data-budget="30-70" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">30 à 70 €</button>
+          <button data-budget="plus-70" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">Plus de 70 €</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="results-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2"></div>
+
+    <p class="mt-8 text-center text-xs text-gray-500">
+      Sélection mise à jour automatiquement chaque mois. Liens affiliés Amazon — vous soutenez le site sans surcoût.
+    </p>
+  </div>
+
+  <script define:vars={{ cadeaux, tag: 'duckurbate-21' }}>
+    let currentAge = '0-12m';
+    let currentBudget = 'moins-30';
+
+    function updateSelection() {
+      const container = document.getElementById('results-grid');
+      const filtered = cadeaux.filter((c) => c.age === currentAge && c.budget === currentBudget);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full rounded-2xl border border-gray-200 bg-white py-12 text-center">
+            <p class="font-medium text-gray-500">Aucun produit ne correspond exactement à ce filtre.</p>
+            <p class="mt-1 text-xs text-gray-400">Essayez d'élargir le budget pour voir d'autres suggestions.</p>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map((item) => `
+        <div class="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <div>
+            ${item.image ? `<img src="${item.image}" alt="" class="mb-4 h-40 w-full rounded-xl object-contain" loading="lazy" />` : ''}
+            <span class="mb-2 inline-block rounded-full bg-sage-50 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-sage-600">
+              Pédagogie validée
+            </span>
+            <h3 class="mb-2 text-lg font-bold text-gray-900">${item.nom}</h3>
+            <p class="mb-4 text-sm text-gray-700">${item.description}</p>
+            <ul class="mb-6 space-y-1 text-xs text-gray-600">
+              ${item.pointsForts.map((pt) => `<li>✓ ${pt}</li>`).join('')}
+            </ul>
+          </div>
+          <a href="https://www.amazon.fr/dp/${item.asin}?tag=${tag}" target="_blank" rel="nofollow sponsored noopener"
+             class="w-full rounded-xl bg-terracotta-500 px-4 py-3 text-center text-sm font-bold text-white shadow-sm transition-colors hover:bg-terracotta-600">
+            Vérifier la disponibilité sur Amazon
+          </a>
+        </div>`).join('');
+    }
+
+    for (const group of ['filter-age', 'filter-budget']) {
+      document.querySelectorAll(`#${group} button`).forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll(`#${group} button`).forEach((b) => b.classList.remove('bg-sage-600', 'text-white', 'active'));
+          e.currentTarget.classList.add('bg-sage-600', 'text-white', 'active');
+          if (group === 'filter-age') currentAge = e.currentTarget.dataset.age;
+          else currentBudget = e.currentTarget.dataset.budget;
+          updateSelection();
+        });
+      });
+    }
+    updateSelection();
+  </script>
+</BaseLayout>

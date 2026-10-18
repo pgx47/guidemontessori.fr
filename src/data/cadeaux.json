@@ -112,20 +112,6 @@
     ]
   },
   {
-    "id": "b0h8ygksz1",
-    "asin": "B0H8YGKSZ1",
-    "nom": "Chariot de marche en bois TOPBRIGHT 10-en-1",
-    "age": "1-3ans",
-    "axe": "motricite",
-    "budget": "30-70",
-    "image": "https://m.media-amazon.com/images/I/71bKS+0hrIL.jpg",
-    "description": "Chariot de marche en bois avec activités pour soutenir la marche et la coordination.",
-    "pointsForts": [
-      "Soutient les premiers pas en sécurité",
-      "Activités multiples pour la motricité fine"
-    ]
-  },
-  {
     "id": "b0bpc7sz4s",
     "asin": "B0BPC7SZ4S",
     "nom": "Boîte de permanence de l'objet avec plateau et 3 balles",
@@ -280,20 +266,6 @@
     ]
   },
   {
-    "id": "b0gjsmhk6m",
-    "asin": "B0GJSMHK6M",
-    "nom": "Jeu de plateau en bois Montessori 42 bâtonnets",
-    "age": "3-6ans",
-    "axe": "motricite",
-    "budget": "moins-30",
-    "image": "https://m.media-amazon.com/images/I/81BZtOEoROL.jpg",
-    "description": "Jeu en bois de tri des couleurs pour la motricité fine et la concentration.",
-    "pointsForts": [
-      "Bois de hêtre et acrylique certifiés",
-      "Format voyage pour jouer partout"
-    ]
-  },
-  {
     "id": "b0gk16gryx",
     "asin": "B0GK16GRYX",
     "nom": "Jeu de bâtonnets en bois Montessori",
@@ -333,20 +305,6 @@
     "pointsForts": [
       "Continents colorés selon Montessori",
       "Supporte la culture et le langage"
-    ]
-  },
-  {
-    "id": "b086s5sx4n",
-    "asin": "B086S5SX4N",
-    "nom": "Globe Montessori des continents",
-    "age": "3-6ans",
-    "axe": "sensoriel",
-    "budget": "30-70",
-    "image": "https://m.media-amazon.com/images/I/51hgNkoMeqL.jpg",
-    "description": "Globe des continents pour l'apprentissage sensoriel de la géographie et des cultures.",
-    "pointsForts": [
-      "Code couleur Montessori des continents",
-      "Matériel culturel durable"
     ]
   },
   {
@@ -448,20 +406,6 @@
     ]
   },
   {
-    "id": "b0ddpjshgd",
-    "asin": "B0DDPJSHGD",
-    "nom": "Chariot de marche en bois HOMEKOL",
-    "age": "1-3ans",
-    "axe": "motricite",
-    "budget": "30-70",
-    "image": "https://m.media-amazon.com/images/I/61SIASq7bLL.jpg",
-    "description": "Chariot de marche en bois naturel pour les premiers pas et la coordination.",
-    "pointsForts": [
-      "Bois naturel couleur claire",
-      "Favorise l'équilibre et la marche"
-    ]
-  },
-  {
     "id": "b0fnwqt96z",
     "asin": "B0FNWQT96Z",
     "nom": "Set de vaisselle en bois GAGAKU 27 pièces",
@@ -473,34 +417,6 @@
     "pointsForts": [
       "27 pièces en bois avec rangement",
       "Encourage le jeu symbolique et l'autonomie"
-    ]
-  },
-  {
-    "id": "b0dnvxhmns",
-    "asin": "B0DNVXHMNS",
-    "nom": "Set de vaisselle en bois UMU 28 pièces",
-    "age": "3-6ans",
-    "axe": "autonomie",
-    "budget": "moins-30",
-    "image": "https://m.media-amazon.com/images/I/71NlaZz-thL.jpg",
-    "description": "Vaisselle en bois avec égouttoir pour imiter les gestes du quotidien en cuisine.",
-    "pointsForts": [
-      "28 pièces avec égouttoir",
-      "Favorise l'imitation et l'autonomie"
-    ]
-  },
-  {
-    "id": "b09xx2kwch",
-    "asin": "B09XX2KWCH",
-    "nom": "Set de vaisselle en bois 27 pièces",
-    "age": "3-6ans",
-    "axe": "autonomie",
-    "budget": "moins-30",
-    "image": "https://m.media-amazon.com/images/I/617ltpkVQ1L.jpg",
-    "description": "Assiettes et vaisselle en bois pour le jeu de cuisine et l'imitation des repas.",
-    "pointsForts": [
-      "Bois certifié FSC",
-      "Développe le jeu symbolique et les gestes"
     ]
   },
   {
@@ -602,20 +518,6 @@
     ]
   },
   {
-    "id": "b0bfx7nzdg",
-    "asin": "B0BFX7NZDG",
-    "nom": "Cube d'activités en bois 8-en-1",
-    "age": "1-3ans",
-    "axe": "motricite",
-    "budget": "moins-30",
-    "image": "https://m.media-amazon.com/images/I/81zE-JTHr5L.jpg",
-    "description": "Cube d'activités en bois avec huit jeux pour la motricité fine et la logique.",
-    "pointsForts": [
-      "Huit activités pédagogiques",
-      "Bois naturel pour les petites mains"
-    ]
-  },
-  {
     "id": "b0h6hgb184",
     "asin": "B0H6HGB184",
     "nom": "Triangle de Pikler 19 en 1 lalalark",
@@ -658,20 +560,6 @@
     ]
   },
   {
-    "id": "b0h9kp66fz",
-    "asin": "B0H9KP66FZ",
-    "nom": "Bibliothèque Montessori 3 Niveaux avec Tiroir",
-    "age": "3-6ans",
-    "axe": "autonomie",
-    "budget": "plus-70",
-    "image": "https://m.media-amazon.com/images/I/81BGuBExvcL.jpg",
-    "description": "Étagère en bois à trois niveaux avec tiroir pour ranger livres et objets.",
-    "pointsForts": [
-      "Hauteur adaptée à l'enfant",
-      "Rangement autonome et ordonné"
-    ]
-  },
-  {
     "id": "2035973228",
     "asin": "2035973228",
     "nom": "Coffret Montessori Lettres Rugueuses",
@@ -700,20 +588,6 @@
     ]
   },
   {
-    "id": "b0h2bff4t6",
-    "asin": "B0H2BFF4T6",
-    "nom": "Triangle de Pikler avec coussin BlueWood",
-    "age": "1-3ans",
-    "axe": "motricite",
-    "budget": "plus-70",
-    "image": "https://m.media-amazon.com/images/I/71m1-mzQ-tL.jpg",
-    "description": "Triangle d'escalade en bois avec coussin pour grimper, glisser et se reposer.",
-    "pointsForts": [
-      "Bois naturel, coussin inclus",
-      "Équilibre et motricité libre"
-    ]
-  },
-  {
     "id": "b0df2d5zxk",
     "asin": "B0DF2D5ZXK",
     "nom": "Set Pikler Tiny Land 7-en-1",
@@ -728,20 +602,6 @@
     ]
   },
   {
-    "id": "b0h75b7vmb",
-    "asin": "B0H75B7VMB",
-    "nom": "Triangle de Pikler avec poignée BlueWood",
-    "age": "1-3ans",
-    "axe": "motricite",
-    "budget": "plus-70",
-    "image": "https://m.media-amazon.com/images/I/71UkEVwW3EL.jpg",
-    "description": "Triangle d'escalade en bois avec poignée pour grimper et développer l'équilibre.",
-    "pointsForts": [
-      "Bois, poignée sécurisante",
-      "Motricité globale et assurance"
-    ]
-  },
-  {
     "id": "b09bqs2q1c",
     "asin": "B09BQS2Q1C",
     "nom": "Voitures en bois à hochet Montessori",
@@ -753,20 +613,6 @@
     "pointsForts": [
       "Bois naturel, prise en main adaptée",
       "Stimule ouïe et motricité globale"
-    ]
-  },
-  {
-    "id": "b0bdfysbg2",
-    "asin": "B0BDFYSBG2",
-    "nom": "Bâton de pluie en bois",
-    "age": "0-12m",
-    "axe": "sensoriel",
-    "budget": "moins-30",
-    "image": "https://m.media-amazon.com/images/I/71xLF3DzJvL.jpg",
-    "description": "Bâton de pluie en bois de 7 pouces, à retourner pour écouter les perles.",
-    "pointsForts": [
-      "Son doux, bois naturel",
-      "Éveil auditif et coordination"
     ]
   },
   {
@@ -921,34 +767,6 @@
     "pointsForts": [
       "Bois, jeu de construction",
       "Logique spatiale et patience"
-    ]
-  },
-  {
-    "id": "b0gzp549zh",
-    "asin": "B0GZP549ZH",
-    "nom": "Triangle de Pikler 9 en 1 DUMOS",
-    "age": "1-3ans",
-    "axe": "motricite",
-    "budget": "30-70",
-    "image": "https://m.media-amazon.com/images/I/71s2SBqI04L.jpg",
-    "description": "Gymnase en bois pliable avec arche, rampe réversible, échelle et blocs.",
-    "pointsForts": [
-      "Bois, structure pliable",
-      "Escalade, équilibre et autonomie"
-    ]
-  },
-  {
-    "id": "b0h6hd9pq5",
-    "asin": "B0H6HD9PQ5",
-    "nom": "Triangle de Pikler 19 en 1 coloré lalalark",
-    "age": "0-12m",
-    "axe": "motricite",
-    "budget": "plus-70",
-    "image": "https://m.media-amazon.com/images/I/81UeL-Lv8lL.jpg",
-    "description": "Set d'escalade en bois coloré avec arche, rampe réversible et tente.",
-    "pointsForts": [
-      "Bois, version colorée",
-      "Grimper, glisser et équilibre"
     ]
   }
 ]

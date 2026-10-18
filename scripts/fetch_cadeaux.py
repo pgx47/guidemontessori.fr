@@ -3,6 +3,7 @@
 import json
 import os
 import sys
+from difflib import SequenceMatcher
 from pathlib import Path
 
 import requests
@@ -48,6 +49,10 @@ def scraper_search(q: str) -> list[dict]:
                         "price": float(price) if price else None,
                         "image": it.get("image")})
     return out
+
+
+def is_duplicate(nom: str, items: list[dict], threshold: float = 0.75) -> bool:
+    return any(SequenceMatcher(None, nom.lower(), x["nom"].lower()).ratio() > threshold for x in items)
 
 
 def budget_of(price) -> str:
@@ -113,7 +118,7 @@ def main() -> int:
     curated = llm_curate(raw)
     out = []
     for it in raw:
-        if c := curated.get(it["asin"]):
+        if (c := curated.get(it["asin"])) and not is_duplicate(c["nom"], out):
             out.append({"id": it["asin"].lower(), "asin": it["asin"], "nom": c["nom"],
                         "age": c["age"], "axe": c["axe"], "budget": budget_of(it.get("price")),
                         "image": it.get("image"), "description": c["description"],

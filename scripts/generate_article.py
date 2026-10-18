@@ -460,7 +460,11 @@ def main() -> int:
         ap.error("--topic ou --auto requis")
 
     print(f"→ {kind} : {topic['keyword']} ({llm_config()[2]})")
-    a = call_llm(topic, kind)
+    try:
+        a = call_llm(topic, kind)
+    except Exception as e:
+        print(f"⚠ génération échouée, run non bloquant : {e}", file=sys.stderr)
+        return 0
     if errs := validate(a):
         print("⚠ " + ", ".join(errs), file=sys.stderr)
 

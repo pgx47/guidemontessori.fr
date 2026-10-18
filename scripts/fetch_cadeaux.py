@@ -108,6 +108,9 @@ def main() -> int:
                         "image": it.get("image"), "description": c["description"],
                         "pointsForts": c["pointsForts"]})
     out = out[:MAX_ITEMS]
+    if not out:
+        print("aucun cadeau validé, cadeaux.json inchangé", file=sys.stderr)
+        return 0
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
     print(f"✓ {len(out)} cadeaux → {OUT}")
     return 0

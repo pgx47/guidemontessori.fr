@@ -98,7 +98,11 @@ pédagogie Montessori et le cadre type), 3 avantages génériques bien formulés
 
 def main() -> int:
     existing = {e["osm_id"]: e for e in json.loads(OUT.read_text())} if OUT.exists() else {}
-    raw = fetch_osm()
+    try:
+        raw = fetch_osm()
+    except Exception as e:
+        print(f"source indisponible, ecoles.json inchangé : {e}", file=sys.stderr)
+        return 0
     print(f"{len(raw)} établissements OSM, {len(existing)} en base")
     new = [e for e in raw if e["osm_id"] not in existing or not existing[e["osm_id"]].get("description_ia")]
     for e in new:

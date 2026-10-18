@@ -64,7 +64,11 @@ def mark_seen(link: str) -> None:
 
 
 def main() -> int:
-    item = latest_item()
+    try:
+        item = latest_item()
+    except Exception as e:
+        print(f"RSS indisponible : {e}", file=sys.stderr)
+        return 0
     if not item:
         print("Aucune actu nouvelle.")
         return 0

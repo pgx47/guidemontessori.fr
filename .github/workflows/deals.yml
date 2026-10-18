@@ -2,7 +2,7 @@ name: Refresh Bons Plans
 
 on:
   schedule:
-    - cron: '0 5 * * *'
+    - cron: '0 5 * * 1'   # lundi — économie du quota ScraperAPI (~10-25 crédits/req Amazon)
   workflow_dispatch:
 
 jobs:

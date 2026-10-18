@@ -13,15 +13,26 @@ TAG = os.environ.get("AMAZON_TAG", "mtssri-21")
 SCRAPER = os.environ.get("SCRAPER_API_KEY")
 
 QUERIES = [
-    "jouet bois bebe 0 12 mois",
-    "materiel montessori bois 3 ans",
-    "vie pratique enfant bois montessori",
-    "tour observation montessori bois enfant",
-    "puzzle encastrement bois montessori",
-    "triangle pikler bois enfant",
+    # 0-12m
+    "hochet bois bebe", "mobile montessori bois bebe", "arche eveil bois bebe",
+    "chariot marcheur bois bebe", "anneau dentition bois", "tapis eveil coton bio",
+    # 1-3ans
+    "boite permanence objet montessori", "puzzle encastrement bois", "cylindres gradues bois",
+    "planche equilibre enfant bois", "boite serrures enfant", "tour observation montessori bois",
+    "lit cabane bois enfant", "triangle pikler bois", "bibliotheque enfant bois montessori",
+    # 3-6ans
+    "lettres rugueuses montessori", "cartes nomenclature montessori", "tour rose montessori",
+    "barres rouges montessori", "globe montessori bois", "perles dorees montessori",
+    "bureau enfant bois reglable", "perles lacage enfant bois",
+    # renfort cases faibles
+    "portique eveil bois bebe", "etagere basse bois bebe", "chariot marche bois bebe",
+    "set vaisselle enfant bois", "table activites bois enfant", "encastrements bois montessori",
+    "materiel sensoriel montessori bois", "jeu tri bois enfant", "rouleau rain stick bois",
+    "porte bebe marche bois", "cube activite bois enfant", "perles enfilage bois enfant",
 ]
-PER_QUERY = 6
-MAX_ITEMS = 24
+PER_QUERY = 3
+MIN_PER_CELL = 6
+MAX_ITEMS = 70
 
 
 def scraper_search(q: str) -> list[dict]:
@@ -107,10 +118,21 @@ def main() -> int:
                         "age": c["age"], "axe": c["axe"], "budget": budget_of(it.get("price")),
                         "image": it.get("image"), "description": c["description"],
                         "pointsForts": c["pointsForts"]})
-    out = out[:MAX_ITEMS]
+    # Fusion : on garde les anciens produits des cases non couvertes par le nouveau lot
+    old = {x["asin"]: x for x in (json.loads(OUT.read_text()) if OUT.exists() else [])}
+    merged = {x["asin"]: x for x in out}
+    for asin, x in old.items():
+        cell = sum(1 for m in merged.values() if m["age"] == x["age"] and m["budget"] == x["budget"])
+        if asin not in merged and cell < MIN_PER_CELL:
+            merged[asin] = x
+    out = list(merged.values())[:MAX_ITEMS]
     if not out:
         print("aucun cadeau validé, cadeaux.json inchangé", file=sys.stderr)
         return 0
+    missing = [(a, b) for a in ("0-12m", "1-3ans", "3-6ans") for b in ("moins-30", "30-70", "plus-70")
+               if sum(1 for x in out if x["age"] == a and x["budget"] == b) < MIN_PER_CELL]
+    if missing:
+        print(f"⚠ cases < {MIN_PER_CELL} : {missing}", file=sys.stderr)
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
     print(f"✓ {len(out)} cadeaux → {OUT}")
     return 0

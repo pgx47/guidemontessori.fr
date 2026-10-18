@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Veille actu : Google News RSS -> brève MDX (collection news), dedup persisté."""
 import json
+import os
 import re
 import sys
 import xml.etree.ElementTree as ET

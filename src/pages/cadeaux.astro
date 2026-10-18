@@ -25,8 +25,9 @@ import cadeaux from '../data/cadeaux.json';
         <label class="mb-3 block text-xs font-extrabold uppercase tracking-wider text-gray-500">
           1. Tranche d'âge de l'enfant
         </label>
-        <div class="grid grid-cols-3 gap-3" id="filter-age">
-          <button data-age="0-12m" class="filter-btn active rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">0 - 12 mois</button>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4" id="filter-age">
+          <button data-age="all" class="filter-btn active bg-sage-600 text-white rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">Tous les âges</button>
+          <button data-age="0-12m" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">0 - 12 mois</button>
           <button data-age="1-3ans" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">1 - 3 ans</button>
           <button data-age="3-6ans" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">3 - 6 ans</button>
         </div>
@@ -35,8 +36,9 @@ import cadeaux from '../data/cadeaux.json';
         <label class="mb-3 block text-xs font-extrabold uppercase tracking-wider text-gray-500">
           2. Votre budget
         </label>
-        <div class="grid grid-cols-3 gap-3" id="filter-budget">
-          <button data-budget="moins-30" class="filter-btn active rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">Moins de 30 €</button>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4" id="filter-budget">
+          <button data-budget="all" class="filter-btn active bg-sage-600 text-white rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">Tout budget</button>
+          <button data-budget="moins-30" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">Moins de 30 €</button>
           <button data-budget="30-70" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">30 à 70 €</button>
           <button data-budget="plus-70" class="filter-btn rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-terracotta-400">Plus de 70 €</button>
         </div>
@@ -51,12 +53,14 @@ import cadeaux from '../data/cadeaux.json';
   </div>
 
   <script define:vars={{ cadeaux, tag: 'mtssri-21' }}>
-    let currentAge = '0-12m';
-    let currentBudget = 'moins-30';
+    let currentAge = 'all';
+    let currentBudget = 'all';
 
     function updateSelection() {
       const container = document.getElementById('results-grid');
-      const filtered = cadeaux.filter((c) => c.age === currentAge && c.budget === currentBudget);
+      const filtered = cadeaux.filter((c) =>
+        (currentAge === 'all' || c.age === currentAge) &&
+        (currentBudget === 'all' || c.budget === currentBudget));
 
       if (filtered.length === 0) {
         container.innerHTML = `

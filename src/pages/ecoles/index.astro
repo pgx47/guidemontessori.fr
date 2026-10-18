@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ecoles from '../../data/ecoles.json';
+
+const villes = [...new Map(
+  ecoles.filter((e) => e.slug_ville).map((e) => [e.slug_ville, e.ville])
+).entries()].sort((a, b) => a[1].localeCompare(b[1], 'fr'));
+const counts = new Map();
+for (const e of ecoles) counts.set(e.slug_ville, (counts.get(e.slug_ville) || 0) + 1);
+---
+
+<BaseLayout
+  title="Annuaire des Écoles Montessori en France — Par Ville"
+  description="Trouvez une école ou crèche Montessori près de chez vous. Annuaire par ville des établissements Montessori en France."
+  type="website"
+>
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="mb-3 text-3xl font-bold text-gray-900">Annuaire des Écoles Montessori</h1>
+    <p class="mb-10 text-gray-700">
+      {ecoles.length} établissements référencés dans {villes.length} villes en France. Sélectionnez votre ville.
+    </p>
+    <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      {villes.map(([slug, nom]) => (
+        <li>
+          <a href={`/ecoles/${slug}/`} class="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-sm transition-shadow hover:shadow-md hover:text-sage-600">
+            {nom}
+            <span class="block text-xs font-normal text-gray-500">{counts.get(slug)} établissement{counts.get(slug) > 1 ? 's' : ''}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-10 text-xs text-gray-500">
+      Données issues d'OpenStreetMap et enrichies automatiquement. Un établissement manquant ? <a href="/contact/" class="underline hover:text-sage-600">Contactez-nous</a>.
+    </p>
+  </div>
+</BaseLayout>

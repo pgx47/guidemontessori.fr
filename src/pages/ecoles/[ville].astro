@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AffiliateBox from '../../components/AffiliateBox.astro';
+import ecoles from '../../data/ecoles.json';
+
+export function getStaticPaths() {
+  const villes = [...new Set(ecoles.map((e) => e.slug_ville).filter(Boolean))];
+  return villes.map((v) => ({
+    params: { ville: v },
+    props: {
+      villeName: ecoles.find((e) => e.slug_ville === v).ville,
+      cp: ecoles.find((e) => e.slug_ville === v).code_postal,
+      list: ecoles.filter((e) => e.slug_ville === v),
+    },
+  }));
+}
+
+const { villeName, cp, list } = Astro.props;
+const title = `École Montessori à ${villeName}${cp ? ` (${cp})` : ''} — Liste et Avis`;
+---
+
+<BaseLayout
+  title={title}
+  description={`Trouvez une école ou crèche Montessori à ${villeName}. ${list.length} établissement(s) référencé(s) avec présentation et points forts.`}
+  type="website"
+>
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <nav class="mb-6 text-xs text-gray-500">
+      <a href="/ecoles/" class="hover:text-sage-600">Annuaire des écoles</a> &rsaquo; {villeName}
+    </nav>
+    <h1 class="mb-3 text-3xl font-bold text-gray-900">
+      École Montessori à {villeName}{cp && <span class="text-gray-500"> ({cp})</span>}
+    </h1>
+    <p class="mb-10 text-gray-700">
+      {list.length} établissement{list.length > 1 ? 's' : ''} Montessori référencé{list.length > 1 ? 's' : ''} à {villeName} et dans les environs.
+    </p>
+
+    <div class="space-y-6">
+      {list.map((e) => (
+        <article class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 class="mb-1 text-xl font-bold text-gray-900">{e.nom}</h2>
+          <p class="mb-3 text-sm text-gray-500">
+            {e.adresse && <span>{e.adresse} · </span>}
+            {e.ville}{e.code_postal && ` ${e.code_postal}`}
+            {e.amenity === 'kindergarten' && <span> · Crèche / Maternelle</span>}
+          </p>
+          {e.description_ia && <p class="mb-4 text-sm leading-relaxed text-gray-700">{e.description_ia}</p>}
+          {e.avantages?.length > 0 && (
+            <ul class="mb-4 space-y-1 text-sm text-gray-700">
+              {e.avantages.map((a) => <li>✓ {a}</li>)}
+            </ul>
+          )}
+          {e.site && (
+            <a href={e.site} target="_blank" rel="noopener" class="text-sm font-semibold text-sage-600 hover:underline">
+              Site de l'établissement →
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+
+    <aside class="mt-12 rounded-2xl border border-terracotta-200 bg-terracotta-50 p-6">
+      <h2 class="mb-2 text-lg font-bold text-gray-900">🎒 Préparez sa rentrée en école Montessori</h2>
+      <p class="mb-5 text-sm text-gray-700">
+        Chaussons souples, petit sac à dos et étiquettes pour vêtements : les indispensables demandés par la plupart des établissements.
+      </p>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <AffiliateBox
+          nom="Chaussons souples en cuir pour début de motricité"
+          asin="B08CH3KJQP"
+          pointsForts={["Semelle flexible adaptée aux premiers pas", "Cuir souple non traité"]}
+          pointsFaibles={["Tailles à vérifier soigneusement"]}
+        />
+        <AffiliateBox
+          nom="Étiquettes personnalisables pour vêtements et matériel"
+          asin="B07S6KDQF7"
+          pointsForts={["Résistantes au lavage machine", "Nom et prénom bien lisibles"]}
+          pointsFaibles={["Délai de personnalisation"]}
+        />
+      </div>
+    </aside>
+  </div>
+</BaseLayout>

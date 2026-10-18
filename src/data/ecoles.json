@@ -1,0 +1,1602 @@
+[
+  {
+    "osm_id": "81004-ecole-primaire-privee-hors-contrat-maria-montessori-d-albi",
+    "nom": "Ecole primaire privée Hors contrat Maria Montessori d'Albi",
+    "ville": "Albi",
+    "code_postal": "81000",
+    "adresse": "15 rue FREDERIC MISTRAL",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "albi",
+    "description_ia": "Cette école primaire privée hors contrat d'Albi se réfère à la pédagogie Maria Montessori. Elle accueille les enfants dans un cadre urbain agréable, au cœur du Tarn. Le projet éducatif met en avant l'autonomie, la manipulation de matériel pédagogique et le respect du rythme individuel, dans un environnement bienveillant et structuré.",
+    "avantages": [
+      "Un cadre urbain agréable dans une ville au patrimoine remarquable",
+      "Une pédagogie Montessori respectueuse du rythme de l'enfant",
+      "Une structure à taille humaine favorisant l'accompagnement individualisé"
+    ]
+  },
+  {
+    "osm_id": "33005-ecole-primaire-privee-montessori-du-bassin",
+    "nom": "Ecole primaire privée Montessori du Bassin",
+    "ville": "Andernos-les-Bains",
+    "code_postal": "33510",
+    "adresse": "151 bis avenue de Bordeaux",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "andernos-les-bains",
+    "description_ia": "Cette école primaire privée se trouve à Andernos-les-Bains, sur le bassin d'Arcachon, en Gironde. Elle applique les grands principes de la pédagogie Montessori, avec des classes organisées en ambiances et un matériel spécifique. L'établissement met l'accent sur l'autonomie, la confiance en soi et l'apprentissage par la manipulation, dans un cadre proche du littoral.",
+    "avantages": [
+      "Un cadre de vie agréable sur le bassin d'Arcachon, apprécié des familles",
+      "Des apprentissages concrets fondés sur la manipulation et le matériel Montessori",
+      "Un accompagnement attentif au développement de l'autonomie et de la confiance en soi"
+    ]
+  },
+  {
+    "osm_id": "78015-ecole-primaire-privee-montessori-bilingue-d-andresy",
+    "nom": "Ecole primaire privée Montessori Bilingue d'Andrésy",
+    "ville": "Andrésy",
+    "code_postal": "78570",
+    "adresse": "1 rue Pasteur",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "andresy",
+    "description_ia": "Cette école primaire Montessori bilingue d'Andrésy accueille les enfants dans un cadre agréable, au bord de la Seine. La pédagogie Montessori y est mise en œuvre avec du matériel concret et des activités autonomes, dans un environnement bilingue. Les enfants y apprennent à leur rythme, dans un esprit d'entraide et de respect mutuel.",
+    "avantages": [
+      "Un environnement bilingue au quotidien",
+      "Un cadre agréable au bord de la Seine",
+      "Un esprit d'entraide et de respect mutuel"
+    ]
+  },
+  {
+    "osm_id": "49007-ecole-primaire-privee-imagine-montessori",
+    "nom": "Ecole Primaire privée Imagine Montessori",
+    "ville": "Angers",
+    "code_postal": "49100",
+    "adresse": "74 rue DE LA HAUTE RECULEE",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "angers",
+    "description_ia": "Cette école primaire privée d'Angers applique les principes de la pédagogie Montessori. Elle accueille les enfants dans un cadre urbain agréable, au cœur de l'Anjou. L'approche éducative privilégie l'autonomie, la coopération et l'apprentissage par la manipulation, dans un environnement bienveillant et structuré, respectueux du rythme de chaque élève.",
+    "avantages": [
+      "Un cadre urbain agréable dans une ville dynamique de l'Ouest",
+      "Une pédagogie fondée sur l'autonomie et la coopération",
+      "Un environnement bienveillant et à taille humaine"
+    ]
+  },
+  {
+    "osm_id": "49007-ecole-primaire-privee-espace-maria-montessori",
+    "nom": "Ecole primaire privée Espace Maria Montessori",
+    "ville": "Angers",
+    "code_postal": "49000",
+    "adresse": "21 rue CHEVREUL",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "angers",
+    "description_ia": "Située à Angers, dans le Maine-et-Loire, cette école primaire privée s'inscrit dans la tradition de la pédagogie Montessori. Elle propose aux enfants un environnement préparé, du matériel sensoriel et un accompagnement respectueux de leur rythme. L'établissement s'adresse aux familles angevines recherchant une alternative pédagogique centrée sur l'autonomie et la coopération.",
+    "avantages": [
+      "Un emplacement urbain à Angers, accessible aux familles de l'agglomération",
+      "Une pédagogie Montessori fondée sur l'autonomie, la manipulation et la coopération",
+      "Un accompagnement respectueux du rythme et du développement de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "49007-imagine-montessori",
+    "nom": "IMAGINE MONTESSORI",
+    "ville": "Angers",
+    "code_postal": "49000",
+    "adresse": "74 rue HAUTE DE RECULEE",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "angers",
+    "description_ia": "IMAGINE MONTESSORI est un projet éducatif angevin qui s'appuie sur la pédagogie Montessori pour les niveaux secondaires. L'approche met en avant l'autonomie, la confiance en soi et l'apprentissage par projets. Implanté à Angers, il s'adresse aux familles souhaitant une continuité pédagogique cohérente après l'école primaire, dans un cadre urbain dynamique.",
+    "avantages": [
+      "Une continuité pédagogique pensée pour l'après-primaire",
+      "Une démarche fondée sur l'autonomie et l'apprentissage par projets",
+      "Une implantation angevine au cœur d'une ville étudiante et dynamique"
+    ]
+  },
+  {
+    "osm_id": "06004-ecole-primaire-privee-internationale-montessori",
+    "nom": "Ecole primaire privée internationale Montessori",
+    "ville": "Antibes",
+    "code_postal": "06160",
+    "adresse": "55 avenue de Cannes",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "antibes",
+    "description_ia": "Cette école primaire privée internationale Montessori est implantée à Antibes, dans les Alpes-Maritimes. Elle associe la pédagogie Montessori à une dimension internationale, avec une attention portée aux langues et à l'ouverture culturelle. L'établissement propose un environnement préparé et un accompagnement respectueux du rythme de chaque enfant, dans un cadre méditerranéen.",
+    "avantages": [
+      "Un cadre méditerranéen agréable sur la Côte d'Azur, à Antibes",
+      "Une dimension internationale associée à la pédagogie Montessori",
+      "Un accompagnement respectueux du rythme et de l'autonomie de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "84007-ecole-montessori-courtine",
+    "nom": "ECOLE MONTESSORI COURTINE",
+    "ville": "Avignon",
+    "code_postal": "84000",
+    "adresse": "30 rue des Quatre Gendarmes d'Ouvéa",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "avignon",
+    "description_ia": "Cette école Montessori se trouve à Avignon, dans le Vaucluse. Elle accueille les enfants dans un environnement préparé, avec du matériel spécifique et une organisation par ambiances. La pédagogie mise en œuvre valorise l'autonomie, la concentration et l'apprentissage par la manipulation, dans un cadre urbain du sud de la France.",
+    "avantages": [
+      "Un emplacement à Avignon, facilement accessible depuis les communes voisines",
+      "Des apprentissages concrets appuyés sur le matériel Montessori",
+      "Une attention portée à l'autonomie et à la concentration de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "78043-ecole-primaire-privee-bilingue-montessori-nlc-78",
+    "nom": "Ecole primaire privée Bilingue Montessori NLC 78",
+    "ville": "Bailly",
+    "code_postal": "78870",
+    "adresse": "25 rue de la Croix Blanche",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "bailly",
+    "description_ia": "Cette école primaire privée bilingue Montessori se trouve à Bailly, dans les Yvelines. Elle combine les principes de la pédagogie Montessori avec un enseignement bilingue, dans un environnement préparé et un cadre à taille humaine. L'établissement s'adresse aux familles du secteur recherchant une alternative pédagogique ouverte sur les langues.",
+    "avantages": [
+      "Un enseignement bilingue associé à la pédagogie Montessori",
+      "Un cadre à taille humaine à Bailly, dans les Yvelines",
+      "Un environnement préparé favorisant l'autonomie et l'éveil linguistique des enfants"
+    ]
+  },
+  {
+    "osm_id": "78043-ecole-primaire-privee-international-montessori-athena",
+    "nom": "Ecole primaire privée International Montessori Athéna",
+    "ville": "Bailly",
+    "code_postal": "78870",
+    "adresse": "29 rue de Noisy",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "bailly",
+    "description_ia": "International Montessori Athéna est une école primaire privée située à Bailly, dans les Yvelines. Elle s'appuie sur la pédagogie Montessori et met en avant une dimension internationale, avec une attention portée aux langues et à l'ouverture culturelle. L'établissement propose un environnement préparé et un accompagnement respectueux du rythme de chaque enfant.",
+    "avantages": [
+      "Une orientation internationale associée à la pédagogie Montessori",
+      "Un emplacement à Bailly, dans un secteur résidentiel des Yvelines",
+      "Un accompagnement attentif au rythme et à l'autonomie de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "78043-ecole-secondaire-privee-international-montessori-athena",
+    "nom": "Ecole secondaire privée International Montessori Athéna",
+    "ville": "Bailly",
+    "code_postal": "78870",
+    "adresse": "29 rue de Noisy",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "bailly",
+    "description_ia": "À Bailly, cet établissement secondaire privé international s'inspire de la pédagogie Montessori pour les adolescents. L'ouverture internationale et l'autonomie y sont valorisées, dans un cadre structuré et exigeant. Situé dans les Yvelines, à proximité de Versailles, il s'adresse aux familles recherchant une alternative pédagogique cohérente pour les années de collège.",
+    "avantages": [
+      "Une dimension internationale associée aux principes Montessori",
+      "Un cadre exigeant et structuré pour les années collège",
+      "Une situation privilégiée dans les Yvelines, près de Versailles"
+    ]
+  },
+  {
+    "osm_id": "24037-ecole-primaire-privee-montessori",
+    "nom": "Ecole primaire privée Montessori",
+    "ville": "Bergerac",
+    "code_postal": "24100",
+    "adresse": "Chemin de Port Clautre",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "bergerac",
+    "description_ia": "À Bergerac, cette école primaire privée s'inscrit dans la démarche Montessori pour accompagner les enfants dans leurs apprentissages. L'autonomie, la concentration et le respect du rythme individuel y occupent une place centrale. Implantée en Dordogne, dans un cadre de vie agréable, elle propose aux familles un environnement scolaire structuré et attentif à l'épanouissement de chaque élève.",
+    "avantages": [
+      "Une démarche Montessori appliquée aux apprentissages du primaire",
+      "Un cadre de vie agréable en Dordogne",
+      "Un accompagnement attentif au rythme de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "07031-ecole-montessori-de-paiolive",
+    "nom": "Ecole Montessori de Païolive",
+    "ville": "Berrias-et-Casteljau",
+    "code_postal": "07460",
+    "adresse": "1264 route de Maisonneuve",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "berrias-et-casteljau",
+    "description_ia": "Implantée à Berrias-et-Casteljau, en Ardèche méridionale, cette école Montessori bénéficie d'un cadre rural et naturel propice à l'éveil. Elle propose un accompagnement des enfants selon les principes de la pédagogie Montessori, avec un environnement préparé et une attention portée à l'autonomie et à la coopération. Les familles y recherchent souvent un ancrage local et un contact avec la nature.",
+    "avantages": [
+      "Un environnement rural et naturel favorable à l'éveil et à l'expérimentation",
+      "Une pédagogie Montessori valorisant l'autonomie, la coopération et le respect du rythme de l'enfant",
+      "Un ancrage local dans un territoire à taille humaine, proche des familles du secteur"
+    ]
+  },
+  {
+    "osm_id": "62119-ecole-primaire-privee-hors-contrat-montessori-de-bethune---niveau-primaire",
+    "nom": "Ecole primaire privée hors contrat Montessori de BETHUNE - niveau primaire",
+    "ville": "Béthune",
+    "code_postal": "62400",
+    "adresse": "182 rue Sadi Carnot",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "bethune",
+    "description_ia": "Cette école primaire privée hors contrat de Béthune applique les principes de la pédagogie Montessori au niveau primaire. Elle met en avant un accompagnement individualisé, des groupes d'âge mixtes et un matériel pédagogique spécifique. Située au cœur de l'Artois, elle s'adresse aux familles du secteur recherchant une alternative éducative structurée et bienveillante.",
+    "avantages": [
+      "Un accompagnement individualisé respectant le rythme de chaque enfant",
+      "Des groupes d'âges mixtes favorisant l'entraide et la coopération",
+      "Une implantation centrale dans le bassin de vie de Béthune"
+    ]
+  },
+  {
+    "osm_id": "62119-ecole-primaire-privee-hors-contrat-montessori-de-l-artois",
+    "nom": "Ecole primaire privée hors contrat Montessori de l'Artois",
+    "ville": "Béthune",
+    "code_postal": "62400",
+    "adresse": "82 rue Sadi Carnot",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "bethune",
+    "description_ia": "À Béthune, cette école primaire privée hors contrat s'appuie sur la pédagogie Montessori pour accompagner les enfants dans leurs apprentissages. L'autonomie, la coopération et l'expérimentation y sont valorisées, dans un cadre structuré et bienveillant. Implantée dans le Pas-de-Calais, elle s'adresse aux familles de l'Artois recherchant une alternative pédagogique cohérente et respectueuse du rythme de chacun.",
+    "avantages": [
+      "Une approche Montessori centrée sur l'expérimentation",
+      "Un cadre structuré et bienveillant pour les apprentissages",
+      "Une implantation dans l'Artois, à Béthune et ses environs"
+    ]
+  },
+  {
+    "osm_id": "62119-ecole-secondaire-privee-hors-contrat-montessori-de-bethune---niveau-college",
+    "nom": "Ecole secondaire privée hors contrat Montessori de BETHUNE - niveau collège",
+    "ville": "Béthune",
+    "code_postal": "62400",
+    "adresse": "182 rue Sadi Carnot",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "bethune",
+    "description_ia": "Cette école secondaire privée hors contrat, de niveau collège, est implantée à Béthune, dans le Pas-de-Calais. Elle prolonge la pédagogie Montessori au-delà du primaire, avec un accompagnement adapté aux adolescents et une organisation favorisant l'autonomie et la responsabilisation. L'établissement s'adresse aux familles du secteur cherchant une continuité après l'école primaire.",
+    "avantages": [
+      "Une continuité Montessori au niveau collège, rare dans le secteur",
+      "Un accompagnement adapté aux adolescents, axé sur l'autonomie et la responsabilisation",
+      "Un ancrage local à Béthune, au plus près des familles du Pas-de-Calais"
+    ]
+  },
+  {
+    "osm_id": "06018-ecole-primaire-privee-montessori-internationale-les-colibris",
+    "nom": "Ecole primaire privée Montessori internationale les Colibris",
+    "ville": "Biot",
+    "code_postal": "06410",
+    "adresse": "3735 route des Dolines",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "biot",
+    "description_ia": "À Biot, cette école primaire privée internationale s'appuie sur la pédagogie Montessori pour accompagner les élèves dans un environnement ouvert sur le monde. L'ouverture linguistique et culturelle y est associée à l'autonomie et au respect du rythme de chacun. Le cadre des Alpes-Maritimes, entre collines et littoral, offre un environnement agréable et propice à l'épanouissement.",
+    "avantages": [
+      "Une dimension internationale associée à la pédagogie Montessori",
+      "Un environnement agréable entre collines et littoral méditerranéen",
+      "Une approche favorisant l'ouverture culturelle et linguistique"
+    ]
+  },
+  {
+    "osm_id": "06018-ecole-secondaire-privee-college-montessori-international-les-colibris",
+    "nom": "Ecole secondaire privée collège Montessori international les colibris",
+    "ville": "Biot",
+    "code_postal": "06410",
+    "adresse": "3735 route des Dollines",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "biot",
+    "description_ia": "Ce collège privé de Biot, dans les Alpes-Maritimes, s'inscrit dans la pédagogie Montessori au niveau secondaire. Il propose un cadre d'apprentissage proche de la Côte d'Azur, avec une ouverture internationale. L'approche éducative valorise l'autonomie, la responsabilisation et l'accompagnement individualisé des adolescents dans leur parcours scolaire.",
+    "avantages": [
+      "Une continuité Montessori jusqu'au niveau collège",
+      "Un cadre méditerranéen agréable entre mer et arrière-pays",
+      "Une dimension internationale favorisant l'ouverture culturelle"
+    ]
+  },
+  {
+    "osm_id": "33063-ecole-primaire-privee-montessori-les-libellules",
+    "nom": "Ecole primaire privée Montessori Les Libellules",
+    "ville": "Bordeaux",
+    "code_postal": "33000",
+    "adresse": "24 rue Paul Mamert",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "bordeaux",
+    "description_ia": "Cette école primaire privée de Bordeaux s'appuie sur la pédagogie Montessori pour accompagner les enfants dans leurs apprentissages. L'autonomie, la coopération et l'usage de matériel concret y sont valorisés. Implantée dans une ville dynamique et culturellement riche, elle propose aux familles bordelaises un cadre scolaire structuré, attentif au rythme et à l'épanouissement de chaque élève.",
+    "avantages": [
+      "Une approche Montessori fondée sur le matériel concret",
+      "Un cadre urbain dynamique et culturellement riche",
+      "Un accompagnement respectueux du rythme de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "13019-ecole-primaire-montessori-internationale-de-cabries",
+    "nom": "Ecole primaire Montessori Internationale de Cabries",
+    "ville": "Cabriès",
+    "code_postal": "13480",
+    "adresse": "Avenue Raymond Martin",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "cabries",
+    "description_ia": "À Cabriès, cette école primaire Montessori internationale propose un cadre lumineux et propice aux apprentissages. La pédagogie Montessori y est déclinée avec du matériel concret et des activités autonomes, dans un esprit d'ouverture culturelle. Les enfants y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
+    "avantages": [
+      "Une ouverture culturelle et internationale",
+      "Un matériel Montessori concret et progressif",
+      "Un cadre structuré et respectueux du rythme de l'enfant"
+    ]
+  },
+  {
+    "osm_id": "14118-ecole-maternelle-montessori-bilingue-privee-hors-contrat",
+    "nom": "Ecole maternelle Montessori bilingue privée hors contrat",
+    "ville": "Caen",
+    "code_postal": "14000",
+    "adresse": "12 avenue Albert 1er",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "caen",
+    "description_ia": "Cette école maternelle Montessori bilingue de Caen accueille les jeunes enfants dans un cadre chaleureux et adapté à leurs besoins. La pédagogie Montessori y est appliquée avec du matériel sensoriel et des activités d'éveil favorisant l'autonomie, dans un environnement bilingue. L'équipe accompagne chaque enfant avec bienveillance, dans le respect de son rythme.",
+    "avantages": [
+      "Un environnement bilingue dès le plus jeune âge",
+      "Du matériel sensoriel pour éveiller la curiosité",
+      "Un accompagnement bienveillant du rythme de chacun"
+    ]
+  },
+  {
+    "osm_id": "33085-ecole-primaire-privee-montessori-le-jardin-des-enfants",
+    "nom": "Ecole primaire privée Montessori Le Jardin des Enfants",
+    "ville": "Camblanes-et-Meynac",
+    "code_postal": "33360",
+    "adresse": "40 route du Bourg",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "camblanes-et-meynac",
+    "description_ia": "Cette école primaire privée se situe à Camblanes-et-Meynac, au sud-est de Bordeaux, en Gironde. Elle s'appuie sur la pédagogie Montessori et propose un cadre semi-rural calme, propice à la concentration. L'approche éducative valorise l'autonomie, l'éveil sensoriel et l'accompagnement individualisé, dans le respect du rythme de chaque enfant.",
+    "avantages": [
+      "Un cadre semi-rural paisible à proximité de Bordeaux",
+      "Une pédagogie Montessori attentive au rythme de chaque enfant",
+      "Une structure à taille humaine favorisant l'accompagnement individualisé"
+    ]
+  },
+  {
+    "osm_id": "34067-je-d-enfants-ecole-montessori-sud-cevennes--ecole-primaire-privee",
+    "nom": "Je d'Enfants Ecole Montessori Sud Cevennes (Ecole primaire privée)",
+    "ville": "Cazilhac",
+    "code_postal": "34190",
+    "adresse": "Le Fesquet",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "cazilhac",
+    "description_ia": "À Cazilhac, cette école primaire privée s'inscrit dans la démarche Montessori au cœur du Sud-Cévennes. Le cadre naturel et les paysages environnants offrent un contexte propice à l'observation, à l'expérimentation et au calme. L'établissement met l'accent sur l'autonomie des enfants et sur un accompagnement attentif à leur rythme, dans un esprit de respect et de coopération.",
+    "avantages": [
+      "Un environnement naturel remarquable propice à l'éveil",
+      "Une pédagogie Montessori centrée sur l'expérimentation",
+      "Un cadre à taille humaine favorisant l'attention portée à chacun"
+    ]
+  },
+  {
+    "osm_id": "60141-bmso---bipc-bilingual-montessori-school-de-l-oise",
+    "nom": "BMSO - BIPC BILINGUAL Montessori School de l'Oise",
+    "ville": "Chantilly",
+    "code_postal": "60631",
+    "adresse": "18 rue Victor Hugo",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "chantilly",
+    "description_ia": "À Chantilly, cette école bilingue s'appuie sur la pédagogie Montessori pour accompagner les élèves dans un environnement d'apprentissage à deux langues. L'immersion linguistique et l'autonomie y sont pensées comme complémentaires. Le cadre de l'Oise, entre forêt et patrimoine, offre un environnement paisible propice à la concentration et à l'épanouissement scolaire.",
+    "avantages": [
+      "Un enseignement bilingue associé à la démarche Montessori",
+      "Un environnement paisible et patrimonial dans l'Oise",
+      "Une approche favorisant l'ouverture culturelle et linguistique"
+    ]
+  },
+  {
+    "osm_id": "92019-ecole-maternelle--privee-montessori-21-de-chatenay-malabry",
+    "nom": "Ecole maternelle  privée Montessori 21 de Chatenay-Malabry",
+    "ville": "Châtenay-Malabry",
+    "code_postal": "92290",
+    "adresse": "42 chemin de la Justice",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "chatenay-malabry",
+    "description_ia": "À Châtenay-Malabry, cette école maternelle Montessori accueille les jeunes enfants dans un cadre verdoyant et paisible. La pédagogie Montessori y est appliquée avec du matériel sensoriel et des activités d'éveil favorisant l'autonomie. L'équipe accompagne chaque enfant avec bienveillance, dans le respect de son rythme et de sa curiosité naturelle.",
+    "avantages": [
+      "Un cadre verdoyant et paisible",
+      "Du matériel sensoriel pour éveiller la curiosité",
+      "Un accompagnement bienveillant du rythme de chacun"
+    ]
+  },
+  {
+    "osm_id": "94022-ecole-montessori-internationale-le-kaleidoscope",
+    "nom": "ECOLE MONTESSORI INTERNATIONALE LE KALEIDOSCOPE",
+    "ville": "Choisy-le-Roi",
+    "code_postal": "94600",
+    "adresse": "16 rue Jules Vallès",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "choisy-le-roi",
+    "description_ia": "L'École Montessori Internationale Le Kaléidoscope est située à Choisy-le-Roi, dans le Val-de-Marne. Elle s'appuie sur la pédagogie Montessori et met en avant une dimension internationale, avec une attention portée aux langues et à l'ouverture culturelle. L'établissement propose un environnement préparé et un accompagnement respectueux du rythme de chaque enfant.",
+    "avantages": [
+      "Une orientation internationale associée à la pédagogie Montessori",
+      "Un emplacement à Choisy-le-Roi, bien relié au réseau de transports francilien",
+      "Un environnement préparé favorisant l'autonomie et la curiosité des enfants"
+    ]
+  },
+  {
+    "osm_id": "92024-ecole-maternelle-privee-montessori-esclaibes-clichy",
+    "nom": "Ecole maternelle privée Montessori esclaibes clichy",
+    "ville": "Clichy",
+    "code_postal": "92110",
+    "adresse": "25 rue MOZART",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "clichy",
+    "description_ia": "Cette école maternelle Montessori de Clichy accueille les jeunes enfants dans un cadre urbain chaleureux et adapté à leurs besoins. La pédagogie Montessori y est appliquée avec du matériel sensoriel et des activités d'éveil favorisant l'autonomie. L'équipe accompagne chaque enfant avec bienveillance, dans le respect de son rythme et de sa curiosité.",
+    "avantages": [
+      "Un accueil chaleureux adapté aux jeunes enfants",
+      "Du matériel sensoriel pour éveiller la curiosité",
+      "Un accompagnement bienveillant du rythme de chacun"
+    ]
+  },
+  {
+    "osm_id": "92025-ecole-maternelle-privee-montessori-bilingue-de-colombes",
+    "nom": "Ecole maternelle privée Montessori Bilingue de Colombes",
+    "ville": "Colombes",
+    "code_postal": "92700",
+    "adresse": "19 rue  Jean Wiener",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "colombes",
+    "description_ia": "Cette école maternelle Montessori bilingue de Colombes accueille les jeunes enfants dans un cadre chaleureux et adapté à leurs besoins. La pédagogie Montessori y est appliquée avec du matériel sensoriel et des activités d'éveil favorisant l'autonomie, dans un environnement bilingue. L'équipe accompagne chaque enfant avec bienveillance, dans le respect de son rythme.",
+    "avantages": [
+      "Un environnement bilingue dès le plus jeune âge",
+      "Du matériel sensoriel pour éveiller la curiosité",
+      "Un accompagnement bienveillant du rythme de chacun"
+    ]
+  },
+  {
+    "osm_id": "78172-ecole-primaire-privee--ecole-des-enfants--ecole-montessori-internationnale",
+    "nom": "Ecole primaire privée, Ecole des enfants, Ecole Montessori Internationnale",
+    "ville": "Conflans-Sainte-Honorine",
+    "code_postal": "78700",
+    "adresse": "24 avenue Félix Gaillerey",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "conflans-sainte-honorine",
+    "description_ia": "Cette école primaire privée est implantée à Conflans-Sainte-Honorine, dans les Yvelines, au confluent de la Seine et de l'Oise. Elle s'inscrit dans la pédagogie Montessori avec une ouverture internationale. Les enfants y évoluent dans un environnement préparé, avec du matériel adapté et un accompagnement favorisant l'autonomie et la curiosité.",
+    "avantages": [
+      "Une localisation à Conflans-Sainte-Honorine, bien reliée au réseau francilien",
+      "Une pédagogie Montessori complétée par une ouverture internationale",
+      "Un environnement préparé favorisant l'autonomie et la curiosité des enfants"
+    ]
+  },
+  {
+    "osm_id": "31150-college-prive-hors-contrat-la-maison-montessori",
+    "nom": "Collège privé hors contrat La maison Montessori",
+    "ville": "Cornebarrieu",
+    "code_postal": "31700",
+    "adresse": "5 bis chemin de Testete",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "cornebarrieu",
+    "description_ia": "À Cornebarrieu, ce collège privé hors contrat se présente comme un lieu d'éducation inspiré de la pédagogie Montessori pour les adolescents. Cette période de vie appelle un accompagnement spécifique, entre travail personnel, projets et vie collective. La structure, de taille réduite, met l'accent sur l'autonomie et la responsabilisation des élèves dans un cadre périurbain toulousain.",
+    "avantages": [
+      "Une pédagogie adaptée aux besoins spécifiques des adolescents",
+      "Un cadre à taille humaine propice à l'écoute et à l'accompagnement",
+      "Une situation proche de Toulouse, dans un environnement plus calme"
+    ]
+  },
+  {
+    "osm_id": "74094-ecole-primaire-privee-montessori-de-l-agglomeration-annemassienne-emaa-cranves-sales",
+    "nom": "Ecole primaire privée Montessori de l'agglomération Annemassienne EMAA CRANVES SALES",
+    "ville": "Cranves-Sales",
+    "code_postal": "74380",
+    "adresse": "112 chemin de la Noue",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "cranves-sales",
+    "description_ia": "À Cranves-Sales, cette école primaire Montessori de l'agglomération annemassienne propose un cadre accueillant entre lacs et montagnes. La pédagogie Montessori y est mise en œuvre à travers du matériel concret et des activités autonomes. Les enfants y apprennent à leur rythme, dans un esprit d'entraide et de respect mutuel.",
+    "avantages": [
+      "Un cadre agréable entre lacs et montagnes",
+      "Des activités autonomes adaptées à chaque âge",
+      "Un esprit d'entraide et de respect mutuel"
+    ]
+  },
+  {
+    "osm_id": "21231-ecole-elementaire-privee-montessori",
+    "nom": "Ecole élémentaire privée Montessori",
+    "ville": "Dijon",
+    "code_postal": "21000",
+    "adresse": "31 rue Elsa Triolet",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "dijon",
+    "description_ia": "Cette école élémentaire Montessori de Dijon accueille les enfants dans un cadre urbain structuré. Les principes Montessori y guident les apprentissages : autonomie, manipulation de matériel sensoriel et respect du rythme individuel. L'équipe veille à créer un climat serein et bienveillant, propice à la confiance en soi et à l'épanouissement de chaque élève.",
+    "avantages": [
+      "Une pédagogie fondée sur l'autonomie et la manipulation",
+      "Un climat serein favorisant la confiance en soi",
+      "Un cadre urbain structuré et accessible"
+    ]
+  },
+  {
+    "osm_id": "83050-ecole-secondaire-privee-college-montessori-les-eclaireurs",
+    "nom": "Ecole secondaire privée collège Montessori les éclaireurs",
+    "ville": "Draguignan",
+    "code_postal": "83300",
+    "adresse": "261 place de la Paix",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "draguignan",
+    "description_ia": "À Draguignan, ce collège privé Montessori accompagne les adolescents selon une approche centrée sur l'autonomie et la responsabilisation. Les années de collège y sont pensées comme un temps de construction personnelle et d'apprentissage actif. Le cadre provençal, entre arrière-pays et Méditerranée, offre un environnement agréable pour un parcours scolaire structuré.",
+    "avantages": [
+      "Une pédagogie Montessori adaptée aux adolescents",
+      "Un cadre de vie provençal agréable et lumineux",
+      "Un accompagnement attentif au projet personnel de chaque élève"
+    ]
+  },
+  {
+    "osm_id": "83050-ecole-elementaire-privee-montessori---l-eclaireuse",
+    "nom": "Ecole élémentaire privée Montessori - L'Eclaireuse",
+    "ville": "Draguignan",
+    "code_postal": "83300",
+    "adresse": "261 place de la Paix",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "draguignan",
+    "description_ia": "Cette école élémentaire privée de Draguignan, dans le Var, s'appuie sur la pédagogie Montessori. Elle propose un cadre d'apprentissage provençal, entre arrière-pays et littoral méditerranéen. L'approche éducative valorise l'autonomie, l'expérimentation et l'accompagnement individualisé, dans le respect des rythmes et des besoins de chaque enfant.",
+    "avantages": [
+      "Un cadre provençal agréable et ensoleillé",
+      "Une pédagogie active fondée sur l'autonomie et l'expérimentation",
+      "Un accompagnement individualisé au sein d'une structure à taille humaine"
+    ]
+  },
+  {
+    "osm_id": "88160-le-petit-monde-de-montessori",
+    "nom": "LE PETIT MONDE DE MONTESSORI",
+    "ville": "Épinal",
+    "code_postal": "88000",
+    "adresse": "23  RUE BOULAY DE LA MEURTHE",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "epinal",
+    "description_ia": "Le Petit Monde de Montessori est situé à Épinal, dans les Vosges. Cet établissement s'appuie sur la pédagogie Montessori pour accompagner les enfants dans leurs premiers apprentissages. Il propose un environnement préparé, du matériel adapté et une attention particulière portée à l'autonomie, à la confiance en soi et au respect du rythme de chacun.",
+    "avantages": [
+      "Un cadre de proximité à Épinal, au cœur des Vosges",
+      "Une pédagogie Montessori centrée sur l'autonomie et la confiance en soi",
+      "Un environnement préparé et un matériel adapté aux apprentissages de la petite enfance"
+    ]
+  },
+  {
+    "osm_id": "89155-ecole-montessori-des-bords-de-l-yonne",
+    "nom": "Ecole Montessori des Bords de l'Yonne",
+    "ville": "Escolives-Sainte-Camille",
+    "code_postal": "89290",
+    "adresse": "36 rue de l'Abbé Grégoire",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "escolives-sainte-camille",
+    "description_ia": "Implantée à Escolives-Sainte-Camille, cette école Montessori bénéficie d'un environnement rural et verdoyant, favorable à l'éveil des enfants. La pédagogie Montessori y est appliquée dans un esprit d'autonomie et de respect du rythme individuel. Les apprentissages s'appuient sur du matériel concret et sur l'expérimentation, dans un climat bienveillant.",
+    "avantages": [
+      "Un cadre verdoyant et paisible à la campagne",
+      "Une pédagogie active fondée sur l'expérimentation",
+      "Un climat bienveillant favorisant la confiance en soi"
+    ]
+  },
+  {
+    "osm_id": "33165-ecole-montessori-bilingue-bordeaux-rive-droite-eclosion-des-fleurs",
+    "nom": "Ecole Montessori bilingue Bordeaux Rive droite Eclosion des fleurs",
+    "ville": "Fargues-Saint-Hilaire",
+    "code_postal": "33370",
+    "adresse": "9 chemin Profond",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "fargues-saint-hilaire",
+    "description_ia": "Cette école Montessori bilingue se situe à Fargues-Saint-Hilaire, aux portes de Bordeaux. Elle propose un enseignement inspiré de la pédagogie Montessori avec une dimension bilingue. Le cadre périurbain offre un environnement calme, propice à la concentration et à l'apprentissage, dans le respect du rythme et de l'autonomie de chaque enfant.",
+    "avantages": [
+      "Un enseignement bilingue dès le plus jeune âge",
+      "Un cadre périurbain calme à proximité de Bordeaux",
+      "Une pédagogie respectueuse du rythme et de l'autonomie de l'enfant"
+    ]
+  },
+  {
+    "osm_id": "74133-ecole-maternelle-privee-montessori-l-amethyste-gaillard",
+    "nom": "Ecole maternelle privée Montessori l'Améthyste GAILLARD",
+    "ville": "Gaillard",
+    "code_postal": "74240",
+    "adresse": "113 rue de Genève",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "gaillard",
+    "description_ia": "Cette école maternelle Montessori de Gaillard accueille les jeunes enfants dans un cadre chaleureux et adapté à leurs besoins. La pédagogie Montessori y est appliquée avec du matériel sensoriel et des activités d'éveil favorisant l'autonomie. L'équipe accompagne chaque enfant avec bienveillance, dans le respect de son rythme et de sa curiosité naturelle.",
+    "avantages": [
+      "Un accueil chaleureux adapté aux jeunes enfants",
+      "Du matériel sensoriel pour éveiller la curiosité",
+      "Un accompagnement bienveillant du rythme de chacun"
+    ]
+  },
+  {
+    "osm_id": "31232-ecole-primaire-privee-hors-contrat-montessori-internationale",
+    "nom": "Ecole primaire privée hors contrat Montessori internationale",
+    "ville": "Grenade",
+    "code_postal": "31330",
+    "adresse": "1966 chemin de montagne",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "grenade",
+    "description_ia": "Cette école primaire privée hors contrat est implantée à Grenade, en Haute-Garonne, au nord de Toulouse. Elle applique les principes de la pédagogie Montessori, avec un environnement préparé et du matériel adapté. Sa dimension internationale se traduit généralement par une ouverture aux langues. L'établissement accueille les familles du secteur en quête d'une alternative éducative.",
+    "avantages": [
+      "Une situation au nord de Toulouse, pratique pour les familles de la couronne toulousaine",
+      "Une pédagogie Montessori associée à une ouverture internationale et linguistique",
+      "Un cadre hors contrat permettant une organisation pédagogique adaptée au projet d'école"
+    ]
+  },
+  {
+    "osm_id": "67180-ecole-primaire-privee-montessori-saint-francois-d-assise",
+    "nom": "Ecole primaire privée Montessori Saint François d'Assise",
+    "ville": "Haguenau",
+    "code_postal": "67500",
+    "adresse": "3 place de la Torture",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "haguenau",
+    "description_ia": "À Haguenau, cette école primaire privée s'inspire de la pédagogie Montessori pour accompagner les enfants dans leurs apprentissages. L'autonomie, la concentration et le respect du rythme individuel y sont valorisés. Située dans le Bas-Rhin, au nord de l'Alsace, elle propose un cadre scolaire structuré et bienveillant aux familles recherchant une alternative pédagogique dans la région.",
+    "avantages": [
+      "Une pédagogie Montessori appliquée aux apprentissages fondamentaux",
+      "Un cadre scolaire structuré et bienveillant",
+      "Une implantation alsacienne à Haguenau et ses environs"
+    ]
+  },
+  {
+    "osm_id": "92040-ecole-maternelle-privee-montessori-bilingue-smiles-n-kids",
+    "nom": "Ecole maternelle privée Montessori Bilingue Smiles n Kids",
+    "ville": "Issy-les-Moulineaux",
+    "code_postal": "92130",
+    "adresse": "68 rue Marcel Miquel",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "issy-les-moulineaux",
+    "description_ia": "Cette école maternelle privée se situe à Issy-les-Moulineaux, dans les Hauts-de-Seine. Elle associe la pédagogie Montessori à une dimension bilingue, avec un environnement préparé et du matériel adapté aux jeunes enfants. L'établissement s'adresse aux familles du sud-ouest parisien souhaitant un éveil précoce aux langues dans un cadre Montessori.",
+    "avantages": [
+      "Une approche bilingue associée à la pédagogie Montessori dès la maternelle",
+      "Un emplacement à Issy-les-Moulineaux, proche de Paris et bien desservi",
+      "Un environnement préparé favorisant l'autonomie et l'éveil sensoriel des jeunes enfants"
+    ]
+  },
+  {
+    "osm_id": "68166-ecole-montessori-mulhouse",
+    "nom": "Ecole Montessori Mulhouse",
+    "ville": "Kingersheim",
+    "code_postal": "68260",
+    "adresse": "7 rue de Paris",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "kingersheim",
+    "description_ia": "Cette école Montessori se situe à Kingersheim, dans l'agglomération de Mulhouse, en Alsace. Elle propose un cadre d'apprentissage inspiré de la pédagogie Montessori, dans un environnement urbain bien équipé. L'approche éducative valorise l'autonomie, la manipulation de matériel spécifique et le respect du rythme de chaque enfant.",
+    "avantages": [
+      "Une implantation pratique dans l'agglomération mulhousienne",
+      "Une pédagogie Montessori fondée sur l'autonomie et la manipulation",
+      "Un cadre scolaire à taille humaine et bien équipé"
+    ]
+  },
+  {
+    "osm_id": "85191-ecole-maternelle-publique-maria-montessori",
+    "nom": "Ecole maternelle publique Maria Montessori",
+    "ville": "La Roche-sur-Yon",
+    "code_postal": "85000",
+    "adresse": "132 boulevard d'Angleterre",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "la-roche-sur-yon",
+    "description_ia": "Cette école maternelle publique de La Roche-sur-Yon, en Vendée, s'inspire de la pédagogie Montessori. Elle accueille de jeunes enfants dans un cadre structuré favorisant l'autonomie, la manipulation et l'éveil sensoriel. En tant qu'établissement public, elle s'inscrit dans le service public d'éducation tout en proposant des pratiques pédagogiques inspirées de Montessori.",
+    "avantages": [
+      "Une école publique, gratuite et ouverte à tous les enfants du secteur",
+      "Des pratiques pédagogiques inspirées de Montessori, axées sur l'autonomie et l'éveil",
+      "Un ancrage local à La Roche-sur-Yon, au plus près des familles vendéennes"
+    ]
+  },
+  {
+    "osm_id": "34134-ecole-primaire-privee-montessori--les-graines-du-bonheur",
+    "nom": "Ecole primaire privée Montessori  Les Graines du Bonheur",
+    "ville": "Lavérune",
+    "code_postal": "34880",
+    "adresse": "10 rue de la Prade",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "laverune",
+    "description_ia": "À Lavérune, cette école primaire privée s'inspire de la pédagogie Montessori pour accompagner les enfants dans un cadre chaleureux et structuré. L'autonomie, la coopération et l'apprentissage par l'expérience y sont valorisés. Proche de Montpellier, l'établissement offre un environnement plus calme, propice à la concentration et à l'épanouissement des élèves au quotidien.",
+    "avantages": [
+      "Un cadre chaleureux et structuré pour les apprentissages",
+      "Une proximité avec Montpellier dans un environnement plus calme",
+      "Une pédagogie valorisant autonomie et coopération"
+    ]
+  },
+  {
+    "osm_id": "78335-ecole-maternelle-montessori",
+    "nom": "Ecole maternelle Montessori",
+    "ville": "Limay",
+    "code_postal": "78520",
+    "adresse": "04 rue des Hautes Meunières",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "limay",
+    "description_ia": "À Limay, cette école maternelle s'inspire de la pédagogie Montessori pour accompagner les jeunes enfants dans leurs premières découvertes. L'autonomie, la manipulation et le respect du rythme individuel y sont privilégiés. Située dans les Yvelines, à proximité de la vallée de la Seine, elle offre un cadre rassurant et structuré pour les premières années de scolarisation.",
+    "avantages": [
+      "Une approche Montessori adaptée à la petite enfance",
+      "Un cadre rassurant et structuré pour les premiers apprentissages",
+      "Une implantation dans les Yvelines, proche de la vallée de la Seine"
+    ]
+  },
+  {
+    "osm_id": "47152-ecole-montessori--les-loupiots",
+    "nom": "Ecole Montessori  Les Loupiots",
+    "ville": "Lougratte",
+    "code_postal": "47290",
+    "adresse": "Bourg CHEMIN DE LA GALVAGNE",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "lougratte",
+    "description_ia": "À Lougratte, cette école Montessori s'inscrit dans un cadre rural du Lot-et-Garonne, propice au calme et à l'observation de la nature. L'approche valorise l'autonomie, l'expérimentation et le respect du rythme de chaque enfant. La petite taille de la structure favorise les relations de confiance et un accompagnement attentif au quotidien, dans un environnement paisible.",
+    "avantages": [
+      "Un cadre rural paisible au cœur du Lot-et-Garonne",
+      "Une structure à taille humaine favorisant les relations de confiance",
+      "Une pédagogie valorisant l'expérimentation et l'autonomie"
+    ]
+  },
+  {
+    "osm_id": "78350-ecole-elementaire-privee-montessori-academy",
+    "nom": "Ecole élémentaire privée montessori academy",
+    "ville": "Louveciennes",
+    "code_postal": "78430",
+    "adresse": "21 route de versailles",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "louveciennes",
+    "description_ia": "Cette école élémentaire Montessori de Louveciennes accueille les enfants dans un cadre verdoyant et paisible, à l'ouest de Paris. La pédagogie Montessori y est appliquée avec du matériel concret et des activités autonomes. Les enfants y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité naturelle.",
+    "avantages": [
+      "Un cadre verdoyant et paisible",
+      "Un matériel Montessori concret et progressif",
+      "Un accompagnement respectueux du rythme de chacun"
+    ]
+  },
+  {
+    "osm_id": "69382-ecole-primaire-privee-montessori---little-maternelle---lyon-confluence",
+    "nom": "Ecole primaire privée Montessori - Little maternelle - Lyon confluence",
+    "ville": "Lyon 2e",
+    "code_postal": "69002",
+    "adresse": "7 cours Bayard",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "lyon-2e",
+    "description_ia": "Cet établissement privé du 2e arrondissement de Lyon s'inscrit dans la pédagogie Montessori. Situé dans le quartier de la Confluence, il bénéficie d'un cadre urbain moderne et bien desservi. Le projet éducatif met en avant l'autonomie, l'éveil sensoriel et l'accompagnement individualisé, dans le respect du rythme et des besoins de chaque enfant.",
+    "avantages": [
+      "Un quartier moderne et bien desservi par les transports lyonnais",
+      "Une pédagogie Montessori attentive au rythme de chaque enfant",
+      "Un cadre urbain dynamique offrant de nombreuses ressources"
+    ]
+  },
+  {
+    "osm_id": "69383-ecole-primaire-privee-montessori-les-clochettes-d-esperance",
+    "nom": "Ecole primaire privée montessori Les Clochettes d'Espérance",
+    "ville": "Lyon 3e",
+    "code_postal": "69003",
+    "adresse": "211 avenue Félix Faure",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "lyon-3e",
+    "description_ia": "Cette école primaire privée du 3e arrondissement de Lyon applique les principes de la pédagogie Montessori. Elle évolue dans un quartier central et animé, bien relié au reste de la métropole. L'approche éducative privilégie l'autonomie, la coopération et l'apprentissage par la manipulation, dans un cadre bienveillant adapté aux enfants accueillis.",
+    "avantages": [
+      "Un emplacement central dans Lyon, facilement accessible",
+      "Une pédagogie fondée sur l'autonomie et la coopération",
+      "Un environnement bienveillant et à taille humaine"
+    ]
+  },
+  {
+    "osm_id": "78358-ecole-primaire-privee-montessori-international-les-rayons-de-soleil",
+    "nom": "Ecole primaire privée Montessori International les Rayons de Soleil",
+    "ville": "Maisons-Laffitte",
+    "code_postal": "78600",
+    "adresse": "34 rue de la Muette",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "maisons-laffitte",
+    "description_ia": "Cette école primaire privée Montessori est installée à Maisons-Laffitte, dans les Yvelines. Elle propose un environnement préparé, du matériel spécifique et une ouverture internationale, souvent associée à l'apprentissage des langues. L'établissement accueille les enfants dans un cadre structuré valorisant l'autonomie, la curiosité et la coopération.",
+    "avantages": [
+      "Un cadre de vie agréable à Maisons-Laffitte, dans les Yvelines",
+      "Une pédagogie Montessori complétée par une ouverture internationale et linguistique",
+      "Un accompagnement favorisant l'autonomie, la curiosité et la coopération"
+    ]
+  },
+  {
+    "osm_id": "78362-ecole-primaire-privee-encyclopedia-school-montessori",
+    "nom": "Ecole primaire privée Encyclopédia School Montessori",
+    "ville": "Mantes-la-Ville",
+    "code_postal": "78711",
+    "adresse": "14 rue Montchauvet",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "mantes-la-ville",
+    "description_ia": "À Mantes-la-Ville, cette école primaire Montessori accueille les enfants dans un cadre urbain structuré. Les principes Montessori y guident les apprentissages : autonomie, manipulation de matériel sensoriel et respect du rythme individuel. L'équipe veille à créer un climat serein et bienveillant, propice à la confiance en soi et à l'épanouissement de chaque élève.",
+    "avantages": [
+      "Une pédagogie fondée sur l'autonomie et la manipulation",
+      "Un climat serein favorisant la confiance en soi",
+      "Un cadre structuré et accessible"
+    ]
+  },
+  {
+    "osm_id": "78372-ecole-primaire-privee-montessori-trillium-international-school",
+    "nom": "Ecole primaire privée Montessori Trillium International School",
+    "ville": "Marly-le-Roi",
+    "code_postal": "78160",
+    "adresse": "9 rue de la Sabotte",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "marly-le-roi",
+    "description_ia": "Montessori Trillium International School est une école primaire privée située à Marly-le-Roi, dans les Yvelines. Elle applique les principes de la pédagogie Montessori dans un cadre international, avec une attention portée aux langues et à l'ouverture culturelle. L'établissement propose un environnement préparé et un accompagnement individualisé respectueux du rythme de chacun.",
+    "avantages": [
+      "Un cadre verdoyant à Marly-le-Roi, dans les Yvelines",
+      "Une dimension internationale associée à la pédagogie Montessori",
+      "Un accompagnement individualisé respectueux du rythme de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "13212-ecole-internationale-montessori-esclaibes",
+    "nom": "Ecole internationale Montessori Esclaibes",
+    "ville": "Marseille",
+    "code_postal": "13012",
+    "adresse": "7 rue gaston de flotte",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "marseille",
+    "description_ia": "Cette école internationale Montessori, située dans le 12e arrondissement de Marseille, accueille les enfants dans un cadre urbain dynamique. Elle s'appuie sur les principes Montessori, avec des groupes d'âges mélangés et un matériel sensoriel adapté. L'ouverture internationale et le respect du rythme de chaque enfant y sont au cœur du projet éducatif.",
+    "avantages": [
+      "Une dimension internationale dans les apprentissages",
+      "Des groupes d'âges mélangés pour favoriser l'entraide",
+      "Un accompagnement attentif du rythme de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "13204-ecole-maternelle-privee-montessori-marseille-4",
+    "nom": "école maternelle privée montessori marseille 4",
+    "ville": "Marseille 4e Arrondissement",
+    "code_postal": "13004",
+    "adresse": "16 rue roussel doria",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "marseille-4e-arrondissement",
+    "description_ia": "Dans le 4e arrondissement de Marseille, cette école maternelle privée s'inspire de la pédagogie Montessori pour accompagner les tout-petits. L'autonomie, la manipulation de matériel sensoriel et le respect du rythme de l'enfant y sont valorisés. Le cadre urbain marseillais, proche des quartiers centraux, offre un environnement vivant pour les premières années de scolarisation.",
+    "avantages": [
+      "Une approche Montessori pensée pour les jeunes enfants",
+      "Un cadre urbain vivant au cœur de Marseille",
+      "Un accompagnement respectueux du rythme de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "13206-ecole-primaire-privee-montessori-21-marseille",
+    "nom": "Ecole primaire privée Montessori 21 Marseille",
+    "ville": "Marseille 6e Arrondissement",
+    "code_postal": "13006",
+    "adresse": "47 rue FALQUE",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "marseille-6e-arrondissement",
+    "description_ia": "Dans le 6e arrondissement de Marseille, cette école primaire privée s'appuie sur la pédagogie Montessori pour accompagner les enfants dans leurs apprentissages. L'autonomie, la coopération et l'usage de matériel concret y sont valorisés. Proche du centre-ville et du littoral, l'établissement propose un cadre scolaire structuré et bienveillant dans une ville dynamique et culturelle.",
+    "avantages": [
+      "Une pédagogie Montessori centrée sur l'autonomie et la coopération",
+      "Un emplacement central à Marseille, proche du littoral",
+      "Un cadre scolaire structuré et bienveillant"
+    ]
+  },
+  {
+    "osm_id": "81159-college-prive-hors-contrat-montessori-du-pastel-massac-seran",
+    "nom": "Collège privé hors contrat Montessori du Pastel Massac Seran",
+    "ville": "Massac-Séran",
+    "code_postal": "81500",
+    "adresse": "75 voie Romaine",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "massac-seran",
+    "description_ia": "Ce collège privé hors contrat de Massac-Séran propose un accompagnement inspiré de la pédagogie Montessori pour les adolescents. Le cadre rural du Tarn favorise le calme, la concentration et le contact avec l'environnement naturel. La structure à taille humaine met l'accent sur l'autonomie, la responsabilité et la coopération entre élèves, dans un esprit de respect du rythme de chacun.",
+    "avantages": [
+      "Un cadre rural apaisant propice à la concentration",
+      "Une structure à taille humaine centrée sur l'autonomie",
+      "Un environnement naturel valorisé dans le quotidien scolaire"
+    ]
+  },
+  {
+    "osm_id": "73155-ecole-primaire-privee-montessori-graine-d-etoile",
+    "nom": "Ecole primaire privée Montessori graine d'étoile",
+    "ville": "Méry",
+    "code_postal": "73420",
+    "adresse": "117 rue des Ecoles",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "mery",
+    "description_ia": "Implantée à Méry, en Savoie, cette école primaire privée s'inscrit dans la démarche Montessori. Elle propose un cadre de travail calme, à proximité de Chambéry et des paysages alpins. La pédagogie valorise l'expérimentation, la manipulation et l'apprentissage progressif, dans le respect des besoins et des rythmes propres à chaque enfant accueilli.",
+    "avantages": [
+      "Un environnement calme et verdoyant, entre lacs et montagnes savoyardes",
+      "Une pédagogie active fondée sur la manipulation et l'expérimentation",
+      "Une structure à taille humaine favorisant l'attention portée à chaque élève"
+    ]
+  },
+  {
+    "osm_id": "98729-fare-anuanua--ecole-montessori-de-moorea-haapiti",
+    "nom": "Fare Anuanua, école Montessori de Moorea Haapiti",
+    "ville": "Moorea",
+    "code_postal": "98728",
+    "adresse": "Avenue PK 26.3 côté montagne, Haapiti",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "moorea",
+    "description_ia": "Située à Moorea, cette école Montessori accueille les enfants dans un environnement paisible, proche de la nature polynésienne. Les classes y sont organisées en groupes d'âges mélangés, selon les principes développés par Maria Montessori. Le matériel sensoriel et l'autonomie guident les apprentissages, dans le respect du rythme de chaque enfant et d'un cadre bienveillant.",
+    "avantages": [
+      "Un cadre naturel et apaisant propice à la concentration",
+      "Une pédagogie respectueuse du rythme de chaque enfant",
+      "Des groupes d'âges mélangés favorisant l'entraide"
+    ]
+  },
+  {
+    "osm_id": "54395-association-pour-un-college-montessori-dans-le-grand-est",
+    "nom": "Association pour un Collège Montessori dans le Grand-Est",
+    "ville": "Nancy",
+    "code_postal": "54000",
+    "adresse": "50 rue de la Commanderie",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "nancy",
+    "description_ia": "Basée à Nancy, cette association porte un projet de collège Montessori pour le Grand-Est. Elle s'inscrit dans une dynamique de développement de la pédagogie Montessori au-delà du primaire, en fédérant familles et acteurs éducatifs. Son action témoigne de l'intérêt croissant pour des parcours scolaires cohérents et respectueux du rythme des adolescents.",
+    "avantages": [
+      "Une initiative associative au service du développement Montessori",
+      "Une dynamique collective fédérant familles et éducateurs",
+      "Une implantation nancéienne au cœur du Grand-Est"
+    ]
+  },
+  {
+    "osm_id": "11262-ecole-maternelle-maria-montessori",
+    "nom": "Ecole maternelle Maria Montessori",
+    "ville": "Narbonne",
+    "code_postal": "11100",
+    "adresse": "21 chemin de Divies",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "narbonne",
+    "description_ia": "Cette école maternelle privée de Narbonne se réfère à la pédagogie Maria Montessori. Elle accueille de jeunes enfants dans un cadre pensé pour l'éveil, l'autonomie et la découverte sensorielle. Les activités proposées s'appuient sur la manipulation, l'observation et le respect du rythme de chacun, dans un environnement sécurisant et adapté à la petite enfance.",
+    "avantages": [
+      "Un cadre adapté à la petite enfance, sécurisant et à taille humaine",
+      "Des activités d'éveil fondées sur la manipulation et les sens",
+      "Une localisation pratique dans le centre de Narbonne et son agglomération"
+    ]
+  },
+  {
+    "osm_id": "92051-ecole-maternelle-montessori-de-neuilly-sur-seine",
+    "nom": "Ecole maternelle Montessori de Neuilly sur Seine",
+    "ville": "Neuilly-sur-Seine",
+    "code_postal": "92200",
+    "adresse": "24 bis rue de la Ferme",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "neuilly-sur-seine",
+    "description_ia": "Cette école maternelle Montessori est implantée à Neuilly-sur-Seine, dans les Hauts-de-Seine. Elle accueille de jeunes enfants dans un environnement préparé, avec du matériel sensoriel et une organisation favorisant l'autonomie. L'établissement s'adresse aux familles du secteur recherchant une pédagogie respectueuse du rythme et du développement de l'enfant.",
+    "avantages": [
+      "Une localisation à Neuilly-sur-Seine, bien desservie par les transports franciliens",
+      "Un environnement préparé et un matériel sensoriel adaptés à la petite enfance",
+      "Un accompagnement respectueux du rythme et de l'autonomie de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "69143-ecole-primaire-privee-montessori-au-mont-d-or",
+    "nom": "Ecole primaire privée Montessori Au Mont d'Or",
+    "ville": "Neuville-sur-Saône",
+    "code_postal": "69250",
+    "adresse": "7 avenue du 11 novembre",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "neuville-sur-saone",
+    "description_ia": "Cette école primaire Montessori de Neuville-sur-Saône propose un cadre structuré où l'enfant apprend à son rythme. Les principes Montessori y sont mis en œuvre à travers un matériel spécifique et des activités autonomes. L'équipe accompagne les élèves dans l'acquisition des fondamentaux, en valorisant la curiosité, la confiance en soi et le vivre-ensemble.",
+    "avantages": [
+      "Un accompagnement individualisé des apprentissages",
+      "Un matériel pédagogique concret et sensoriel",
+      "Un environnement calme et sécurisant pour grandir"
+    ]
+  },
+  {
+    "osm_id": "06088-ecole-primaire-privee-montessori-internationale",
+    "nom": "Ecole primaire privée Montessori internationale",
+    "ville": "Nice",
+    "code_postal": "06000",
+    "adresse": "6 bd Prince de Galles",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "nice",
+    "description_ia": "Située à Nice, cette école primaire privée se réclame de la pédagogie Montessori dans un cadre international. Les principes mis en avant reposent sur l'autonomie, le respect du rythme de chaque enfant et un matériel sensoriel structuré. L'établissement accueille des élèves du primaire dans un environnement urbain méditerranéen, avec une attention portée à l'ouverture culturelle et linguistique.",
+    "avantages": [
+      "Une approche pédagogique centrée sur l'autonomie et le rythme individuel de l'enfant",
+      "Un cadre urbain niçois bien desservi et facilement accessible",
+      "Une dimension internationale propice à l'ouverture culturelle et linguistique"
+    ]
+  },
+  {
+    "osm_id": "94052-ecole-montessori-internationale-trilingue-de-nogent-sur-marne",
+    "nom": "Ecole Montessori Internationale Trilingue de Nogent sur Marne",
+    "ville": "Nogent-sur-Marne",
+    "code_postal": "94130",
+    "adresse": "12 avenue Victor Hugo",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "nogent-sur-marne",
+    "description_ia": "Cette école Montessori internationale et trilingue se trouve à Nogent-sur-Marne, dans le Val-de-Marne. Elle associe la pédagogie Montessori à un enseignement trilingue, dans un environnement préparé et un cadre structuré. L'établissement s'adresse aux familles du secteur souhaitant un éveil précoce aux langues dans une démarche Montessori.",
+    "avantages": [
+      "Un enseignement trilingue associé à la pédagogie Montessori",
+      "Un emplacement à Nogent-sur-Marne, dans l'est francilien bien desservi",
+      "Un environnement préparé favorisant l'autonomie et l'ouverture culturelle"
+    ]
+  },
+  {
+    "osm_id": "98818-ecole-maternelle-privee-la-ruche-montessori",
+    "nom": "Ecole maternelle privée La Ruche Montessori",
+    "ville": "Nouméa",
+    "code_postal": "98800",
+    "adresse": "26 route de l'Anse-Vata",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "noumea",
+    "description_ia": "Cette école maternelle privée de Nouméa, en Nouvelle-Calédonie, se réfère à la pédagogie Montessori. Elle accueille de jeunes enfants dans un cadre tropical, à proximité du littoral. Les activités s'appuient sur l'éveil sensoriel, la manipulation et le respect du rythme individuel, dans un environnement sécurisant et adapté à la petite enfance.",
+    "avantages": [
+      "Un cadre tropical agréable au cœur de Nouméa",
+      "Des activités d'éveil sensoriel adaptées à la petite enfance",
+      "Un environnement sécurisant et à taille humaine"
+    ]
+  },
+  {
+    "osm_id": "78466-ecole-primaire-privee-montessori-internationale-el-nido",
+    "nom": "Ecole primaire privée Montessori internationale El Nido",
+    "ville": "Orgeval",
+    "code_postal": "78630",
+    "adresse": "1120 route des Alluets",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "orgeval",
+    "description_ia": "À Orgeval, cette école primaire Montessori internationale propose un cadre verdoyant et propice aux apprentissages. La pédagogie Montessori y est déclinée avec du matériel concret et des activités autonomes, dans un esprit d'ouverture culturelle. Les enfants y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
+    "avantages": [
+      "Une ouverture culturelle et internationale",
+      "Un cadre verdoyant propice à la concentration",
+      "Un matériel Montessori concret et progressif"
+    ]
+  },
+  {
+    "osm_id": "45234-ecole-maternelle-maria-montessori",
+    "nom": "Ecole maternelle Maria Montessori",
+    "ville": "Orléans",
+    "code_postal": "45000",
+    "adresse": "12 rue Théophile Naudy",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "orleans",
+    "description_ia": "À Orléans, cette école maternelle s'inspire de la pédagogie Maria Montessori pour accompagner les tout-petits dans leurs premières découvertes. Le matériel sensoriel, l'autonomie et le respect du rythme de l'enfant y sont valorisés. En plein cœur de la ville, l'établissement propose un cadre rassurant et structuré pour les premières années de scolarisation.",
+    "avantages": [
+      "Une approche Montessori pensée pour les tout-petits",
+      "Un cadre rassurant pour les premières années d'école",
+      "Une implantation centrale à Orléans, facilement accessible"
+    ]
+  },
+  {
+    "osm_id": "93055-ecole-maternelle-moderato-montessori",
+    "nom": "Ecole Maternelle Moderato Montessori",
+    "ville": "Pantin",
+    "code_postal": "93500",
+    "adresse": "37 rue des grilles",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "pantin",
+    "description_ia": "Cette école maternelle Montessori est implantée à Pantin, en Seine-Saint-Denis, aux portes de Paris. Elle accueille de jeunes enfants dans un environnement préparé, avec du matériel sensoriel et une organisation favorisant l'autonomie. L'établissement s'adresse aux familles du secteur recherchant une pédagogie respectueuse du rythme et du développement de l'enfant.",
+    "avantages": [
+      "Une localisation à Pantin, aux portes de Paris et bien desservie",
+      "Un environnement préparé et un matériel sensoriel adaptés à la petite enfance",
+      "Un accompagnement respectueux du rythme et de l'autonomie de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "75107-college-prive-ellipse-montessori",
+    "nom": "Collège privé Ellipse Montessori",
+    "ville": "Paris",
+    "code_postal": "75007",
+    "adresse": "3 rue Amélie",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "paris",
+    "description_ia": "Ce collège privé Montessori du 7e arrondissement de Paris accueille les adolescents dans un cadre urbain central et stimulant. La pédagogie Montessori y est adaptée à l'âge du collège, avec des activités autonomes et un accompagnement individualisé. Les élèves y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
+    "avantages": [
+      "Une pédagogie Montessori adaptée à l'âge du collège",
+      "Un accompagnement individualisé des élèves",
+      "Une localisation centrale dans le 7e arrondissement"
+    ]
+  },
+  {
+    "osm_id": "75115-e-m-pr-ma-petite-ecole-montessori-7-rue-villafranca",
+    "nom": "E.M.PR MA PETITE ECOLE MONTESSORI 7 rue Villafranca",
+    "ville": "Paris",
+    "code_postal": "75015",
+    "adresse": "7 rue Villafranca",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris",
+    "description_ia": "Dans le 15e arrondissement de Paris, cette école Montessori accueille les enfants dans un cadre intime et chaleureux. Les principes Montessori y guident les apprentissages : autonomie, manipulation de matériel sensoriel et respect du rythme individuel. L'équipe veille à créer un climat serein et bienveillant, propice à l'épanouissement de chaque enfant.",
+    "avantages": [
+      "Un cadre intime et chaleureux à taille humaine",
+      "Une pédagogie fondée sur l'autonomie et la manipulation",
+      "Un climat serein propice à l'épanouissement"
+    ]
+  },
+  {
+    "osm_id": "75105-e-m-pr-montessori-small-world",
+    "nom": "E.M.PR MONTESSORI SMALL WORLD",
+    "ville": "Paris",
+    "code_postal": "75005",
+    "adresse": "11 rue Flatters",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris",
+    "description_ia": "Cette école Montessori du 5e arrondissement de Paris accueille les enfants dans un cadre urbain stimulant, au cœur du Quartier latin. La pédagogie Montessori y est appliquée avec du matériel concret et des activités autonomes. Les enfants y apprennent à leur rythme, dans un esprit d'entraide et de respect mutuel.",
+    "avantages": [
+      "Une localisation centrale dans le Quartier latin",
+      "Des activités autonomes adaptées à chaque âge",
+      "Un esprit d'entraide et de respect mutuel"
+    ]
+  },
+  {
+    "osm_id": "75119-e-p-pr-montessori-21-paris-jaures-74-quai-de-la-loire",
+    "nom": "E.P.PR MONTESSORI 21 PARIS JAURES 74 quai de la Loire",
+    "ville": "Paris",
+    "code_postal": "75019",
+    "adresse": "74 quai de la Loire",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris",
+    "description_ia": "Située dans le 19e arrondissement de Paris, cette école Montessori accueille les enfants dans un cadre urbain animé, au bord du canal. La pédagogie Montessori y est mise en œuvre avec du matériel concret et des activités autonomes. Les enfants y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
+    "avantages": [
+      "Une localisation accessible au cœur du 19e arrondissement",
+      "Un matériel Montessori concret et progressif",
+      "Un cadre structuré respectueux du rythme de l'enfant"
+    ]
+  },
+  {
+    "osm_id": "75113-e-p-pr-horizon-montessori-6-rue-gourdault",
+    "nom": "E.P.PR HORIZON MONTESSORI 6 rue Gourdault",
+    "ville": "Paris 13e",
+    "code_postal": "75013",
+    "adresse": "6 rue Gourdault",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-13e",
+    "description_ia": "Cet établissement privé du 13e arrondissement de Paris s'appuie sur la pédagogie Montessori. Il accueille des élèves dans un cadre urbain dense, à proximité des transports et des équipements du quartier. L'approche privilégie l'autonomie, la concentration et l'apprentissage par la manipulation, avec un suivi attentif du développement de chaque enfant.",
+    "avantages": [
+      "Un accès facilité grâce au réseau de transports parisien",
+      "Une pédagogie Montessori favorisant autonomie et concentration",
+      "Un environnement scolaire à taille humaine au sein d'un quartier dynamique"
+    ]
+  },
+  {
+    "osm_id": "75114-e-m-pr-montessori-101-paris-23-rue-beaunier",
+    "nom": "E.M.PR MONTESSORI 101 PARIS 23 rue Beaunier",
+    "ville": "Paris 14e",
+    "code_postal": "75014",
+    "adresse": "23 rue Beaunier",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-14e",
+    "description_ia": "Cette école maternelle privée du 14e arrondissement de Paris se réfère à la pédagogie Montessori. Elle accueille de jeunes enfants dans un cadre urbain convivial, proche de transports et d'espaces verts. Les activités s'appuient sur l'éveil sensoriel, la manipulation et le respect du rythme individuel, dans un environnement sécurisant et adapté à la petite enfance.",
+    "avantages": [
+      "Un cadre adapté à la petite enfance, sécurisant et chaleureux",
+      "Des activités d'éveil sensoriel et de manipulation",
+      "Une bonne desserte par les transports et les commodités du quartier"
+    ]
+  },
+  {
+    "osm_id": "75115-college-prive-montessori-esclaibes",
+    "nom": "Collège Privé Montessori Esclaibes",
+    "ville": "Paris 15e",
+    "code_postal": "75015",
+    "adresse": "1 rue Jules Simon",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "paris-15e",
+    "description_ia": "Ce collège privé du 15e arrondissement de Paris applique les principes de la pédagogie Montessori. Il accueille des élèves au niveau secondaire dans un cadre urbain bien équipé. L'approche pédagogique valorise l'autonomie, la confiance en soi et l'accompagnement personnalisé, dans le respect du rythme et des besoins propres à chaque adolescent.",
+    "avantages": [
+      "Une continuité Montessori au niveau collège",
+      "Un quartier bien desservi et doté de nombreux équipements",
+      "Un suivi personnalisé attentif aux besoins de chaque élève"
+    ]
+  },
+  {
+    "osm_id": "75115-e-p-pr-montessori-48-rue-dantzig",
+    "nom": "E.P.PR MONTESSORI 48 rue Dantzig",
+    "ville": "Paris 15e",
+    "code_postal": "75015",
+    "adresse": "48 rue Dantzig",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-15e",
+    "description_ia": "Implanté dans le 15e arrondissement de Paris, cet établissement privé s'inscrit dans la pédagogie Montessori. Il accueille les enfants dans un environnement urbain calme, proche de parcs et de commodités. L'approche pédagogique repose sur l'autonomie, la manipulation de matériel spécifique et un accompagnement attentif du développement de chaque élève.",
+    "avantages": [
+      "Un quartier résidentiel agréable et bien desservi",
+      "Des espaces verts et équipements de proximité à disposition",
+      "Un accompagnement pédagogique attentif au rythme de chaque enfant"
+    ]
+  },
+  {
+    "osm_id": "75117-e-p-pr-montessori-paris-17-33-boulevard-berthier",
+    "nom": "E.P.PR MONTESSORI PARIS 17 33 boulevard Berthier",
+    "ville": "Paris 17e",
+    "code_postal": "75017",
+    "adresse": "33 boulevard Berthier",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-17e",
+    "description_ia": "Cet établissement privé du 17e arrondissement de Paris se réclame de la pédagogie Montessori. Il propose un cadre d'apprentissage urbain, bien relié au reste de la capitale. La démarche éducative valorise l'autonomie, la confiance en soi et l'apprentissage par l'expérience, dans le respect des rythmes et des centres d'intérêt de chaque enfant.",
+    "avantages": [
+      "Une desserte aisée par les transports en commun parisiens",
+      "Une pédagogie valorisant l'autonomie et la confiance en soi",
+      "Un cadre scolaire à taille humaine dans un quartier animé"
+    ]
+  },
+  {
+    "osm_id": "75119-e-p-pr-montessori-plaisir-d-enfance-56-rue-du-pre-saint-gervais",
+    "nom": "E.P.PR MONTESSORI PLAISIR D'ENFANCE 56 rue du Pré Saint Gervais",
+    "ville": "Paris 19e",
+    "code_postal": "75019",
+    "adresse": "56 rue du Pré Saint Gervais",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-19e",
+    "description_ia": "Cet établissement privé du 19e arrondissement de Paris applique les principes de la pédagogie Montessori. Il se situe dans un quartier vivant, proche des buttes et des équipements du secteur. Le projet éducatif met en avant l'autonomie, la coopération et l'apprentissage par la manipulation, dans un cadre bienveillant adapté aux enfants accueillis.",
+    "avantages": [
+      "Un cadre de quartier vivant et bien relié au centre de Paris",
+      "Une pédagogie fondée sur l'autonomie et la coopération",
+      "Un environnement bienveillant et à taille humaine"
+    ]
+  },
+  {
+    "osm_id": "75102-college-prive-montessori",
+    "nom": "Collège privé Montessori",
+    "ville": "Paris 2e",
+    "code_postal": "75002",
+    "adresse": "113 boulevard de Sébastopol",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "paris-2e",
+    "description_ia": "Ce collège privé du 2e arrondissement de Paris se réclame de la pédagogie Montessori. Il accueille des adolescents dans un quartier central et très bien desservi. Le projet éducatif met l'accent sur l'autonomie, la responsabilisation et l'accompagnement individualisé, dans un cadre urbain dynamique offrant de nombreuses ressources culturelles à proximité.",
+    "avantages": [
+      "Un emplacement central dans Paris, très bien desservi",
+      "Un accompagnement individualisé adapté aux adolescents",
+      "Un environnement culturel riche à proximité immédiate"
+    ]
+  },
+  {
+    "osm_id": "75107-e-p-pr-ellipse-montessori-academy-3-rue-amelie",
+    "nom": "E.P.PR ELLIPSE MONTESSORI ACADEMY 3 rue Amélie",
+    "ville": "Paris 7e",
+    "code_postal": "75007",
+    "adresse": "3 rue Amélie",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-7e",
+    "description_ia": "Situé dans le 7e arrondissement de Paris, cet établissement privé applique les principes de la pédagogie Montessori. Il évolue dans un quartier central, proche de nombreux équipements culturels et de transports. Le projet éducatif met l'accent sur l'autonomie, le respect du rythme de l'enfant et l'usage d'un matériel pédagogique structuré et progressif.",
+    "avantages": [
+      "Un emplacement central dans un arrondissement bien desservi",
+      "Un matériel pédagogique structuré et progressif",
+      "Un cadre culturel riche à proximité immédiate de l'école"
+    ]
+  },
+  {
+    "osm_id": "64445-ecole-privee-montessori-de-pau",
+    "nom": "Ecole privée Montessori de Pau",
+    "ville": "Pau",
+    "code_postal": "64000",
+    "adresse": "4 rue MARYSE BASTIE",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "pau",
+    "description_ia": "À Pau, cette école Montessori accueille les enfants dans un cadre agréable, à proximité des Pyrénées. La pédagogie Montessori y est mise en œuvre avec du matériel concret et des activités autonomes. Les enfants y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité naturelle.",
+    "avantages": [
+      "Un cadre agréable à proximité des Pyrénées",
+      "Un matériel Montessori concret et progressif",
+      "Un accompagnement respectueux du rythme de chacun"
+    ]
+  },
+  {
+    "osm_id": "59457-ecole-maternelle-maria-montessori",
+    "nom": "Ecole maternelle Maria Montessori",
+    "ville": "Pérenchies",
+    "code_postal": "59840",
+    "adresse": "Place de l'Europe",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "perenchies",
+    "description_ia": "Située à Pérenchies, dans le département du Nord, cette école maternelle s'inscrit dans le courant pédagogique Montessori. Elle accueille de jeunes enfants dans un cadre pensé pour favoriser l'autonomie, la manipulation et le respect du rythme de chacun. L'établissement s'appuie sur un environnement préparé et un matériel sensoriel adapté aux premiers apprentissages.",
+    "avantages": [
+      "Un cadre de proximité au cœur de Pérenchies, facilement accessible aux familles du secteur",
+      "Une approche pédagogique centrée sur l'autonomie et le rythme propre à chaque enfant",
+      "Un environnement préparé avec du matériel sensoriel adapté aux premiers apprentissages"
+    ]
+  },
+  {
+    "osm_id": "41187-ecole-primaire-privee-montessori-du-vendomois",
+    "nom": "Ecole primaire privée Montessori du Vendômois",
+    "ville": "Renay",
+    "code_postal": "41100",
+    "adresse": "5 route de Vendôme",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "renay",
+    "description_ia": "Cette école primaire privée se situe à Renay, dans le Loir-et-Cher, au cœur du Vendômois. Elle s'appuie sur la pédagogie Montessori et propose un cadre rural calme, propice à la concentration. L'approche éducative privilégie l'autonomie, la manipulation et l'apprentissage progressif, dans le respect des rythmes individuels des enfants accueillis.",
+    "avantages": [
+      "Un cadre rural paisible favorable à la concentration",
+      "Une pédagogie active fondée sur la manipulation et l'expérimentation",
+      "Une structure à taille humaine au sein du Vendômois"
+    ]
+  },
+  {
+    "osm_id": "38336-ecole-primaire-montessori-du-pays-viennois",
+    "nom": "école primaire Montéssori du Pays Viennois",
+    "ville": "Reventin-Vaugris",
+    "code_postal": "38121",
+    "adresse": "557 route nationale 7",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "reventin-vaugris",
+    "description_ia": "Cette école primaire Montessori du Pays Viennois, à Reventin-Vaugris, accueille les enfants dans un environnement calme et proche de la nature. Les principes Montessori y guident les apprentissages : autonomie, manipulation de matériel sensoriel et respect du rythme individuel. L'équipe veille à créer un climat serein et bienveillant pour chaque élève.",
+    "avantages": [
+      "Un environnement calme et proche de la nature",
+      "Une pédagogie fondée sur l'autonomie et la manipulation",
+      "Un climat serein et bienveillant au quotidien"
+    ]
+  },
+  {
+    "osm_id": "42187-ecole-primaire-privee-montessori-saint-louis",
+    "nom": "Ecole primaire privée Montessori Saint-Louis",
+    "ville": "Roanne",
+    "code_postal": "42300",
+    "adresse": "4 place larochette",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "roanne",
+    "description_ia": "Cette école primaire privée de Roanne s'appuie sur les principes Montessori pour accompagner les enfants dans leurs apprentissages. L'autonomie, la concentration et le respect du rythme individuel y sont au cœur de la démarche. Implantée dans la Loire, elle propose un cadre scolaire structuré et bienveillant aux familles roannaises en recherche d'une alternative pédagogique.",
+    "avantages": [
+      "Des principes Montessori appliqués aux apprentissages du primaire",
+      "Un cadre scolaire structuré et bienveillant",
+      "Une implantation roannaise au cœur de la Loire"
+    ]
+  },
+  {
+    "osm_id": "97411-ecole-primaire-privee-montessori-de-saint-denis",
+    "nom": "Ecole primaire privée Montessori de Saint Denis",
+    "ville": "Saint-Denis",
+    "code_postal": "97400",
+    "adresse": "15 rue Mazagran",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-denis",
+    "description_ia": "Cette école primaire Montessori de Saint-Denis, à La Réunion, accueille les enfants dans un cadre urbain dynamique. Les principes Montessori y guident les apprentissages : autonomie, manipulation de matériel sensoriel et respect du rythme individuel. L'équipe veille à créer un climat bienveillant, propice à la confiance en soi et à l'épanouissement.",
+    "avantages": [
+      "Une pédagogie fondée sur l'autonomie et la manipulation",
+      "Un climat bienveillant favorisant la confiance en soi",
+      "Un cadre urbain dynamique et accessible"
+    ]
+  },
+  {
+    "osm_id": "97411-ecole-primaire-privee-montessori-les-oliviers",
+    "nom": "Ecole primaire privée Montessori les Oliviers",
+    "ville": "Saint-Denis",
+    "code_postal": "97490",
+    "adresse": "50 rue des goyaves",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-denis",
+    "description_ia": "À Saint-Denis de La Réunion, cette école primaire Montessori propose un cadre accueillant et lumineux, adapté au climat de l'île. La pédagogie Montessori y est mise en œuvre avec du matériel concret et des activités autonomes. Les enfants y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
+    "avantages": [
+      "Un cadre lumineux adapté au climat réunionnais",
+      "Un matériel Montessori concret et progressif",
+      "Un accompagnement respectueux du rythme de chacun"
+    ]
+  },
+  {
+    "osm_id": "35278-college-prive-hc-montessori-workshop-st-gregoire",
+    "nom": "Collège privé HC Montessori Workshop St-Grégoire",
+    "ville": "Saint-Grégoire",
+    "code_postal": "35760",
+    "adresse": "5 parc de Brocéliande",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "saint-gregoire",
+    "description_ia": "Ce collège privé hors contrat de Saint-Grégoire s'appuie sur les principes Montessori pour accompagner les élèves dans leurs années de collège. L'accent est mis sur l'autonomie, la coopération et le développement du sens critique. Proche de Rennes, l'établissement s'adresse aux familles recherchant une alternative pédagogique dans un cadre structuré et bienveillant.",
+    "avantages": [
+      "Des principes Montessori appliqués aux années de collège",
+      "Une proximité immédiate avec Rennes et son agglomération",
+      "Un cadre de travail favorisant coopération et autonomie"
+    ]
+  },
+  {
+    "osm_id": "35278-ecole-primaire-privee-hors-contrat-the-montessori-workshop",
+    "nom": "Ecole primaire privée hors-contrat THE MONTESSORI WORKSHOP",
+    "ville": "Saint-Grégoire",
+    "code_postal": "35760",
+    "adresse": "5 parc de Brocéliande",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-gregoire",
+    "description_ia": "À Saint-Grégoire, près de Rennes, cette école primaire privée hors contrat s'appuie sur la pédagogie Montessori. Elle accueille les enfants dans un environnement préparé, avec du matériel dédié et une organisation favorisant l'autonomie et la concentration. L'établissement s'adresse aux familles du secteur rennais en quête d'une alternative pédagogique structurée.",
+    "avantages": [
+      "Une localisation proche de Rennes, pratique pour les familles de l'agglomération",
+      "Un environnement préparé et un matériel Montessori favorisant concentration et autonomie",
+      "Un cadre associatif hors contrat permettant une organisation pédagogique souple"
+    ]
+  },
+  {
+    "osm_id": "01360-ecole-primaire-privee-montessori-mont-et-sourire",
+    "nom": "Ecole primaire privée Montessori Mont et Sourire",
+    "ville": "Saint-Jean-de-Gonville",
+    "code_postal": "01630",
+    "adresse": "51 rue de l'Eglise",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-jean-de-gonville",
+    "description_ia": "À Saint-Jean-de-Gonville, cette école primaire Montessori propose un cadre paisible au pied du Jura, favorable à la concentration. La pédagogie Montessori y est appliquée avec du matériel concret et des activités autonomes. Les enfants y apprennent à leur rythme, dans un esprit d'entraide et de respect mutuel.",
+    "avantages": [
+      "Un cadre paisible au pied du Jura",
+      "Des activités autonomes adaptées à chaque âge",
+      "Un esprit d'entraide et de respect mutuel"
+    ]
+  },
+  {
+    "osm_id": "97224-annexe-ecole-elementaire-hors-contrat-les-p-tits-papillons-montessori",
+    "nom": "Annexe Ecole Elementaire Hors Contrat Les P'Tits Papillons Montessori",
+    "ville": "Saint-Joseph",
+    "code_postal": "97212",
+    "adresse": "Chemin Séailles Carks",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-joseph",
+    "description_ia": "Cette annexe d'école élémentaire hors contrat Montessori est située à Saint-Joseph, en Martinique. Elle accueille les enfants dans un environnement préparé, avec du matériel adapté et une organisation inspirée de la pédagogie Montessori. Le cadre antillais offre un contexte chaleureux, propice à l'éveil et à l'expérimentation.",
+    "avantages": [
+      "Un cadre antillais chaleureux à Saint-Joseph, en Martinique",
+      "Une pédagogie Montessori fondée sur l'autonomie et la manipulation",
+      "Un ancrage local au plus près des familles du secteur"
+    ]
+  },
+  {
+    "osm_id": "10343-ecole-primaire-privee-montessori-dans-l-aube",
+    "nom": "Ecole primaire privée Montessori dans l'Aube",
+    "ville": "Saint-Julien-les-Villas",
+    "code_postal": "10800",
+    "adresse": "12 rue de Sancey",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-julien-les-villas",
+    "description_ia": "Cette école primaire privée se situe à Saint-Julien-les-Villas, dans l'agglomération de Troyes, en Champagne. Elle s'inscrit dans la pédagogie Montessori et propose un cadre périurbain calme, propice à la concentration. Le projet éducatif met en avant l'autonomie, la manipulation et l'apprentissage progressif, dans le respect du rythme de chaque enfant.",
+    "avantages": [
+      "Un cadre périurbain calme à proximité de Troyes",
+      "Une pédagogie Montessori fondée sur l'autonomie et la manipulation",
+      "Une structure à taille humaine favorisant l'attention à chaque élève"
+    ]
+  },
+  {
+    "osm_id": "42279-seme-la-vie--ecole-montessori-et-permaculture",
+    "nom": "Sème La Vie, Ecole Montessori et Permaculture",
+    "ville": "Saint-Just-Saint-Rambert",
+    "code_postal": "42170",
+    "adresse": "51 rue du père Sambardier",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-just-saint-rambert",
+    "description_ia": "Cette école Montessori est installée à Saint-Just-Saint-Rambert, dans la Loire. Elle associe les principes de la pédagogie Montessori à une dimension de permaculture et de contact avec le vivant. Les enfants y évoluent dans un cadre qui valorise l'expérimentation, l'autonomie et le respect de l'environnement, avec des activités en lien avec la nature.",
+    "avantages": [
+      "Une approche originale associant pédagogie Montessori et découverte de la permaculture",
+      "Un contact régulier avec la nature propice à l'observation et à l'expérimentation",
+      "Un cadre à taille humaine dans la Loire, favorisant l'autonomie et le respect du vivant"
+    ]
+  },
+  {
+    "osm_id": "97415-ecole-montessori-de-la-saline-les-bains",
+    "nom": "Ecole Montessori de la Saline les Bains",
+    "ville": "Saint-Paul",
+    "code_postal": "97460",
+    "adresse": "5 rue Auguste Lacaussade  Lts Dayot 2",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-paul",
+    "description_ia": "Cette école Montessori est située à Saint-Paul, sur l'île de La Réunion, dans le secteur de La Saline-les-Bains. Elle accueille les enfants dans un environnement préparé, avec du matériel adapté et une organisation inspirée de la pédagogie Montessori. Le cadre tropical et littoral offre un contexte propice à l'éveil et à l'expérimentation.",
+    "avantages": [
+      "Un cadre tropical et littoral à La Réunion, propice à l'éveil",
+      "Une pédagogie Montessori fondée sur l'autonomie et la manipulation",
+      "Un ancrage local à Saint-Paul, au plus près des familles réunionnaises"
+    ]
+  },
+  {
+    "osm_id": "97416-ecole-secondaire-privee-college-montessori-de-saint-pierre",
+    "nom": "Ecole secondaire privée Collège Montessori de Saint Pierre",
+    "ville": "Saint-Pierre",
+    "code_postal": "97410",
+    "adresse": "48 chemin Maxime Rivière",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "saint-pierre",
+    "description_ia": "À Saint-Pierre, cet établissement secondaire privé se réclame de la pédagogie Montessori pour accompagner les adolescents. Le collège constitue une étape charnière où l'autonomie, la confiance et le sens des responsabilités sont travaillés. L'organisation en petits groupes et l'attention portée à chaque parcours caractérisent ce type de structure, dans un cadre insulaire à découvrir.",
+    "avantages": [
+      "Un cadre pédagogique attentif au rythme et à l'autonomie de chaque élève",
+      "Un environnement à taille humaine favorisant les relations de confiance",
+      "Une localisation à Saint-Pierre, au cœur de l'île de La Réunion"
+    ]
+  },
+  {
+    "osm_id": "02691-ecole-primaire-maria-montessori---georges-bachy",
+    "nom": "Ecole primaire Maria Montessori - Georges Bachy",
+    "ville": "Saint-Quentin",
+    "code_postal": "02100",
+    "adresse": "146 rue d'Epargnemailles",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "saint-quentin",
+    "description_ia": "À Saint-Quentin, cette école primaire s'inscrit dans la démarche Montessori pour accompagner les enfants dans leurs apprentissages fondamentaux. L'autonomie, la concentration et le respect du rythme individuel y sont valorisés. Implantée dans l'Aisne, elle propose un cadre scolaire structuré et bienveillant aux familles recherchant une alternative pédagogique dans la ville.",
+    "avantages": [
+      "Une démarche Montessori appliquée aux apprentissages fondamentaux",
+      "Un cadre scolaire structuré et bienveillant",
+      "Une implantation saint-quentinoise facilement accessible"
+    ]
+  },
+  {
+    "osm_id": "59589-ecole-primaire-privee-hors-contrat-montessori-ecole-de-la-chouette-bleue-de-thiant",
+    "nom": "Ecole primaire privée hors contrat Montessori Ecole de la Chouette Bleue de THIANT",
+    "ville": "Thiant",
+    "code_postal": "59224",
+    "adresse": "133 rue Jean Jaurès",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "thiant",
+    "description_ia": "Cette école primaire privée hors contrat de Thiant, dans le Nord, applique les principes de la pédagogie Montessori. Elle propose un cadre d'apprentissage à taille humaine, dans une commune proche de Valenciennes. Le projet éducatif met en avant l'autonomie, la coopération et l'accompagnement individualisé, dans le respect du rythme et des besoins de chaque enfant.",
+    "avantages": [
+      "Un cadre à taille humaine favorisant l'attention à chaque élève",
+      "Une pédagogie fondée sur l'autonomie et la coopération",
+      "Une situation pratique à proximité de Valenciennes"
+    ]
+  },
+  {
+    "osm_id": "83137-ecole-elementaire-privee-montessori-arbre-de-vie",
+    "nom": "Ecole élémentaire privée Montessori-Arbre de vie",
+    "ville": "Toulon",
+    "code_postal": "83000",
+    "adresse": "33 rond-point Mirasouleou",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "toulon",
+    "description_ia": "Cette école élémentaire privée de Toulon s'inscrit dans la démarche Montessori, qui valorise l'apprentissage par l'expérience et le matériel sensoriel. Les enfants y sont accompagnés dans la construction de leur autonomie et de leur concentration. Le cadre urbain méditerranéen offre un environnement propice à un quotidien scolaire structuré et bienveillant.",
+    "avantages": [
+      "Une approche Montessori centrée sur l'expérimentation et le matériel concret",
+      "Un accompagnement individualisé respectant le rythme de chaque enfant",
+      "Une implantation toulonnaise facilement accessible depuis l'agglomération"
+    ]
+  },
+  {
+    "osm_id": "26362-ecole-primaire-privee-montessori-a-petits-pas",
+    "nom": "Ecole primaire privée Montessori à petits pas",
+    "ville": "Valence",
+    "code_postal": "26000",
+    "adresse": "1 place Maurice Ravel",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "valence",
+    "description_ia": "Cette école primaire privée de Valence s'appuie sur la pédagogie Montessori pour accompagner les enfants dans leurs premiers apprentissages. Le matériel sensoriel, l'autonomie et le respect du rythme individuel y occupent une place centrale. Implantée dans la Drôme, elle s'adresse aux familles valentinoises recherchant un cadre scolaire bienveillant et structuré.",
+    "avantages": [
+      "Une approche Montessori adaptée aux apprentissages fondamentaux",
+      "Un respect du rythme et de l'autonomie de chaque enfant",
+      "Une implantation valentinoise facilement accessible"
+    ]
+  },
+  {
+    "osm_id": "03310-ecole-primaire-privee-montessori-vichy",
+    "nom": "Ecole primaire privée Montessori Vichy",
+    "ville": "Vichy",
+    "code_postal": "03200",
+    "adresse": "13 rue de Provence",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "vichy",
+    "description_ia": "Cette école primaire privée Montessori est située à Vichy, dans l'Allier. Elle accueille les enfants dans un environnement préparé, avec du matériel spécifique et une organisation inspirée de la pédagogie Montessori. L'établissement met l'accent sur l'autonomie, la concentration et l'apprentissage par la manipulation, dans un cadre urbain agréable.",
+    "avantages": [
+      "Un emplacement à Vichy, dans un cadre urbain agréable et accessible",
+      "Des apprentissages concrets appuyés sur le matériel Montessori",
+      "Une attention portée à l'autonomie et à la concentration de chaque enfant"
+    ]
+  }
+]

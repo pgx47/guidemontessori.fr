@@ -86,6 +86,7 @@ const legal = [
               {books.map((l) => <a href={l.href} class="block px-4 py-2 text-sm hover:bg-sage-50">{l.label}</a>)}
             </div>
           </div>
+          <a href="/ecoles/" class="transition-colors hover:text-sage-600">Écoles</a>
           <a href="/cadeaux/" class="transition-colors hover:text-sage-600">🎁 Idées Cadeaux</a>
           <a href="/bons-plans/" class="flex items-center gap-1 transition-colors hover:text-sage-600">
             <span class="rounded-full bg-terracotta-500 px-1.5 py-0.5 text-xs font-bold text-white">%</span> Bons Plans
@@ -98,6 +99,7 @@ const legal = [
           <nav class="absolute left-0 right-0 top-full flex flex-col space-y-3 border-b border-sage-200 bg-white px-6 py-4 shadow-lg">
             {nav.map((l) => <a href={l.href} class="py-2 text-gray-700 hover:text-sage-600">{l.label}</a>)}
             {books.map((l) => <a href={l.href} class="py-2 pl-4 text-sm text-gray-700 hover:text-sage-600">{l.label}</a>)}
+            <a href="/ecoles/" class="py-2 text-gray-700 hover:text-sage-600">🏫 Écoles</a>
             <a href="/cadeaux/" class="py-2 text-gray-700 hover:text-sage-600">🎁 Idées Cadeaux</a>
             <a href="/bons-plans/" class="py-2 text-gray-700 hover:text-sage-600">🏷️ Bons Plans</a>
           </nav>
@@ -119,7 +121,7 @@ const legal = [
           <div>
             <p class="mb-4 font-semibold text-sage-100">Navigation</p>
             <ul class="space-y-2 text-sm text-sage-300">
-              {[...nav, ...books, { href: '/cadeaux/', label: '🎁 Idées Cadeaux' }, { href: '/bons-plans/', label: '🏷️ Bons Plans' }, { href: '/a-propos/', label: 'À Propos' }, { href: '/contact/', label: 'Contact' }].map((l) => (
+              {[...nav, ...books, { href: '/ecoles/', label: '🏫 Écoles' }, { href: '/cadeaux/', label: '🎁 Idées Cadeaux' }, { href: '/bons-plans/', label: '🏷️ Bons Plans' }, { href: '/a-propos/', label: 'À Propos' }, { href: '/contact/', label: 'Contact' }].map((l) => (
                 <li><a href={l.href} class="transition-colors hover:text-white">{l.label}</a></li>
               ))}
             </ul>

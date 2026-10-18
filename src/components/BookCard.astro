@@ -10,26 +10,45 @@ const { book, badgeClass = 'bg-sage-100 text-sage-700' } = Astro.props;
 const isParent = book.targetAudience === 'parent';
 ---
 
-<article class="rounded-xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-  <div class="mb-3 flex items-start justify-between gap-4">
-    {book.image && (
-      <img src={book.image} alt="" class="h-28 w-20 shrink-0 rounded-lg object-contain" loading="lazy" />
-    )}
-    <div>
-      <h3 class="text-xl font-semibold text-gray-900">{book.title}</h3>
-      {isParent ? <p class="text-sm text-gray-500">{book.author}</p> : <p class="text-sm font-medium text-terracotta-600">{book.ageRange}</p>}
+<article class="flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition-shadow duration-300 hover:shadow-md sm:flex-row">
+  {book.image && (
+    <div class="flex shrink-0 items-center justify-center border-b border-stone-200 bg-[#FBF9F5] p-6 sm:w-1/3 sm:border-b-0 sm:border-r sm:p-8 md:w-1/4">
+      <img
+        src={book.image}
+        alt={`Couverture du livre ${book.title}`}
+        class="h-auto w-32 max-w-[160px] rounded-sm object-contain shadow-[4px_4px_12px_rgba(0,0,0,0.15)] sm:w-full"
+        loading="lazy"
+      />
     </div>
-    {
-      isParent ? (
-        <span class:list={['shrink-0 rounded-full px-3 py-1 text-sm font-medium', badgeClass]}>{book.level}</span>
-      ) : (
-        <span class="shrink-0 text-lg font-bold text-gray-900">{book.price}</span>
-      )
-    }
-  </div>
-  <p class="mb-4 text-gray-600">{book.description}</p>
-  <div class="flex items-center justify-between">
-    {isParent && <span class="text-lg font-bold text-gray-900">{book.price}</span>}
-    <a href={book.amazonUrl} target="_blank" rel="nofollow sponsored noopener" class="btn-cta text-sm">Voir sur Amazon →</a>
+  )}
+
+  <div class="flex flex-grow flex-col p-6 sm:p-8">
+    <div class="mb-2 flex items-start justify-between gap-4">
+      <div>
+        <h3 class="mb-1 text-xl font-extrabold leading-tight text-gray-900">{book.title}</h3>
+        <p class="text-sm font-bold text-gray-500">
+          {isParent ? book.author : book.ageRange}
+        </p>
+      </div>
+      {(isParent ? book.level : book.category) && (
+        <span class:list={['shrink-0 rounded-full border px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest', badgeClass]}>
+          {isParent ? book.level : book.category}
+        </span>
+      )}
+    </div>
+
+    <p class="mb-6 mt-4 flex-grow text-sm leading-relaxed text-gray-700">{book.description}</p>
+
+    <div class="mt-auto flex flex-wrap items-center justify-between gap-4 border-t border-stone-100 pt-5">
+      <span class="text-xl font-extrabold text-gray-900">{book.price}</span>
+      <a
+        href={book.amazonUrl}
+        target="_blank"
+        rel="nofollow sponsored noopener"
+        class="w-full rounded-xl bg-terracotta-500 px-6 py-3 text-center text-sm font-bold text-white shadow-sm transition-colors hover:bg-terracotta-600 sm:w-auto"
+      >
+        Voir sur Amazon →
+      </a>
+    </div>
   </div>
 </article>

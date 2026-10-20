@@ -20,6 +20,8 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    outputs:
+      dopublish: ${{ steps.decide.outputs.publish }}
     permissions:
       contents: write
     steps:
@@ -40,17 +42,20 @@ jobs:
       - run: npm ci
 
       - name: Decide publish day (2-4 random weekdays per ISO week)
-        if: github.event_name == 'schedule'
+        id: decide
         run: |
           python3 - <<'PY'
-          import random, datetime, sys
+          import random, datetime, os
           today = datetime.date.today()
           seed = int(today.strftime('%G%W'))
           days = sorted(random.Random(seed).sample(range(5), random.Random(seed + 1).randint(2, 4)))
-          print(f"semaine {today.isocalendar()} → jours publiés : {days}, aujourd'hui {today.weekday()}")
-          sys.exit(0 if today.weekday() in days else 78)
+          ok = today.weekday() in days or os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch'
+          print(f"semaine {today.isocalendar()} → jours publiés : {days}, aujourd'hui {today.weekday()} → publish={ok}")
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"publish={'1' if ok else '0'}\n")
           PY
       - name: Generate article
+        if: steps.decide.outputs.publish == '1'
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -72,9 +77,11 @@ jobs:
           fi
 
       - name: Validate build (schema Zod + MDX)
+        if: steps.decide.outputs.publish == '1'
         run: npm run build
 
       - name: Commit and push
+        if: steps.decide.outputs.publish == '1'
         run: |
           git config user.name "bot-montessori"
           git config user.email "bot@guidemontessori.fr"
@@ -85,5 +92,6 @@ jobs:
 
   deploy:
     needs: publish
+    if: needs.publish.outputs.dopublish == '1'
     uses: ./.github/workflows/deploy.yml
     secrets: inherit

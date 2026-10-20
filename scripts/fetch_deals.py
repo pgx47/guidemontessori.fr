@@ -13,6 +13,11 @@ QUERIES = ["montessori jouets bébé", "matériel montessori", "montessori"]
 MAX_DEALS = 20
 
 
+def is_dup(nom: str, items: list, t: float = 0.7) -> bool:
+    from difflib import SequenceMatcher
+    return any(SequenceMatcher(None, nom.lower(), x["name"].lower()).ratio() > t for x in items)
+
+
 def fmt_price(s: str, n) -> str:
     if "€" in s:
         return s
@@ -45,7 +50,7 @@ def main() -> int:
             continue
         for it in r.json().get("results", []):
             asin, name = str(it.get("asin") or ""), str(it.get("name") or "")
-            if not asin or not name or asin in seen:
+            if not asin or not name or asin in seen or is_dup(name, deals):
                 continue
             seen.add(asin)
             deals.append({

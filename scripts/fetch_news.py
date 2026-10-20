@@ -15,20 +15,34 @@ import generate_article as g
 
 ROOT = Path(__file__).resolve().parent.parent
 STATE = ROOT / "src" / "data" / "news_state.json"
-RSS = ('https://news.google.com/rss/search?q=montessori+OR+"petite+enfance"'
-       '+OR+"motricit%C3%A9+libre"&hl=fr&gl=FR&ceid=FR:fr')
+RSS_FEEDS = [
+    "https://news.google.com/rss/search?q=montessori+OR+%22p%C3%A9dagogie+montessori%22&hl=fr&gl=FR&ceid=FR:fr",
+    "https://news.google.com/rss/search?q=motricit%C3%A9+libre+OR+%22jeu+libre%22+enfant&hl=fr&gl=FR&ceid=FR:fr",
+    "https://news.google.com/rss/search?q=%C3%A9ducation+bienveillante+OR+%22neurosciences+enfant%22&hl=fr&gl=FR&ceid=FR:fr",
+    "https://news.google.com/rss/search?q=%C3%A9veil+enfant+nature+OR+%22activit%C3%A9s+enfants%22&hl=fr&gl=FR&ceid=FR:fr",
+]
+EXCLUDE = ("liquidation", "fermeture", "tribunal", "procès", "accident", "grève",
+           "licenciement", "violence", "agression", "décès", "homicide",
+           "manifestation", "police", "policier", "catéchisme")
 
 
-def latest_item() -> tuple[str, str, str] | None:
+def latest_items(limit: int = 3) -> list[tuple[str, str, str]]:
     done = set(json.loads(STATE.read_text()).get("seen", [])) if STATE.exists() else set()
-    xml = requests.get(RSS, timeout=30, headers={"User-Agent": "guidemontessori/1.0"}).content
-    for it in ET.fromstring(xml).iter("item"):
-        link = it.findtext("link") or ""
-        if link in done:
-            continue
-        title = it.findtext("title") or ""
-        return (link, title, re.sub(r"<[^>]+>", " ", it.findtext("description") or "")[:500])
-    return None
+    out = []
+    for url in RSS_FEEDS:
+        try:
+            xml = requests.get(url, timeout=30, headers={"User-Agent": "guidemontessori/1.0"}).content
+            for it in ET.fromstring(xml).iter("item"):
+                link = it.findtext("link") or ""
+                title = it.findtext("title") or ""
+                if link in done or any(w in title.lower() for w in EXCLUDE):
+                    continue
+                out.append((link, title, re.sub(r"<[^>]+>", " ", it.findtext("description") or "")[:500]))
+                if len(out) >= limit:
+                    return out
+        except Exception as e:
+            print(f"⚠ RSS {url[:50]} : {e}", file=sys.stderr)
+    return out
 
 
 def source_image(link: str) -> str | None:
@@ -64,15 +78,19 @@ def mark_seen(link: str) -> None:
 
 
 def main() -> int:
-    try:
-        item = latest_item()
-    except Exception as e:
-        print(f"RSS indisponible : {e}", file=sys.stderr)
-        return 0
-    if not item:
+    items = latest_items(limit=int(os.environ.get("NEWS_COUNT", "3")))
+    if not items:
         print("Aucune actu nouvelle.")
         return 0
-    link, title, summary = item
+    for link, title, summary in items:
+        try:
+            _publish(link, title, summary)
+        except Exception as e:
+            print(f"⚠ '{title[:50]}' : {e}", file=sys.stderr)
+    return 0
+
+
+def _publish(link: str, title: str, summary: str) -> None:
     print(f"actu : {title}")
     topic = {"keyword": title,
              "angle": f"brève d'actualité. Faits réels : {summary} Source : {link}. "

@@ -1,36 +1,100 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ecoles from '../../data/ecoles.json';
+import coords from '../../data/villes_coords.json';
 
-const villes = [...new Map(
-  ecoles.filter((e) => e.slug_ville).map((e) => [e.slug_ville, e.ville])
-).entries()].sort((a, b) => a[1].localeCompare(b[1], 'fr'));
-const counts = new Map();
-for (const e of ecoles) counts.set(e.slug_ville, (counts.get(e.slug_ville) || 0) + 1);
+const byVille = new Map<string, { nom: string; cp: string; ecoles: number; college: number }>();
+for (const e of ecoles) {
+  if (!e.slug_ville) continue;
+  const v = byVille.get(e.slug_ville) || { nom: e.ville, cp: e.code_postal, ecoles: 0, college: 0 };
+  v.ecoles += 1;
+  if (e.amenity === 'Collège') v.college += 1;
+  byVille.set(e.slug_ville, v);
+}
+const villes = [...byVille.entries()].sort((a, b) => a[1].nom.localeCompare(b[1].nom, 'fr'));
+const markers = villes
+  .filter(([slug]) => coords[slug])
+  .map(([slug, v]) => ({ slug, nom: v.nom, n: v.ecoles, lat: coords[slug].lat, lon: coords[slug].lon }));
 ---
 
 <BaseLayout
-  title="Annuaire des Écoles Montessori en France — Par Ville"
-  description="Trouvez une école ou crèche Montessori près de chez vous. Annuaire par ville des établissements Montessori en France."
+  title="Annuaire des Écoles Montessori en France — Carte et Recherche"
+  description="Trouvez une école ou crèche Montessori près de chez vous. Carte interactive et annuaire par ville des établissements Montessori en France."
   type="website"
 >
-  <div class="mx-auto max-w-3xl px-4 py-12">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" slot="head" />
+
+  <div class="mx-auto max-w-5xl px-4 py-12">
     <h1 class="mb-3 text-3xl font-bold text-gray-900">Annuaire des Écoles Montessori</h1>
-    <p class="mb-10 text-gray-700">
-      {ecoles.length} établissements référencés dans {villes.length} villes en France. Sélectionnez votre ville.
+    <p class="mb-8 text-gray-700">
+      {ecoles.length} établissements référencés dans {villes.length} villes en France.
     </p>
-    <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3">
-      {villes.map(([slug, nom]) => (
-        <li>
-          <a href={`/ecoles/${slug}/`} class="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-800 shadow-sm transition-shadow hover:shadow-md hover:text-sage-600">
-            {nom}
-            <span class="block text-xs font-normal text-gray-500">{counts.get(slug)} établissement{counts.get(slug) > 1 ? 's' : ''}</span>
+
+    <div id="map" class="mb-10 h-80 w-full rounded-2xl border border-sage-200 shadow-sm sm:h-96"></div>
+
+    <div class="mb-8">
+      <input
+        id="search"
+        type="search"
+        placeholder="Rechercher une ville, un département ou un code postal…"
+        class="w-full rounded-xl border border-sage-300 bg-white px-5 py-3.5 text-sm text-gray-800 shadow-sm outline-none placeholder:text-gray-400 focus:border-sage-500 focus:ring-2 focus:ring-sage-200"
+      />
+      <p id="no-result" class="mt-6 hidden text-center text-sm text-gray-500">Aucun établissement trouvé — essayez une ville proche.</p>
+    </div>
+
+    <ul id="villes-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {villes.map(([slug, v]) => (
+        <li class="ville-card" data-search={`${v.nom} ${v.cp}`.toLowerCase()}>
+          <a href={`/ecoles/${slug}/`} class="group flex items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+            <div class="min-w-0">
+              <p class="truncate text-base font-bold text-gray-900 group-hover:text-sage-700">{v.nom}</p>
+              <p class="mt-0.5 text-xs text-gray-500">{v.ecoles} établissement{v.ecoles > 1 ? 's' : ''} · {v.cp.slice(0, 2)}</p>
+              <div class="mt-2 flex flex-wrap gap-1.5">
+                <span class="rounded-full bg-sage-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-sage-700">École</span>
+                {v.college > 0 && <span class="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-blue-700">Collège</span>}
+              </div>
+            </div>
+            <span class="shrink-0 text-sage-400 transition-transform group-hover:translate-x-1 group-hover:text-sage-600">→</span>
           </a>
         </li>
       ))}
     </ul>
+
     <p class="mt-10 text-xs text-gray-500">
       Données issues d'OpenStreetMap et enrichies automatiquement. Un établissement manquant ? <a href="/contact/" class="underline hover:text-sage-600">Contactez-nous</a>.
     </p>
   </div>
+
+  <script define:vars={{ markers }}>
+    const input = document.getElementById('search');
+    const cards = document.querySelectorAll('.ville-card');
+    const noResult = document.getElementById('no-result');
+    input?.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((c) => {
+        const show = !q || c.dataset.search.includes(q);
+        c.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      noResult?.classList.toggle('hidden', visible > 0);
+    });
+  </script>
+
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script is:inline define:vars={{ markers }}>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!window.L) return;
+      const map = L.map('map').setView([46.6, 2.4], 6);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 18,
+      }).addTo(map);
+      markers.forEach((m) => {
+        L.marker([m.lat, m.lon])
+          .addTo(map)
+          .bindPopup(`<strong>${m.nom}</strong><br>${m.n} établissement${m.n > 1 ? 's' : ''}<br><a href="/ecoles/${m.slug}/" style="color:#557755;font-weight:bold">Voir les écoles →</a>`);
+      });
+    });
+  </script>
 </BaseLayout>

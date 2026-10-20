@@ -1,0 +1,346 @@
+{
+ "albi": {
+  "lat": 43.9277552,
+  "lon": 2.147899
+ },
+ "andernos-les-bains": {
+  "lat": 44.7476897,
+  "lon": -1.0925184
+ },
+ "andresy": {
+  "lat": 48.9821445,
+  "lon": 2.0610573
+ },
+ "angers": {
+  "lat": 47.4739884,
+  "lon": -0.5515588
+ },
+ "antibes": {
+  "lat": 43.5813878,
+  "lon": 7.1236966
+ },
+ "avignon": {
+  "lat": 43.9492493,
+  "lon": 4.8059012
+ },
+ "bailly": {
+  "lat": 49.4962015,
+  "lon": 2.9706092
+ },
+ "bergerac": {
+  "lat": 44.8534568,
+  "lon": 0.487531
+ },
+ "berrias-et-casteljau": {
+  "lat": 44.3792656,
+  "lon": 4.2101265
+ },
+ "bethune": {
+  "lat": 50.528207,
+  "lon": 2.646031
+ },
+ "biot": {
+  "lat": 43.627821,
+  "lon": 7.081617
+ },
+ "bordeaux": {
+  "lat": 44.851939,
+  "lon": -0.587877
+ },
+ "cabries": {
+  "lat": 43.447143,
+  "lon": 5.36102
+ },
+ "caen": {
+  "lat": 49.184316,
+  "lon": -0.37193
+ },
+ "camblanes-et-meynac": {
+  "lat": 44.764364,
+  "lon": -0.473133
+ },
+ "cazilhac": {
+  "lat": 43.923724,
+  "lon": 3.702897
+ },
+ "chantilly": {
+  "lat": 49.188222,
+  "lon": 2.461897
+ },
+ "chatenay-malabry": {
+  "lat": 48.769869,
+  "lon": 2.258651
+ },
+ "choisy-le-roi": {
+  "lat": 48.764115,
+  "lon": 2.412807
+ },
+ "clichy": {
+  "lat": 48.90348,
+  "lon": 2.305118
+ },
+ "colombes": {
+  "lat": 48.922451,
+  "lon": 2.247799
+ },
+ "conflans-sainte-honorine": {
+  "lat": 49.000025,
+  "lon": 2.099679
+ },
+ "cornebarrieu": {
+  "lat": 43.649903,
+  "lon": 1.315701
+ },
+ "cranves-sales": {
+  "lat": 46.196608,
+  "lon": 6.304966
+ },
+ "dijon": {
+  "lat": 47.331953,
+  "lon": 5.033601
+ },
+ "draguignan": {
+  "lat": 43.532342,
+  "lon": 6.46034
+ },
+ "epinal": {
+  "lat": 48.170226,
+  "lon": 6.484892
+ },
+ "escolives-sainte-camille": {
+  "lat": 47.72145,
+  "lon": 3.606116
+ },
+ "fargues-saint-hilaire": {
+  "lat": 44.820669,
+  "lon": -0.439011
+ },
+ "gaillard": {
+  "lat": 46.185835,
+  "lon": 6.20728
+ },
+ "grenade": {
+  "lat": 43.764143,
+  "lon": 1.289286
+ },
+ "haguenau": {
+  "lat": 48.814549,
+  "lon": 7.772611
+ },
+ "issy-les-moulineaux": {
+  "lat": 48.823903,
+  "lon": 2.262887
+ },
+ "kingersheim": {
+  "lat": 47.788855,
+  "lon": 7.325047
+ },
+ "la-roche-sur-yon": {
+  "lat": 46.670848,
+  "lon": -1.412533
+ },
+ "laverune": {
+  "lat": 43.586196,
+  "lon": 3.804882
+ },
+ "limay": {
+  "lat": 48.993097,
+  "lon": 1.735314
+ },
+ "lougratte": {
+  "lat": 44.590093,
+  "lon": 0.620543
+ },
+ "louveciennes": {
+  "lat": 48.862854,
+  "lon": 2.118962
+ },
+ "lyon-2e": {
+  "lat": 45.750351,
+  "lon": 4.826148
+ },
+ "lyon-3e": {
+  "lat": 45.751578,
+  "lon": 4.869577
+ },
+ "maisons-laffitte": {
+  "lat": 48.951168,
+  "lon": 2.151409
+ },
+ "mantes-la-ville": {
+  "lat": 48.974694,
+  "lon": 1.710809
+ },
+ "marly-le-roi": {
+  "lat": 48.875287,
+  "lon": 2.092406
+ },
+ "marseille": {
+  "lat": 43.307373,
+  "lon": 5.442311
+ },
+ "marseille-4e-arrondissement": {
+  "lat": 43.306398,
+  "lon": 5.400105
+ },
+ "marseille-6e-arrondissement": {
+  "lat": 43.287545,
+  "lon": 5.381329
+ },
+ "massac-seran": {
+  "lat": 43.672811,
+  "lon": 1.847379
+ },
+ "mery": {
+  "lat": 45.634277,
+  "lon": 5.92932
+ },
+ "moorea": {
+  "lat": -17.577,
+  "lon": -150.202
+ },
+ "nancy": {
+  "lat": 48.688135,
+  "lon": 6.171263
+ },
+ "narbonne": {
+  "lat": 43.166709,
+  "lon": 3.05014
+ },
+ "neuilly-sur-seine": {
+  "lat": 48.886191,
+  "lon": 2.265869
+ },
+ "neuville-sur-saone": {
+  "lat": 45.878728,
+  "lon": 4.842213
+ },
+ "nice": {
+  "lat": 43.71273,
+  "lon": 7.255313
+ },
+ "nogent-sur-marne": {
+  "lat": 48.837475,
+  "lon": 2.480913
+ },
+ "noumea": {
+  "lat": -22.262744,
+  "lon": 166.445742
+ },
+ "orgeval": {
+  "lat": 48.926202,
+  "lon": 1.978094
+ },
+ "orleans": {
+  "lat": 47.873569,
+  "lon": 1.911358
+ },
+ "pantin": {
+  "lat": 48.900267,
+  "lon": 2.409457
+ },
+ "paris": {
+  "lat": 48.845277,
+  "lon": 2.350554
+ },
+ "paris-13e": {
+  "lat": 48.830193,
+  "lon": 2.365001
+ },
+ "paris-14e": {
+  "lat": 48.830108,
+  "lon": 2.323026
+ },
+ "paris-15e": {
+  "lat": 48.84162,
+  "lon": 2.295289
+ },
+ "paris-17e": {
+  "lat": 48.887702,
+  "lon": 2.304844
+ },
+ "paris-19e": {
+  "lat": 48.887252,
+  "lon": 2.387708
+ },
+ "paris-2e": {
+  "lat": 48.867669,
+  "lon": 2.341157
+ },
+ "paris-7e": {
+  "lat": 48.853954,
+  "lon": 2.312864
+ },
+ "pau": {
+  "lat": 43.316034,
+  "lon": -0.343106
+ },
+ "perenchies": {
+  "lat": 50.669221,
+  "lon": 2.969171
+ },
+ "renay": {
+  "lat": 47.843123,
+  "lon": 1.170415
+ },
+ "reventin-vaugris": {
+  "lat": 45.484048,
+  "lon": 4.841953
+ },
+ "roanne": {
+  "lat": 46.043412,
+  "lon": 4.072015
+ },
+ "saint-denis": {
+  "lat": -20.909778,
+  "lon": 55.444588
+ },
+ "saint-gregoire": {
+  "lat": 48.157745,
+  "lon": -1.68361
+ },
+ "saint-jean-de-gonville": {
+  "lat": 46.210914,
+  "lon": 5.951066
+ },
+ "saint-joseph": {
+  "lat": 14.669451,
+  "lon": -61.030824
+ },
+ "saint-julien-les-villas": {
+  "lat": 48.275596,
+  "lon": 4.097086
+ },
+ "saint-just-saint-rambert": {
+  "lat": 45.494348,
+  "lon": 4.251132
+ },
+ "saint-paul": {
+  "lat": -21.032001,
+  "lon": 55.283043
+ },
+ "saint-pierre": {
+  "lat": -21.307722,
+  "lon": 55.491803
+ },
+ "saint-quentin": {
+  "lat": 49.847398,
+  "lon": 3.28745
+ },
+ "thiant": {
+  "lat": 50.300807,
+  "lon": 3.445877
+ },
+ "toulon": {
+  "lat": 43.136696,
+  "lon": 5.933796
+ },
+ "valence": {
+  "lat": 44.922579,
+  "lon": 4.921827
+ },
+ "vichy": {
+  "lat": 46.131168,
+  "lon": 3.428025
+ }
+}

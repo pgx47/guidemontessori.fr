@@ -19,8 +19,7 @@ const canonical = new URL(Astro.url.pathname, SITE.url).toString();
 const ogImage = new URL(image ?? '/hero-1.png', SITE.url).toString();
 
 const nav = [
-  { href: '/articles/', label: 'Articles' },
-  { href: '/actualites/', label: 'Actualités' },
+  { href: '/articles/', label: 'Guides' },
 ];
 const books = [
   { href: '/lectures-parents/', label: 'Lectures Parents' },
@@ -87,10 +86,8 @@ const legal = [
             </div>
           </div>
           <a href="/ecoles/" class="transition-colors hover:text-sage-600">Écoles</a>
-          <a href="/cadeaux/" class="transition-colors hover:text-sage-600">🎁 Idées Cadeaux</a>
-          <a href="/bons-plans/" class="flex items-center gap-1 transition-colors hover:text-sage-600">
-            <span class="rounded-full bg-terracotta-500 px-1.5 py-0.5 text-xs font-bold text-white">%</span> Bons Plans
-          </a>
+          <a href="/cadeaux/" class="transition-colors hover:text-sage-600">Cadeaux</a>
+          <a href="/bons-plans/" class="rounded-full bg-terracotta-500 px-4 py-1.5 text-sm font-bold text-white transition-colors hover:bg-terracotta-600">Promos</a>
         </nav>
         <details class="md:hidden">
           <summary class="cursor-pointer list-none p-2 text-gray-600 hover:text-sage-600" aria-label="Menu">
@@ -99,9 +96,9 @@ const legal = [
           <nav class="absolute left-0 right-0 top-full flex flex-col space-y-3 border-b border-sage-200 bg-white px-6 py-4 shadow-lg">
             {nav.map((l) => <a href={l.href} class="py-2 text-gray-700 hover:text-sage-600">{l.label}</a>)}
             {books.map((l) => <a href={l.href} class="py-2 pl-4 text-sm text-gray-700 hover:text-sage-600">{l.label}</a>)}
-            <a href="/ecoles/" class="py-2 text-gray-700 hover:text-sage-600">🏫 Écoles</a>
-            <a href="/cadeaux/" class="py-2 text-gray-700 hover:text-sage-600">🎁 Idées Cadeaux</a>
-            <a href="/bons-plans/" class="py-2 text-gray-700 hover:text-sage-600">🏷️ Bons Plans</a>
+            <a href="/ecoles/" class="py-2 text-gray-700 hover:text-sage-600">Écoles</a>
+            <a href="/cadeaux/" class="py-2 text-gray-700 hover:text-sage-600">Cadeaux</a>
+            <a href="/bons-plans/" class="py-2 font-bold text-terracotta-600 hover:text-terracotta-700">Promos</a>
           </nav>
         </details>
       </div>

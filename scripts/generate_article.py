@@ -278,6 +278,17 @@ def generate_image(prompt: str, slug: str) -> bytes | None:
     """Image réaliste : retry x3 avec vision QC, fallback Pexels."""
     full_prompt = f"{IMG_STYLE} Scene: {prompt}"
     try:
+        cf_acct, cf_tok = os.environ.get("CLOUDFLARE_ACCOUNT_ID"), os.environ.get("CLOUDFLARE_API_TOKEN")
+        if cf_acct and cf_tok:
+            r = requests.post(
+                f"https://api.cloudflare.com/client/v4/accounts/{cf_acct}/ai/run/@cf/black-forest-labs/flux-1-schnell",
+                headers={"Authorization": f"Bearer {cf_tok}"},
+                json={"prompt": full_prompt}, timeout=180)
+            if r.ok:
+                j = r.json()
+                raw = requests.get(j["result"]["image"], timeout=60).content if str(j["result"]["image"]).startswith("http") else __import__("base64").b64decode(j["result"]["image"])
+                data = _to_webp(raw)
+                return data if inspect_image(data) else None
         if key := os.environ.get("OPENAI_API_KEY"):
             r = requests.post(
                 "https://api.openai.com/v1/images/generations",

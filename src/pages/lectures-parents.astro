@@ -21,6 +21,18 @@ const books = booksFor('parent');
             </p>
         </header>
 
+
+        <nav class="mb-8 flex flex-wrap justify-center gap-2">
+          <a href="#essentiels" class="rounded-full border border-sage-300 px-4 py-1.5 text-xs font-bold text-sage-700 hover:bg-sage-50">Essentiels</a>
+          <a href="#approfondi" class="rounded-full border border-sage-300 px-4 py-1.5 text-xs font-bold text-sage-700 hover:bg-sage-50">Théorie</a>
+          <a href="#pratique" class="rounded-full border border-sage-300 px-4 py-1.5 text-xs font-bold text-sage-700 hover:bg-sage-50">Pratique</a>
+        </nav>
+
+        <section class="mb-10 rounded-xl border border-sage-200 bg-sage-50 p-6">
+            <h2 class="font-serif text-lg font-bold text-gray-800 mb-2">📚 Par où commencer ?</h2>
+            <p class="text-sm text-gray-700">Nouveau dans la pédagogie ? Commencez par <strong>"L'Enfant"</strong> pour comprendre la philosophie, complété par <strong>"100 activités Montessori"</strong> pour la mise en pratique immédiate.</p>
+        </section>
+
         {/* Introduction */}
         <section class="bg-white rounded-xl p-6 mb-10 shadow-sm">
             <blockquote class="text-lg italic text-gray-600 border-l-4 border-sage-400 pl-4">
@@ -34,11 +46,11 @@ const books = booksFor('parent');
         </section>
 
         {/* Les Essentiels */}
-        <section class="mb-12">
+        <section id="essentiels" class="mb-12">
             <h2 class="text-2xl font-serif font-bold text-sage-700 mb-6">
                 📖 Les Ouvrages Essentiels de Maria Montessori
             </h2>
-            <div class="grid gap-6">
+            <div class="grid gap-6 md:grid-cols-2">
                 {books.filter((b) => b.level === "Essentiel").map((book) => <BookCard book={book} badgeClass="bg-terracotta-100 text-terracotta-700" />)}
             </div>
         </section>
@@ -48,7 +60,7 @@ const books = booksFor('parent');
             <h2 class="text-2xl font-serif font-bold text-sage-700 mb-6">
                 🎓 Pour Approfondir
             </h2>
-            <div class="grid gap-6">
+            <div class="grid gap-6 md:grid-cols-2">
                 {books.filter((b) => b.level === "Approfondi").map((book) => <BookCard book={book} badgeClass="bg-sage-100 text-sage-700" />)}
             </div>
         </section>
@@ -58,7 +70,7 @@ const books = booksFor('parent');
             <h2 class="text-2xl font-serif font-bold text-sage-700 mb-6">
                 🛠️ Guides Pratiques
             </h2>
-            <div class="grid gap-6">
+            <div class="grid gap-6 md:grid-cols-2">
                 {books.filter((b) => b.level === "Pratique").map((book) => <BookCard book={book} badgeClass="bg-blue-100 text-blue-700" />)}
             </div>
         </section>

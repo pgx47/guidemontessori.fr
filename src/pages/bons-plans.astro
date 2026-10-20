@@ -48,7 +48,7 @@ const updated = data.updated ? formatDate(new Date(data.updated)) : null;
           </div>
         ) : (
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {deals.map((d) => (
+            {deals.slice(0,12).map((d) => (
               <a
                 href={d.url}
                 target="_blank"
@@ -101,6 +101,13 @@ const updated = data.updated ? formatDate(new Date(data.updated)) : null;
           vous. Les promotions sont détectées quotidiennement ; les prix et la disponibilité des produits peuvent changer rapidement sur Amazon.
         </p>
       </div>
+    
+    {data.deals.length > 12 && (
+      <div class="pb-16 text-center">
+        <a href="/bons-plans/2/" class="inline-block rounded-xl border border-sage-300 px-6 py-3 text-sm font-bold text-sage-700 hover:bg-sage-50">Page suivante →</a>
+      </div>
+    )}
     </section>
+
   </div>
 </BaseLayout>

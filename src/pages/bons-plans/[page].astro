@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../site.config';
+import { readFileSync } from 'node:fs';
+import data from '../../data/deals.json';
+
+const PER_PAGE = 12;
+
+export function getStaticPaths() {
+  const all = JSON.parse(readFileSync('src/data/deals.json', 'utf8')).deals;
+  const pages = Math.ceil(all.length / 12);
+  return Array.from({ length: Math.max(0, pages - 1) }, (_, i) => ({
+    params: { page: String(i + 2) },
+    props: { pageNum: i + 2, deals: all.slice((i + 1) * 12, (i + 2) * 12) },
+  }));
+}
+
+const { pageNum, deals } = Astro.props;
+const updated = data.updated ? formatDate(new Date(data.updated)) : null;
+const total = Math.ceil(data.deals.length / PER_PAGE);
+---
+
+<BaseLayout title={`Bons Plans Montessori — Page ${pageNum}`} description={`Bons plans Montessori, page ${pageNum}. Promotions sur le matériel, livres et jeux Montessori.`}>
+  <section class="py-16 text-center">
+    <div class="mx-auto max-w-4xl px-4">
+      <h1 class="mb-4 font-serif text-4xl font-bold text-sage-800 md:text-5xl">Bons Plans Montessori</h1>
+      <p class="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600">Page {pageNum} — offres du moment sur le matériel Montessori.</p>
+      {updated && <p class="mt-3 text-sm text-gray-400">Dernière mise à jour&nbsp;: {updated}</p>}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {deals.map((d) => (
+        <a href={d.url} target="_blank" rel="nofollow sponsored noopener"
+           class="group flex flex-col rounded-2xl bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+          <div class="mb-4 flex h-44 items-center justify-center overflow-hidden rounded-xl bg-[#faf7f2]">
+            {d.image ? <img src={d.image} alt={d.name} loading="lazy" class="max-h-full max-w-full object-contain transition-transform group-hover:scale-105" /> : <span class="text-4xl">🏷️</span>}
+          </div>
+          <h3 class="mb-2 line-clamp-2 text-sm font-semibold leading-snug text-gray-800">{d.name}</h3>
+          {d.stars !== null && (
+            <div class="mb-2 flex items-center gap-1 text-xs text-amber-500">
+              ★ {d.stars}
+              {d.totalReviews !== null && <span class="text-gray-400">({d.totalReviews.toLocaleString('fr-FR')})</span>}
+            </div>
+          )}
+          <div class="mt-auto flex items-center gap-2">
+            {d.price && <span class="text-lg font-extrabold text-gray-900">{d.price}</span>}
+            {d.isLimitedDeal && <span class="rounded-full bg-green-600 px-2 py-0.5 text-[11px] font-bold text-white">Promo</span>}
+          </div>
+          <div class="mt-3 rounded-xl bg-sage-50 py-2.5 text-center text-sm font-medium text-sage-700 transition-colors group-hover:bg-sage-600 group-hover:text-white">Voir l'offre →</div>
+        </a>
+      ))}
+    </div>
+
+    <nav class="mt-12 flex justify-center gap-3 text-sm">
+      <a href="/bons-plans/" class="rounded-lg border border-sage-300 px-4 py-2 font-bold text-sage-700 hover:bg-sage-50">← Page 1</a>
+      {pageNum < total && <a href={`/bons-plans/${pageNum + 1}/`} class="rounded-lg border border-sage-300 px-4 py-2 font-bold text-sage-700 hover:bg-sage-50">Page {pageNum + 1} →</a>}
+    </nav>
+  </section>
+</BaseLayout>

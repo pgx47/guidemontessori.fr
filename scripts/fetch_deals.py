@@ -9,8 +9,12 @@ from pathlib import Path
 import requests
 
 OUT = Path(__file__).resolve().parent.parent / "src" / "data" / "deals.json"
-QUERIES = ["montessori jouets bébé", "matériel montessori", "montessori"]
-MAX_DEALS = 20
+QUERIES = ["montessori jouets bébé", "matériel montessori", "montessori",
+           "tour observation montessori", "triangle pikler", "lit cabane montessori",
+           "puzzle montessori bois", "mobile montessori", "arcade eveil montessori",
+           "etagere montessori enfant", "perles montessori", "cartes montessori"]
+MAX_DEALS = 120
+PER_PAGE = 12
 
 
 def is_dup(nom: str, items: list, t: float = 0.7) -> bool:
@@ -100,6 +104,8 @@ def main() -> int:
                         d["name"] = noms[d["asin"]]
         except Exception as e:
             print(f"⚠ traduction : {e}", file=sys.stderr)
+    import random
+    random.shuffle(deals)
     OUT.write_text(json.dumps({"updated": date.today().isoformat(), "deals": deals}, ensure_ascii=False, indent=2) + "\n")
     print(f"{len(deals)} offres écrites dans {OUT}")
     return 0

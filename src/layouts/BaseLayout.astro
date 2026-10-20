@@ -29,7 +29,7 @@ const legal = [
   { href: '/mentions-legales/', label: 'Mentions Légales' },
   { href: '/politique-confidentialite/', label: 'Politique de Confidentialité' },
   { href: '/politique-cookies/', label: 'Politique de Cookies' },
-  { href: '/cgv/', label: 'CGV' },
+  { href: '/cgv/', label: 'CGU' },
 ];
 ---
 
@@ -118,7 +118,7 @@ const legal = [
           <div>
             <p class="mb-4 font-semibold text-sage-100">Navigation</p>
             <ul class="space-y-2 text-sm text-sage-300">
-              {[...nav, ...books, { href: '/ecoles/', label: '🏫 Écoles' }, { href: '/cadeaux/', label: '🎁 Idées Cadeaux' }, { href: '/bons-plans/', label: '🏷️ Bons Plans' }, { href: '/a-propos/', label: 'À Propos' }, { href: '/contact/', label: 'Contact' }].map((l) => (
+              {[...nav, ...books, { href: '/actualites/', label: 'Actualités' }, { href: '/ecoles/', label: 'Écoles' }, { href: '/cadeaux/', label: 'Cadeaux' }, { href: '/bons-plans/', label: 'Promos' }, { href: '/a-propos/', label: 'À propos' }, { href: '/contact/', label: 'Contact' }].map((l) => (
                 <li><a href={l.href} class="transition-colors hover:text-white">{l.label}</a></li>
               ))}
             </ul>

@@ -7,6 +7,8 @@ export const SITE = {
   author: 'Rédaction GuideMontessori',
   gaId: 'G-SFEFV3XZDZ',
   amazonTag: import.meta.env.PUBLIC_AMAZON_TAG ?? 'streamlibfr0f-21',
+  googleVerification: import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION as string | undefined,
+  bingVerification: import.meta.env.PUBLIC_BING_SITE_VERIFICATION as string | undefined,
 };
 
 export const amazonUrl = (asin: string) => `https://www.amazon.fr/dp/${asin}?tag=${SITE.amazonTag}`;

@@ -3,7 +3,7 @@
 Secret : GOOGLE_SERVICE_ACCOUNT_JSON (contenu du fichier de clé du service account)."""
 import json, os, sys, requests
 
-HOST = "guidemontessori.fr"
+HOST = "www.guidemontessori.fr"
 
 def urls() -> list[str]:
     xml = requests.get(f"https://{HOST}/sitemap-0.xml", timeout=30).text

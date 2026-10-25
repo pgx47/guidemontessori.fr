@@ -20,7 +20,7 @@ const { headings } = await render(entry);
 const toc = headings.filter((h) => h.depth === 2);
 ---
 
-<BaseLayout title={title} description={description} keywords={keywords} image={image} type="article" publishDate={publishDate}>
+<BaseLayout title={title} description={description} keywords={keywords} image={image} type="article" publishDate={publishDate} updatedDate={updatedDate}>
   <SeoSchema
     slot="head"
     type="article"

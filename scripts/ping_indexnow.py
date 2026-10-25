@@ -2,14 +2,24 @@
 """Ping IndexNow (Bing/Yandex) avec les URLs du sitemap."""
 import os, sys, requests
 
-HOST = "guidemontessori.fr"
-KEY = os.environ["INDEXNOW_KEY"]
+HOST = "www.guidemontessori.fr"
+KEY = os.environ.get("INDEXNOW_KEY") or "55b5cf4e6c664e2588594a105781d615"
+KEY_LOCATION = f"https://{HOST}/{KEY}.txt"
+
+try:
+    kf = requests.get(KEY_LOCATION, timeout=30)
+    if kf.status_code != 200 or kf.text.strip() != KEY:
+        print(f"indexnow: avertissement keyfile {KEY_LOCATION} -> HTTP {kf.status_code}", file=sys.stderr)
+except Exception as e:
+    print(f"indexnow: avertissement keyfile injoignable {KEY_LOCATION} -> {e}", file=sys.stderr)
+
 try:
     xml = requests.get(f"https://{HOST}/sitemap-0.xml", timeout=30).text
     urls = [u.split("<loc>")[1].split("</loc>")[0] for u in xml.split("<url>")[1:]]
 except Exception:
     urls = [f"https://{HOST}/"]
+
 r = requests.post("https://api.indexnow.org/indexnow", json={
-    "host": HOST, "key": KEY, "keyLocation": f"https://{HOST}/{KEY}.txt", "urlList": urls[:100]}, timeout=30)
-print("indexnow", r.status_code, len(urls), "urls")
-sys.exit(0 if r.ok else 0)  # jamais bloquant
+    "host": HOST, "key": KEY, "keyLocation": KEY_LOCATION, "urlList": urls[:10000]}, timeout=30)
+print("indexnow", r.status_code, len(urls), "urls", "" if r.ok else r.text[:300])
+sys.exit(0)  # jamais bloquant

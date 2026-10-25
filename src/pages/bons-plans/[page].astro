@@ -20,7 +20,7 @@ const updated = data.updated ? formatDate(new Date(data.updated)) : null;
 const total = Math.ceil(data.deals.length / PER_PAGE);
 ---
 
-<BaseLayout title={`Bons Plans Montessori — Page ${pageNum}`} description={`Bons plans Montessori, page ${pageNum}. Promotions sur le matériel, livres et jeux Montessori.`}>
+<BaseLayout title={`Bons Plans Montessori — Page ${pageNum}`} description={`Bons plans Montessori, page ${pageNum}. Promotions sur le matériel, livres et jeux Montessori.`} noindex>
   <section class="py-16 text-center">
     <div class="mx-auto max-w-4xl px-4">
       <h1 class="mb-4 font-serif text-4xl font-bold text-sage-800 md:text-5xl">Bons Plans Montessori</h1>

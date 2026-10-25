@@ -2,37 +2,109 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AffiliateBox from '../../components/AffiliateBox.astro';
 import ecoles from '../../data/ecoles.json';
+import coords from '../../data/villes_coords.json';
 
 export function getStaticPaths() {
   const villes = [...new Set(ecoles.map((e) => e.slug_ville).filter(Boolean))];
-  return villes.map((v) => ({
-    params: { ville: v },
-    props: {
-      villeName: ecoles.find((e) => e.slug_ville === v).ville,
-      cp: ecoles.find((e) => e.slug_ville === v).code_postal,
-      list: ecoles.filter((e) => e.slug_ville === v),
-    },
-  }));
+
+  const distance = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => {
+    const R = 6371;
+    const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+    const dLon = ((b.lon - a.lon) * Math.PI) / 180;
+    const s =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(s));
+  };
+
+  const counts = new Map<string, number>();
+  for (const e of ecoles) counts.set(e.slug_ville, (counts.get(e.slug_ville) ?? 0) + 1);
+
+  return villes.map((v) => {
+    const list = ecoles.filter((e) => e.slug_ville === v);
+    const here = coords[v];
+    const voisines = here
+      ? villes
+          .filter((s) => s !== v && coords[s])
+          .map((s) => ({ slug: s, nom: ecoles.find((e) => e.slug_ville === s).ville, n: counts.get(s) ?? 0, d: distance(here, coords[s]) }))
+          .sort((a, b) => a.d - b.d)
+          .slice(0, 6)
+      : [];
+
+    return {
+      params: { ville: v },
+      props: { villeName: list[0].ville, cp: list[0].code_postal, list, voisines },
+    };
+  });
 }
 
-const { villeName, cp, list } = Astro.props;
-const title = `École Montessori à ${villeName}${cp ? ` (${cp})` : ''} — Liste et Avis`;
+const { villeName, cp, list, voisines } = Astro.props;
+
+const ecolesN = list.filter((e) => e.amenity !== 'Collège').length;
+const collegesN = list.length - ecolesN;
+const types = [ecolesN ? `${ecolesN} école${ecolesN > 1 ? 's' : ''}` : null, collegesN ? `${collegesN} collège${collegesN > 1 ? 's' : ''}` : null]
+  .filter(Boolean)
+  .join(' et ');
+
+const title = `Écoles Montessori à ${villeName}`;
+const description = `Annuaire des écoles Montessori à ${villeName}${cp ? ` (${cp})` : ''} : ${list.length} établissement${
+  list.length > 1 ? 's' : ''
+} référencé${list.length > 1 ? 's' : ''} (${types}), adresses et présentation.`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://www.guidemontessori.fr/' },
+        { '@type': 'ListItem', position: 2, name: 'Annuaire des écoles', item: 'https://www.guidemontessori.fr/ecoles/' },
+        { '@type': 'ListItem', position: 3, name: `Écoles Montessori à ${villeName}`, item: `https://www.guidemontessori.fr/ecoles/${list[0].slug_ville}/` },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      name: `Écoles Montessori à ${villeName}`,
+      numberOfItems: list.length,
+      itemListElement: list.map((e, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': e.amenity === 'Collège' ? 'MiddleSchool' : 'School',
+          name: e.nom,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: e.adresse || undefined,
+            postalCode: e.code_postal || undefined,
+            addressLocality: e.ville || undefined,
+            addressCountry: 'FR',
+          },
+          ...(e.site ? { url: e.site } : {}),
+        },
+      })),
+    },
+  ],
+};
 ---
 
-<BaseLayout
-  title={title}
-  description={`Trouvez une école ou crèche Montessori à ${villeName}. ${list.length} établissement(s) référencé(s) avec présentation et points forts.`}
-  type="website"
->
+<BaseLayout title={title} description={description} type="website">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)} />
+
   <div class="mx-auto max-w-3xl px-4 py-12">
-    <nav class="mb-6 text-xs text-gray-500">
+    <nav class="mb-6 text-xs text-gray-500" aria-label="Fil d'Ariane">
       <a href="/ecoles/" class="hover:text-sage-600">Annuaire des écoles</a> &rsaquo; {villeName}
     </nav>
     <h1 class="mb-3 text-3xl font-bold text-gray-900">
-      École Montessori à {villeName}{cp && <span class="text-gray-500"> ({cp})</span>}
+      Écoles Montessori à {villeName}{cp && <span class="text-gray-500"> ({cp})</span>}
     </h1>
     <p class="mb-10 text-gray-700">
-      {list.length} établissement{list.length > 1 ? 's' : ''} Montessori référencé{list.length > 1 ? 's' : ''} à {villeName} et dans les environs.
+      {villeName} compte {list.length} établissement{list.length > 1 ? 's' : ''} Montessori référencé{list.length > 1 ? 's' : ''} dans notre annuaire&nbsp;: {types}.
+      {ecolesN > 0 && collegesN > 0
+        ? ' Écoles primaires et collèges appliquant la pédagogie Montessori y sont recensés avec leur adresse.'
+        : collegesN > 0
+          ? ' Ces collèges appliquent la pédagogie Montessori et sont recensés avec leur adresse.'
+          : ' Ces écoles appliquent la pédagogie Montessori et sont recensées avec leur adresse.'}
+      {list.length === 1 && ' Vous trouverez ci-dessous sa présentation détaillée, ses points forts et son contact.'}
     </p>
 
     <div class="space-y-6">
@@ -42,6 +114,7 @@ const title = `École Montessori à ${villeName}${cp ? ` (${cp})` : ''} — List
           <p class="mb-3 text-sm text-gray-500">
             {e.adresse && <span>{e.adresse} · </span>}
             {e.ville}{e.code_postal && ` ${e.code_postal}`}
+            {e.amenity === 'Collège' && <span> · Collège</span>}
             {e.amenity === 'kindergarten' && <span> · Crèche / Maternelle</span>}
           </p>
           {e.description_ia && <p class="mb-4 text-sm leading-relaxed text-gray-700">{e.description_ia}</p>}
@@ -58,6 +131,29 @@ const title = `École Montessori à ${villeName}${cp ? ` (${cp})` : ''} — List
         </article>
       ))}
     </div>
+
+    {
+      voisines.length > 0 && (
+        <section class="mt-14">
+          <h2 class="mb-4 font-serif text-xl font-bold text-gray-900">Écoles Montessori près de {villeName}</h2>
+          <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {voisines.map((v) => (
+              <li>
+                <a
+                  href={`/ecoles/${v.slug}/`}
+                  class="flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm transition-colors hover:border-sage-300 hover:bg-sage-50"
+                >
+                  <span class="font-semibold text-gray-800">Écoles Montessori à {v.nom}</span>
+                  <span class="shrink-0 text-xs text-gray-500">
+                    {v.n} étab. · {Math.round(v.d)} km
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
     <aside class="mt-12 rounded-2xl border border-terracotta-200 bg-terracotta-50 p-6">
       <h2 class="mb-2 text-lg font-bold text-gray-900">🎒 Préparez sa rentrée en école Montessori</h2>
@@ -81,5 +177,11 @@ const title = `École Montessori à ${villeName}${cp ? ` (${cp})` : ''} — List
         />
       </div>
     </aside>
+
+    <p class="mt-10 text-center text-sm">
+      <a href="/ecoles/" class="text-sage-600 hover:underline">← Voir toutes les villes</a>
+      {' · '}
+      <a href="/articles/" class="text-sage-600 hover:underline">Guides Montessori</a>
+    </p>
   </div>
 </BaseLayout>

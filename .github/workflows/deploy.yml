@@ -27,6 +27,8 @@ jobs:
       - run: npm run build
         env:
           PUBLIC_AMAZON_TAG: ${{ vars.AMAZON_TAG }}
+          PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          PUBLIC_BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
       - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -37,7 +39,6 @@ jobs:
       - name: Ping IndexNow
         if: success()
         env:
-          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |

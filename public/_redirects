@@ -1,4 +1,5 @@
-https://guidemontessori.fr/* https://www.guidemontessori.fr/:splat 301
+# Apex -> www : a configurer en Redirect Rule (Rules > Redirect Rules),
+# les redirects par domaine ne sont pas supportes par Pages _redirects.
 /articles.html /articles/ 301
 /admin /articles/ 301
 /admin/* /articles/ 301

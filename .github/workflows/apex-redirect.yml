@@ -34,7 +34,7 @@ jobs:
                   return e.code, json.loads(e.read())
 
           s, r = call("GET", "/user/tokens/verify")
-          print("token verify:", s, r.get("result", {}).get("status"), r.get("errors") or "")
+          print("token verify:", s, (r.get("result") or {}).get("status"), r.get("errors") or "")
 
           s, r = call("GET", f"/zones?name={HOST}")
           if s != 200 or not r.get("result"):

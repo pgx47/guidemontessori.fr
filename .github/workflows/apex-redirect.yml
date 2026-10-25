@@ -49,7 +49,7 @@ jobs:
 
           cond = (
               f'(http.host eq "{HOST}" '
-              'and not http.request.uri.path matches "^/[0-9a-f]{32}\\.txt$" '
+              'and http.request.uri.path ne "/57338eccf0bd7423e81d2ab725406602.txt" '
               'and http.request.uri.path ne "/BingSiteAuth.xml")'
           )
           print("expression:", cond)

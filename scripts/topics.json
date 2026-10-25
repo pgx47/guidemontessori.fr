@@ -14,7 +14,7 @@
       "keyword": "tour d'observation montessori",
       "type": "guide",
       "angle": "à partir de quel âge, stabilité, modèles évolutifs, erreurs à éviter",
-      "status": "pending",
+      "status": "published",
       "products": [
         {
           "asin": "B0GWQXY92V",
@@ -24,7 +24,9 @@
           "asin": "B0GZV9YM7D",
           "nom": "Toddler Standing Tower, 4-in-1 Kitchen Stool with Blackboard"
         }
-      ]
+      ],
+      "slug": "tour-observation-montessori-age-stabilite",
+      "publishedAt": "2026-10-25"
     },
     {
       "keyword": "étagère montessori jouets",

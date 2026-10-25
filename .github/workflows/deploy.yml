@@ -42,6 +42,6 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
-          pip install requests 2>/dev/null || true
+          pip install requests google-auth
           python scripts/ping_indexnow.py
           python scripts/ping_google.py

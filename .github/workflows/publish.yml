@@ -40,6 +40,7 @@ jobs:
 
       - run: pip install -r scripts/requirements.txt
       - run: npm ci
+      - run: python -m unittest discover -s scripts/tests -v
 
       - name: Decide publish day (2-4 random weekdays per ISO week)
         id: decide
@@ -86,7 +87,7 @@ jobs:
         run: |
           git config user.name "bot-montessori"
           git config user.email "bot@guidemontessori.fr"
-          git add src/content/ scripts/topics.json
+          git add src/content/ scripts/topics.json public/images/generated/
           git diff --cached --quiet && exit 0
           git commit -m "content: nouvel article"
           git push

@@ -82,12 +82,14 @@ def main() -> int:
     if not items:
         print("Aucune actu nouvelle.")
         return 0
+    failed = False
     for link, title, summary in items:
         try:
             _publish(link, title, summary)
         except Exception as e:
+            failed = True
             print(f"⚠ '{title[:50]}' : {e}", file=sys.stderr)
-    return 0
+    return 1 if failed else 0
 
 
 def _publish(link: str, title: str, summary: str) -> None:

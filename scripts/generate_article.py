@@ -105,7 +105,7 @@ def llm_config() -> tuple[str, str, str, str]:
         if key := os.environ.get(env):
             default_base = "https://openrouter.ai/api/v1" if "OPENROUTER" in env else "https://api.deepseek.com"
             default_model = "deepseek/deepseek-v4.1-flash" if "OPENROUTER" in env else "deepseek-flash"
-            return (os.environ.get("LLM_BASE_URL", default_base), key, os.environ.get("LLM_MODEL", default_model), "openai")
+            return ((os.environ.get("LLM_BASE_URL") or default_base), key, (os.environ.get("LLM_MODEL") or default_model), "openai")
     if key := os.environ.get("ANTHROPIC_API_KEY"):
         return (API_URL, key, MODEL, "anthropic")
     sys.exit("Aucune clé LLM : DEEPSEEK_API_KEY, OPENROUTER_API_KEY ou ANTHROPIC_API_KEY requis")
@@ -509,8 +509,8 @@ def main() -> int:
     try:
         a = call_llm(topic, kind)
     except Exception as e:
-        print(f"⚠ génération échouée, run non bloquant : {e}", file=sys.stderr)
-        return 0
+        print(f"Erreur de génération : {e}", file=sys.stderr)
+        return 1
     if errs := validate(a):
         print("⚠ " + ", ".join(errs), file=sys.stderr)
 

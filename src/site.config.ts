@@ -1,7 +1,7 @@
 export const SITE = {
   name: 'GuideMontessori.fr',
   url: 'https://www.guidemontessori.fr',
-  title: 'GuideMontessori.fr | Le Guide pour une Parentalité Bienveillante',
+  title: 'Montessori à la maison : activités, matériel et conseils | GuideMontessori.fr',
   description:
     'Découvrez les meilleurs matériels Montessori pour accompagner le développement de votre enfant. Guides détaillés, conseils pédagogiques et sélections de produits.',
   author: 'Rédaction GuideMontessori',

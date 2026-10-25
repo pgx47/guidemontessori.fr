@@ -1,6 +1,7 @@
 // @ts-check
 import fs from 'node:fs';
 import path from 'node:path';
+import { parse as parseYaml } from 'yaml';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -15,7 +16,14 @@ for (const [prefix, dir] of [
   if (!fs.existsSync(base)) continue;
   for (const file of fs.readdirSync(base)) {
     if (!/\.mdx?$/.test(file)) continue;
-    contentDates.set(`${prefix}${file.replace(/\.mdx?$/, '')}/`, fs.statSync(path.join(base, file)).mtime);
+    const source = fs.readFileSync(path.join(base, file), 'utf8');
+    const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+    if (!frontmatter) continue;
+    const data = parseYaml(frontmatter[1]);
+    const date = new Date(data.updatedDate ?? data.publishDate);
+    if (!data.draft && new Date(data.publishDate) <= new Date() && !Number.isNaN(date.valueOf())) {
+      contentDates.set(`${prefix}${file.replace(/\.mdx?$/, '')}/`, date);
+    }
   }
 }
 

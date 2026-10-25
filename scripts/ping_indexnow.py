@@ -3,7 +3,7 @@
 import os, sys, requests
 
 HOST = "www.guidemontessori.fr"
-KEY = os.environ.get("INDEXNOW_KEY") or "55b5cf4e6c664e2588594a105781d615"
+KEY = os.environ.get("INDEXNOW_KEY") or "57338eccf0bd7423e81d2ab725406602"
 KEY_LOCATION = f"https://{HOST}/{KEY}.txt"
 
 try:

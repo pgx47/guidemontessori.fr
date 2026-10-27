@@ -4,7 +4,7 @@ import SeoSchema from '../components/SeoSchema.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { render } from 'astro:content';
-import { SITE, formatDate } from '../site.config';
+import { SITE, formatDate, affiliateUrl } from '../site.config';
 import type { Entry } from '../lib/content';
 
 interface Props {
@@ -100,7 +100,7 @@ const toc = headings.filter((h) => h.depth === 2);
             <p class="mb-3 font-serif text-2xl font-bold text-gray-800">Prêt à Offrir ce Matériel à Votre Enfant ?</p>
             <p class="mx-auto mb-6 max-w-lg text-gray-600">Retrouvez notre sélection sur Amazon avec livraison rapide et retours gratuits.</p>
             <a
-              href={amazonUrl}
+              href={affiliateUrl(amazonUrl)}
               target="_blank"
               rel="nofollow sponsored noopener"
               class="inline-block rounded-full px-8 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"

@@ -24,7 +24,9 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - run: |
+          npm run build
+          npm run check:site
         env:
           PUBLIC_AMAZON_TAG: ${{ vars.AMAZON_TAG }}
           PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
@@ -39,9 +41,16 @@ jobs:
       - name: Ping IndexNow
         if: success()
         env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
-          pip install requests google-auth
+          pip install requests
           python scripts/ping_indexnow.py
+
+      - name: Submit sitemap to Google Search Console
+        if: success()
+        continue-on-error: true
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          pip install requests google-auth
           python scripts/ping_google.py

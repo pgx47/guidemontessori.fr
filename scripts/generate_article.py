@@ -91,9 +91,11 @@ def slugify(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
 
 
-def existing_articles() -> list[tuple[str, str]]:
+def existing_articles(kind: str | None = None) -> list[tuple[str, str]]:
     out = []
-    for d in DIRS.values():
+    for collection, d in DIRS.items():
+        if kind is not None and collection != kind:
+            continue
         for f in d.glob("*.md*"):
             m = re.search(r'^title:\s*"?(.*?)"?\s*$', f.read_text(), re.M)
             out.append((f.stem, m.group(1) if m else f.stem))
@@ -121,7 +123,11 @@ def tool_for(api: str) -> list:
 def call_llm(topic: dict, kind: str) -> dict:
     url, key, model, api = llm_config()
     products = topic.get("products", [])
-    links = "\n".join(f"- /articles/{s}/ : {t}" for s, t in existing_articles())
+    links = "\n".join(
+        f"- /{prefix}/{slug}/ : {title}"
+        for collection, prefix in (("guide", "articles"), ("news", "actualites"))
+        for slug, title in existing_articles(collection)
+    )
     prompt = f"""Type : {"guide evergreen / comparatif" if kind == "guide" else "brève d'actualité"}
 Mot-clé principal : {topic["keyword"]}
 Angle : {topic.get("angle", "répondre précisément à l'intention de recherche du parent")}

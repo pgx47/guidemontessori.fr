@@ -3,3 +3,8 @@
 /articles.html /articles/ 301
 /admin /articles/ 301
 /admin/* /articles/ 301
+
+/sitemap.xml /sitemap-index.xml 301
+/articles/vie-prairie/ /articles/vie-pratique/ 301
+/articles/vie-praptique/ /articles/vie-pratique/ 301
+/articles/bougeotheque-municipale-bordeaux-petite-enfance/ /actualites/bougeotheque-municipale-bordeaux-petite-enfance/ 301

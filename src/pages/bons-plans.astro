@@ -1,4 +1,5 @@
 ---
+import { affiliateUrl } from '../site.config';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { formatDate } from '../site.config';
 import data from '../data/deals.json';
@@ -22,8 +23,8 @@ const updated = data.updated ? formatDate(new Date(data.updated)) : null;
 ---
 
 <BaseLayout
-  title="Bons Plans Montessori – Promos du Jour"
-  description="Les meilleures offres et promotions Montessori sur Amazon. Matériel, livres et jouets éducatifs à prix réduit, mis à jour chaque jour."
+  title="Bons Plans Montessori – Offres et sélections"
+  description="Les meilleures offres et promotions Montessori sur Amazon. Matériel, livres et jouets éducatifs à prix réduit, mis à jour chaque lundi."
   keywords={['bons plans montessori', 'promotions montessori', 'réductions jouets éducatifs', 'offres montessori amazon']}
 >
   <div class="min-h-screen bg-gradient-to-b from-[#faf7f2] to-[#f5f0e8]">
@@ -32,7 +33,7 @@ const updated = data.updated ? formatDate(new Date(data.updated)) : null;
 
         <h1 class="mb-4 font-serif text-4xl font-bold text-sage-800 md:text-5xl">Bons Plans Montessori</h1>
         <p class="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600">
-          Les meilleures offres du moment sur le matériel, les livres et les jeux Montessori. Mis à jour automatiquement chaque jour.
+          Les meilleures offres du moment sur le matériel, les livres et les jeux Montessori. Mis à jour automatiquement chaque lundi.
         </p>
         {updated && <p class="mt-3 text-sm text-gray-400">Dernière mise à jour&nbsp;: {updated}</p>}
       </div>
@@ -44,13 +45,13 @@ const updated = data.updated ? formatDate(new Date(data.updated)) : null;
           <div class="py-20 text-center">
             <span class="mb-4 block text-5xl">📦</span>
             <p class="text-lg text-gray-500">Aucune offre disponible pour le moment.</p>
-            <p class="mt-2 text-sm text-gray-400">Revenez demain pour découvrir les nouvelles promotions !</p>
+            <p class="mt-2 text-sm text-gray-400">La sélection est actualisée chaque lundi.</p>
           </div>
         ) : (
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {deals.slice(0,12).map((d) => (
               <a
-                href={d.url}
+                href={affiliateUrl(d.url)}
                 target="_blank"
                 rel="nofollow sponsored noopener"
                 class="group relative flex flex-col overflow-hidden rounded-2xl border border-sage-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
@@ -106,7 +107,7 @@ const updated = data.updated ? formatDate(new Date(data.updated)) : null;
       <div class="mt-16 rounded-2xl border border-sage-200 bg-white/60 p-6 text-center backdrop-blur">
         <p class="text-xs leading-relaxed text-gray-400">
           🔗 Les liens ci-dessus sont des liens affiliés Amazon. En effectuant un achat via ces liens, vous soutenez GuideMontessori.fr sans aucun surcoût pour
-          vous. Les promotions sont détectées quotidiennement ; les prix et la disponibilité des produits peuvent changer rapidement sur Amazon.
+          vous. Les promotions sont actualisées chaque lundi ; les prix et la disponibilité des produits peuvent changer rapidement sur Amazon.
         </p>
       </div>
     </section>

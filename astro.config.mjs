@@ -4,8 +4,10 @@ import path from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import affiliateLinks, { DEFAULT_AMAZON_TAG } from './src/lib/affiliate-links.mjs';
 
 const contentDates = new Map();
 for (const [prefix, dir] of [
@@ -31,6 +33,7 @@ export default defineConfig({
   site: 'https://www.guidemontessori.fr',
   trailingSlash: 'ignore',
   build: { format: 'directory' },
+  markdown: { processor: unified({ rehypePlugins: [[affiliateLinks, { tag: process.env.PUBLIC_AMAZON_TAG?.trim() || DEFAULT_AMAZON_TAG }]] }) },
   integrations: [
     mdx(),
     sitemap({

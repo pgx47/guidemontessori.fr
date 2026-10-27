@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import cadeaux from '../data/cadeaux.json';
+import { SITE } from '../site.config';
 ---
 
 <BaseLayout
@@ -52,7 +53,7 @@ import cadeaux from '../data/cadeaux.json';
     </p>
   </div>
 
-  <script define:vars={{ cadeaux, tag: 'mtssri-21' }}>
+  <script define:vars={{ cadeaux, tag: SITE.amazonTag }}>
     let currentAge = 'all';
     let currentBudget = 'all';
 

@@ -1,5 +1,5 @@
 ---
-import { amazonUrl } from '../site.config';
+import { amazonUrl, affiliateUrl } from '../site.config';
 
 interface Props {
   asin: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { asin, nom, pointsForts, pointsFaibles, image, prix, ctaUrl } = Astro.props;
-const href = ctaUrl || amazonUrl(asin);
+const href = ctaUrl ? affiliateUrl(ctaUrl) : amazonUrl(asin);
 ---
 
 <div class="not-prose my-8 flex flex-col overflow-hidden rounded-2xl border-2 border-orange-100 bg-white shadow-sm sm:flex-row">

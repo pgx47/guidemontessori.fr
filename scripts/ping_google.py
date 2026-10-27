@@ -7,6 +7,7 @@ avoir accès à la propriété Search Console.
 """
 import json
 import os
+import re
 import sys
 from urllib.parse import quote
 
@@ -20,7 +21,18 @@ def submit_sitemap(token: str) -> int:
     endpoint = f'https://www.googleapis.com/webmasters/v3/sites/{quote(SITE, safe="")}/sitemaps/{quote(SITEMAP, safe="")}'
     response = requests.put(endpoint, headers={'Authorization': f'Bearer {token}'}, timeout=30)
     if response.status_code not in (200, 204):
-        print(f'::warning::Search Console : soumission du sitemap refusée (HTTP {response.status_code}). Vérifier l’API et les droits du compte de service.')
+        reason = 'inconnu'
+        try:
+            payload = response.json()
+            error = payload.get('error', {}) if isinstance(payload, dict) else {}
+            for detail in [*error.get('details', []), *error.get('errors', [])]:
+                candidate = detail.get('reason', '')
+                if re.fullmatch(r'[A-Za-z_]{1,80}', candidate):
+                    reason = candidate
+                    break
+        except (ValueError, TypeError, AttributeError):
+            pass
+        print(f'::warning::Search Console : soumission du sitemap refusée (HTTP {response.status_code}, motif {reason}). Vérifier l’API et les droits du compte de service.')
         return 1
     print('Search Console : sitemap soumis avec succès.')
     return 0

@@ -74,3 +74,10 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "content: illustrations des articles sans photo"
           git push
+
+  deploy:
+    needs: generate
+    # Un push fait avec GITHUB_TOKEN ne déclenche pas les autres workflows :
+    # sans ce job, les images seraient committées mais jamais déployées.
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit

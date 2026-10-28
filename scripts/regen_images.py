@@ -51,6 +51,103 @@ UNSPLASH_QUERIES = {
 }
 
 
+def _existing_hashes() -> set[str]:
+    """Empreintes des photos déjà en place, pour ne jamais réutiliser la même."""
+    import hashlib
+    out = set()
+    for f in PHOTOS.glob("*.webp"):
+        if f.name.endswith("-640.webp"):
+            continue
+        out.add(hashlib.sha1(f.read_bytes()).hexdigest())
+    return out
+
+
+def _valid_image(raw: bytes) -> bytes | None:
+    """Contrôles qualité communs : taille, largeur, ratio."""
+    import io
+    from PIL import Image
+    try:
+        im = Image.open(io.BytesIO(raw))
+        w, h = im.size
+    except Exception:
+        return None
+    if w < 1200 or h == 0:
+        return None
+    ratio = w / h
+    if not (1.2 <= ratio <= 2.2):
+        return None
+    return raw
+
+
+def generate_openverse(slug: str):
+    """Vraie photo CC depuis Openverse (aucune clé). -> (bytes, credit)"""
+    query = UNSPLASH_QUERIES.get(slug)
+    if not query:
+        return None, None
+    import hashlib
+    used = _existing_hashes()
+    bad = re.compile(r"logo|icon\b|\bmap\b|carte\b|diagram|schema|\.svg|\bplan\b|chart|graph|poster", re.I)
+    try:
+        r = requests.get(
+            "https://api.openverse.org/v1/images/",
+            params={"q": query, "page_size": "20", "license": "cc0,pdm,by", "size": "large", "filter_dead": "false"},
+            headers={"User-Agent": "GuideMontessori/1.0"},
+            timeout=45,
+        )
+    except Exception as e:
+        print(f"    ✗ Openverse : {type(e).__name__}")
+        return None, None
+    if not r.ok:
+        print(f"    ✗ Openverse : HTTP {r.status_code}")
+        return None, None
+
+    for it in r.json().get("results", []):
+        if bad.search(it.get("title") or "") or bad.search(it.get("url") or ""):
+            continue
+        w, h = it.get("width") or 0, it.get("height") or 0
+        if w < 1200 or h == 0 or not (1.2 <= w / h <= 2.2):
+            continue
+        try:
+            img = requests.get(it["url"], headers={"User-Agent": "GuideMontessori/1.0"}, timeout=60)
+            if not img.ok or len(img.content) < 80_000:
+                continue
+            if not _valid_image(img.content):
+                continue
+            if hashlib.sha1(img.content).hexdigest() in used:
+                continue
+            credit = {
+                "photographer": it.get("creator"),
+                "profile": it.get("creator_url"),
+                "source": it.get("foreign_landing_url"),
+                "license": it.get("license"),
+            }
+            print(f"    ✓ Openverse — {it.get('title') or query} ({w}×{h}, {it.get('license')})")
+            return img.content, credit
+        except Exception:
+            continue
+    return None, None
+
+
+def generate_pollinations(prompt: str) -> bytes | None:
+    """Génération gratuite sans clé (Pollinations)."""
+    import hashlib
+    full = f"{IMG_STYLE} Scene: {prompt}"
+    seed = int(hashlib.sha1(prompt.encode()).hexdigest()[:8], 16) % 10**6
+    try:
+        r = requests.get(
+            f"https://image.pollinations.ai/prompt/{requests.utils.quote(full)}",
+            params={"width": 1280, "height": 853, "nologo": "true", "model": "flux", "seed": seed},
+            timeout=180,
+        )
+    except Exception as e:
+        print(f"    ✗ Pollinations : {type(e).__name__}")
+        return None
+    if not r.ok:
+        print(f"    ✗ Pollinations : HTTP {r.status_code}")
+        return None
+    return _valid_image(r.content)
+
+
 def unsplash_keys() -> list[str]:
     """Rotation sur plusieurs applications : chacune plafonne à 50 req/h."""
     keys = []
@@ -278,8 +375,10 @@ def process(slug: str, prompt: str) -> bool:
     data = None
     credit = None
 
-    # 1. Unsplash (vraie photo, licence commerciale libre)
-    data, credit = generate_unsplash(slug)
+    # 1. Vraie photo libre : Openverse (sans clé) puis Unsplash (si clé)
+    data, credit = generate_openverse(slug)
+    if not data:
+        data, credit = generate_unsplash(slug)
 
     # 2. Génération IA si Unsplash n'a rien donné
     if not data:
@@ -288,6 +387,9 @@ def process(slug: str, prompt: str) -> bool:
             data = generate_flux(prompt)
             if data:
                 break
+        if not data:
+            print(f"  {slug} — repli Pollinations (gratuit, sans clé)")
+            data = generate_pollinations(prompt)
 
     if not data:
         print(f"  ⚠ IA indisponible pour {slug}, tentative stock libre")

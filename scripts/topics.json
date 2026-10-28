@@ -32,7 +32,7 @@
       "keyword": "étagère montessori jouets",
       "type": "guide",
       "angle": "rotation des jouets, hauteur, nombre d'activités par âge",
-      "status": "pending",
+      "status": "published",
       "products": [
         {
           "asin": "B0GS9RBK4V",
@@ -42,7 +42,9 @@
           "asin": "B0GWJ6HP6C",
           "nom": "OOOK Montessori Shelf 5-Section, 2-Shelf Toy Organizers and Storage The Forest S"
         }
-      ]
+      ],
+      "slug": "etagere-montessori-jouets-rotation",
+      "publishedAt": "2026-10-28"
     },
     {
       "keyword": "triangle de pikler",

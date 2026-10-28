@@ -33,6 +33,89 @@ from generate_article import (  # noqa: E402
 )
 
 FLUX_URL = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/run/@cf/black-forest-labs/flux-1-schnell"
+UNSPLASH_SEARCH = "https://api.unsplash.com/search/photos"
+
+# Requêtes Unsplash (EN) par slug.
+UNSPLASH_QUERIES = {
+    "etagere-montessori-jouets-rotation": "wooden shelf toys child room",
+    "tour-observation-montessori-age-stabilite": "child learning tower kitchen",
+    "amenager-un-coin-lecture-montessori": "children bookshelf reading corner",
+    "preparation-environnement-montessori": "montessori playroom wooden shelf",
+    "agent-accueil-petite-enfance-offres-salaires": "nursery reception interior",
+    "accueil-grand-age-methode-montessori-france-tv": "elderly hands activity care",
+    "atelier-montessori-rochechouart-aide-moi-a-faire-seul": "children hands wooden toys table",
+    "bougeotheque-municipale-bordeaux-petite-enfance": "toddler balance beam indoor play",
+    "ecole-montessori-irisia-aix-chantier-cour": "school courtyard plane trees",
+}
+
+
+def unsplash_keys() -> list[str]:
+    """Rotation sur plusieurs applications : chacune plafonne à 50 req/h."""
+    keys = []
+    for env in ("UNSPLASH_ACCESS_KEY", "UNSPLASH_ACCESS_KEY_2", "UNSPLASH_ACCESS_KEY_3"):
+        v = os.environ.get(env)
+        if v and v.strip():
+            keys.append(v.strip())
+    return keys
+
+
+def generate_unsplash(slug: str):
+    """(bytes, credit) depuis Unsplash, ou (None, None)."""
+    keys = unsplash_keys()
+    if not keys:
+        print("    ✗ Unsplash : aucune clé configurée")
+        return None, None
+    query = UNSPLASH_QUERIES.get(slug)
+    if not query:
+        return None, None
+
+    for i, key in enumerate(keys, 1):
+        try:
+            r = requests.get(
+                UNSPLASH_SEARCH,
+                headers={"Authorization": f"Client-ID {key}", "Accept-Version": "v1"},
+                params={"query": query, "per_page": "20", "orientation": "landscape", "content_filter": "high"},
+                timeout=30,
+            )
+        except Exception as e:
+            print(f"    ✗ Unsplash clé {i} : {type(e).__name__}")
+            continue
+
+        if r.status_code in (401, 403):
+            print(f"    ✗ Unsplash clé {i} : HTTP {r.status_code} — {r.text[:120]}")
+            continue
+        if not r.ok:
+            print(f"    ✗ Unsplash clé {i} : HTTP {r.status_code}")
+            continue
+
+        for ph in r.json().get("results", []):
+            if ph.get("premium"):
+                continue
+            w, h = ph.get("width") or 0, ph.get("height") or 0
+            if w < 1600 or h == 0 or not (1.2 <= w / h <= 2.2):
+                continue
+            try:
+                img = requests.get(ph["urls"]["raw"] + "&w=1600&fm=jpg&q=85", timeout=60)
+                if not img.ok or len(img.content) < 80_000:
+                    continue
+                # Exigé par les guidelines Unsplash : signaler le téléchargement.
+                try:
+                    requests.get(ph["links"]["download_location"],
+                                 headers={"Authorization": f"Client-ID {key}"}, timeout=15)
+                except Exception:
+                    pass
+                credit = {
+                    "photographer": (ph.get("user") or {}).get("name"),
+                    "profile": (ph.get("user") or {}).get("links", {}).get("html"),
+                    "source": ph.get("links", {}).get("html"),
+                    "license": "Unsplash License",
+                }
+                print(f"    ✓ Unsplash — {ph.get('alt_description') or query} ({w}×{h}) — clé {i}")
+                return img.content, credit
+            except Exception as e:
+                print(f"    ! Unsplash image ignorée : {type(e).__name__}")
+                continue
+    return None, None
 
 
 def generate_flux(prompt: str) -> bytes | None:
@@ -183,11 +266,18 @@ def process(slug: str, prompt: str) -> bool:
     emoji = read_str(fm, "emoji", "")
 
     data = None
-    for attempt in range(1, 4):
-        print(f"  génération {slug} — essai {attempt}/3")
-        data = generate_flux(prompt)
-        if data:
-            break
+    credit = None
+
+    # 1. Unsplash (vraie photo, licence commerciale libre)
+    data, credit = generate_unsplash(slug)
+
+    # 2. Génération IA si Unsplash n'a rien donné
+    if not data:
+        for attempt in range(1, 4):
+            print(f"  génération {slug} — essai {attempt}/3")
+            data = generate_flux(prompt)
+            if data:
+                break
 
     if not data:
         print(f"  ⚠ IA indisponible pour {slug}, tentative stock libre")
@@ -206,6 +296,8 @@ def process(slug: str, prompt: str) -> bool:
     out = PHOTOS / f"{slug}.webp"
     out.write_bytes(_to_webp(data))
     fm = set_str(fm, "image", f"/images/photos/{slug}.webp")
+    if credit and credit.get("photographer"):
+        fm = set_str(fm, "imageCredit", f"Photo : {credit['photographer']} / Unsplash")
     path.write_text(f"---\n{fm}\n---\n{body}")
     print(f"  ✓ {out.relative_to(ROOT)} ({out.stat().st_size // 1024} Ko)")
     return True

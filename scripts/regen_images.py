@@ -45,6 +45,8 @@ UNSPLASH_QUERIES = {
     "accueil-grand-age-methode-montessori-france-tv": "elderly hands activity care",
     "atelier-montessori-rochechouart-aide-moi-a-faire-seul": "children hands wooden toys table",
     "bougeotheque-municipale-bordeaux-petite-enfance": "toddler balance beam indoor play",
+    "apprentissage-vie-pratique-montessori-vaisselle": "child washing dishes hands kitchen",
+    "la-tour-pink-montessori-developpement-enfant": "wooden blocks tower pink cubes",
     "ecole-montessori-irisia-aix-chantier-cour": "school courtyard plane trees",
 }
 
@@ -209,6 +211,14 @@ PROMPTS = {
         "A toddler balancing barefoot on a low wooden beam in a bright indoor movement play space, "
         "soft mat and cushions on the floor, warm daylight, gentle motion, "
         "no text, no identifiable face"
+    ),
+    "apprentissage-vie-pratique-montessori-vaisselle": (
+        "A child's hands washing a small ceramic bowl and cup at a low basin in a warm kitchen, "
+        "wooden dish brush and a linen drying cloth, soft daylight, no text, no identifiable face"
+    ),
+    "la-tour-pink-montessori-developpement-equilibre-enfant": (
+        "Ten graded wooden pink cubes stacked into a tower on a small wooden table in a calm playroom, "
+        "warm natural light, shallow depth of field, no text, no people"
     ),
     "ecole-montessori-irisia-aix-chantier-cour": (
         "A French school courtyard with large plane trees casting dappled light on gravel and paving, "

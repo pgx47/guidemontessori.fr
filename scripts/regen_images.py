@@ -146,11 +146,60 @@ def process(slug: str, prompt: str) -> bool:
     return True
 
 
+def diagnose() -> None:
+    """Vérifie chaque fournisseur d'images et affiche l'erreur réelle."""
+    import os
+    import requests
+
+    acct = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
+    tok = os.environ.get("CLOUDFLARE_API_TOKEN")
+    print(f"CLOUDFLARE_ACCOUNT_ID: {'oui' if acct else 'non'}")
+    print(f"CLOUDFLARE_API_TOKEN: {'oui' if tok else 'non'}")
+    print(f"OPENAI_API_KEY: {'oui' if os.environ.get('OPENAI_API_KEY') else 'non'}")
+
+    if acct and tok:
+        try:
+            r = requests.post(
+                f"https://api.cloudflare.com/client/v4/accounts/{acct}/ai/run/@cf/black-forest-labs/flux-1-schnell",
+                headers={"Authorization": f"Bearer {tok}"},
+                json={"prompt": "a wooden shelf", "steps": 4},
+                timeout=120,
+            )
+            print(f"→ Workers AI : HTTP {r.status_code}")
+            if not r.ok:
+                print("   " + r.text[:500])
+        except Exception as e:
+            print(f"→ Workers AI : exception {e}")
+
+    try:
+        r = requests.get("https://api.openverse.org/v1/images/?q=montessori&page_size=1", timeout=15)
+        print(f"→ Openverse : HTTP {r.status_code}")
+    except Exception as e:
+        print(f"→ Openverse : exception {type(e).__name__}")
+
+    try:
+        r = requests.get(
+            "https://commons.wikimedia.org/w/api.php",
+            params={"action": "query", "format": "json", "list": "search",
+                    "srsearch": "montessori filetype:bitmap", "srnamespace": "6", "srlimit": "3"},
+            headers={"User-Agent": "GuideMontessori/1.0"}, timeout=15,
+        )
+        hits = len(r.json().get("query", {}).get("search", []))
+        print(f"→ Wikimedia : HTTP {r.status_code}, {hits} résultats")
+    except Exception as e:
+        print(f"→ Wikimedia : exception {type(e).__name__}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--slug", action="append", default=[])
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--diagnose", action="store_true")
     args = ap.parse_args()
+
+    if args.diagnose:
+        diagnose()
+        return 0
 
     slugs = list(PROMPTS) if (args.all or not args.slug) else args.slug
     ok = 0

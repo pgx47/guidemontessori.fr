@@ -1,6 +1,7 @@
 ---
 import fs from 'node:fs';
 import type { CollectionEntry } from 'astro:content';
+import { ogCardVersion } from '../lib/og';
 import { formatDate } from '../site.config';
 
 interface Props {
@@ -16,6 +17,7 @@ const href = `/${entry.collection === 'news' ? 'actualites' : 'articles'}/${entr
 
 const collectionPath = entry.collection === 'news' ? 'actualites' : 'articles';
 const ogPath = `/og/${collectionPath}/${entry.id}.jpg`;
+const ogSrc = ogCardVersion(ogPath);
 
 const imageStr = typeof image === 'string' ? image : '';
 const isRemote = /^https?:\/\//i.test(imageStr);
@@ -70,7 +72,7 @@ const fallbackGlyph = entry.collection === 'news' ? 'A' : 'G';
       </div>
     ) : renderOg || renderRemote ? (
       <div class="aspect-[16/10] overflow-hidden">
-        <img src={renderOg ? ogPath : remoteSrc} alt={title} width="640" height="400" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <img src={renderOg ? ogSrc : remoteSrc} alt={title} width="640" height="400" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
       </div>
     ) : (
       <div class="flex aspect-[16/10] items-center justify-center" style={`background: ${fallbackBg}`}>

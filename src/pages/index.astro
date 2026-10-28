@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getGuides, getNews } from '../lib/content';
+import { ogCardVersion } from '../lib/og';
 import { SITE, formatDate } from '../site.config';
 
 const [guides, news] = await Promise.all([getGuides(), getNews()]);
@@ -110,7 +111,7 @@ const guideList = guides.slice(1, 5);
           <a href={`/articles/${featuredGuide.id}/`} class="group block overflow-hidden rounded-2xl border border-sand-300 bg-[#fffcf8] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
             <div class="aspect-[16/9] overflow-hidden bg-sand-100">
               <img
-                src={`/og/articles/${featuredGuide.id}.jpg`}
+                src={ogCardVersion(`/og/articles/${featuredGuide.id}.jpg`)}
                 alt={featuredGuide.data.title}
                 width="1200"
                 height="630"
@@ -131,7 +132,7 @@ const guideList = guides.slice(1, 5);
           {guideList.map((entry) => (
             <a href={`/articles/${entry.id}/`} class="group flex items-center gap-4 border-b border-sand-300 py-4 first:pt-0 last:border-b-0 last:pb-0">
               <img
-                src={`/og/articles/${entry.id}.jpg`}
+                src={ogCardVersion(`/og/articles/${entry.id}.jpg`)}
                 alt=""
                 width="1200"
                 height="630"
@@ -185,7 +186,7 @@ const guideList = guides.slice(1, 5);
             <li>
               <a href={`/actualites/${entry.id}/`} class="group flex items-center gap-4 border-b border-sand-300 py-3">
                 <img
-                  src={`/og/actualites/${entry.id}.jpg`}
+                  src={ogCardVersion(`/og/actualites/${entry.id}.jpg`)}
                   alt=""
                   width="1200"
                   height="630"

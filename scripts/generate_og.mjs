@@ -330,8 +330,9 @@ async function main() {
   if (defaultSize > MAX_OG_KB * 1024) alerts.push(`default.jpg (${(defaultSize / 1024).toFixed(0)} Ko)`);
   console.log(`  [og] default.jpg  <-  default  (${(defaultSize / 1024).toFixed(0)} Ko)`);
 
-  // WebP
-  const contentImages = listContentImages();
+  // WebP (désactivable avec --og-only : n'écrit que les cartes OG)
+  const ogOnly = process.argv.includes('--og-only');
+  const contentImages = ogOnly ? [] : listContentImages();
   let webpGenerated = 0;
   let webpSkipped = 0;
   for (const src of contentImages) {

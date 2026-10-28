@@ -29,7 +29,6 @@ from generate_article import (  # noqa: E402
     ROOT,
     _to_webp,
     fetch_stock,
-    inspect_image,
     make_brand_card,
 )
 
@@ -79,9 +78,10 @@ def generate_flux(prompt: str) -> bytes | None:
         print(f"    ✗ conversion WebP impossible : {type(e).__name__}: {e}")
         return None
 
-    if not inspect_image(data):
-        print("    ✗ image rejetée par le contrôle qualité vision")
-        return None
+    # On ne passe PAS par inspect_image() : il interroge llm_config(), qui pointe
+    # sur deepseek-flash via DEEPSEEK_API_KEY — un modèle sans vision. Il répondait
+    # donc du texte au hasard et rejetait 100 % des images générées.
+    # Les prompts imposent déjà le style photo, et la sélection se fait à l'œil.
     return data
 
 CONTENT = ROOT / "src" / "content"

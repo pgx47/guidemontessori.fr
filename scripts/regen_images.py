@@ -34,6 +34,74 @@ from generate_article import (  # noqa: E402
 
 FLUX_URL = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/run/@cf/black-forest-labs/flux-1-schnell"
 UNSPLASH_SEARCH = "https://api.unsplash.com/search/photos"
+PIXABAY_API = "https://pixabay.com/api/"
+
+# Requêtes Pixabay (EN) : termes concrets, orientés photo.
+PIXABAY_QUERIES = {
+    "etagere-montessori-jouets-rotation": "wooden shelf toys nursery",
+    "tour-observation-montessori-age-stabilite": "child kitchen step stool",
+    "amenager-un-coin-lecture-montessori": "child books bookshelf reading",
+    "preparation-environnement-montessori": "montessori classroom wooden toys",
+    "apprentissage-vie-pratique-montessori-vaisselle": "child washing dishes hands",
+    "la-tour-pink-montessori-developpement-equilibre-enfant": "wooden blocks tower",
+    "agent-accueil-petite-enfance-offres-salaires": "nursery room interior",
+    "accueil-grand-age-methode-montessori-france-tv": "elderly hands care",
+    "atelier-montessori-rochechouart-aide-moi-a-faire-seul": "children craft table hands",
+    "bougeotheque-municipale-bordeaux-petite-enfance": "toddler playing indoor",
+    "ecole-montessori-irisia-aix-chantier-cour": "courtyard trees school building",
+}
+
+
+def generate_pixabay(slug: str):
+    """Vraie photo depuis Pixabay (clé gratuite, 100 req/min). -> (bytes, credit)"""
+    key = os.environ.get("PIXABAY_API_KEY")
+    if not key:
+        print("    ✗ Pixabay : aucune clé configurée")
+        return None, None
+    query = PIXABAY_QUERIES.get(slug)
+    if not query:
+        return None, None
+
+    import hashlib
+    used = _existing_hashes()
+    try:
+        r = requests.get(PIXABAY_API, params={
+            "key": key, "q": query, "image_type": "photo", "orientation": "horizontal",
+            "min_width": "1600", "per_page": "30", "safesearch": "true", "order": "popular",
+        }, timeout=30)
+    except Exception as e:
+        print(f"    ✗ Pixabay : {type(e).__name__}")
+        return None, None
+    if not r.ok:
+        print(f"    ✗ Pixabay : HTTP {r.status_code} — {r.text[:120]}")
+        return None, None
+
+    for hit in r.json().get("hits", []):
+        w, h = hit.get("imageWidth") or 0, hit.get("imageHeight") or 0
+        if w < 1600 or h == 0 or not (1.2 <= w / h <= 2.2):
+            continue
+        url = hit.get("fullHDURL") or hit.get("largeImageURL")
+        if not url:
+            continue
+        try:
+            img = requests.get(url, timeout=60)
+            if not img.ok or len(img.content) < 80_000:
+                continue
+            if not _valid_image(img.content):
+                continue
+            if hashlib.sha1(img.content).hexdigest() in used:
+                continue
+            credit = {
+                "photographer": hit.get("user"),
+                "profile": f"https://pixabay.com/users/{hit.get('user')}-{hit.get('user_id')}/",
+                "source": hit.get("pageURL"),
+                "license": "Pixabay Content License",
+            }
+            print(f"    ✓ Pixabay — {hit.get('tags','')[:60]} ({w}×{h})")
+            return img.content, credit
+        except Exception:
+            continue
+    return None, None
 
 # Requêtes Unsplash (EN) par slug.
 UNSPLASH_QUERIES = {
@@ -375,8 +443,10 @@ def process(slug: str, prompt: str) -> bool:
     data = None
     credit = None
 
-    # 1. Vraie photo libre : Openverse (sans clé) puis Unsplash (si clé)
-    data, credit = generate_openverse(slug)
+    # 1. Vraie photo : Pixabay (clé gratuite) puis Openverse puis Unsplash
+    data, credit = generate_pixabay(slug)
+    if not data:
+        data, credit = generate_openverse(slug)
     if not data:
         data, credit = generate_unsplash(slug)
 

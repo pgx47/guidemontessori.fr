@@ -30,7 +30,7 @@ const TWITTER_HANDLE = '@guidemontessori';
 
 // OG image : carte 1200×630 générée si disponible, sinon image de l'article.
 const ogCard = ogCardFor(Astro.url.pathname);
-const ogImagePath = ogCard ?? image ?? '/hero-1.png';
+const ogImagePath = ogCard ?? image ?? '/og/default.jpg';
 const ogGenerated = Boolean(ogCard);
 const ogImage = new URL(ogImagePath, SITE.url).toString();
 const ogImageAlt = title ?? SITE.title;

@@ -19,10 +19,10 @@ const guidesItemList = {
 };
 
 const ages = [
-  { age: '0–12 mois', title: 'Les premières découvertes', text: 'Observer, toucher et explorer à son rythme.', href: '/articles/mobile-munari/', number: '01' },
-  { age: '1–3 ans', title: 'Faire par soi-même', text: 'Des gestes simples pour grandir en autonomie.', href: '/articles/vie-pratique/', number: '02' },
-  { age: '3–6 ans', title: 'Apprendre avec ses sens', text: 'Manipuler, comparer et découvrir le langage.', href: '/articles/tour-rose/', number: '03', featured: true },
-  { age: '6 ans et plus', title: 'Explorer le monde', text: 'Nourrir la curiosité avec la géographie.', href: '/articles/globe-montessori/', number: '04' },
+  { age: '0–12 mois', title: 'Les premières découvertes', text: 'Observer, toucher et explorer à son rythme.', href: '/articles/mobile-munari/', number: '01', image: '/images/mobile-munari.webp', alt: 'Bébé observant un mobile Munari' },
+  { age: '1–3 ans', title: 'Faire par soi-même', text: 'Des gestes simples pour grandir en autonomie.', href: '/articles/vie-pratique/', number: '02', image: '/images/vie-pratique.webp', alt: 'Enfant faisant de la vie pratique' },
+  { age: '3–6 ans', title: 'Apprendre avec ses sens', text: 'Manipuler, comparer et découvrir le langage.', href: '/articles/tour-rose/', number: '03', image: '/images/tour-rose.webp', alt: 'Enfant construisant la tour rose Montessori', featured: true },
+  { age: '6 ans et plus', title: 'Explorer le monde', text: 'Nourrir la curiosité avec la géographie.', href: '/articles/globe-montessori/', number: '04', image: '/images/enfant-globe.webp', alt: 'Enfant explorant le monde avec un globe Montessori' },
 ];
 
 const resources = [
@@ -61,17 +61,15 @@ const guideList = guides.slice(1, 5);
       <div class="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {ages.map((item) => (
           <a href={item.href} class:list={['age-card group', item.featured && 'age-card--featured']}>
-            {item.featured && (
-              <img
-                src="/images/montessori-maison.webp"
-                alt="Enfant manipulant les cubes de la tour rose Montessori"
-                width="1024"
-                height="1024"
-                loading="lazy"
-                decoding="async"
-                class="mb-4 aspect-[16/10] w-full rounded-xl object-cover"
-              />
-            )}
+            <img
+              src={item.image}
+              alt={item.alt}
+              width="1024"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+              class="mb-4 aspect-[16/10] w-full rounded-xl object-cover"
+            />
             <div class="flex items-center justify-between">
               <span class="text-sm font-semibold text-sage-700">{item.age}</span>
               <span aria-hidden="true" class="font-serif text-2xl leading-none text-sand-400">{item.number}</span>

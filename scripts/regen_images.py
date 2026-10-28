@@ -13,14 +13,76 @@ Aucune dépendance YAML : le frontmatter est manipulé par regex + json.loads,
 ce qui évite d'ajouter pyyaml aux requirements du workflow.
 """
 import argparse
+import base64
 import json
+import os
 import re
 import sys
 from pathlib import Path
 
+import requests
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from generate_article import _to_webp, fetch_stock, generate_image, make_brand_card, ROOT  # noqa: E402
+from generate_article import (  # noqa: E402
+    IMG_STYLE,
+    ROOT,
+    _to_webp,
+    fetch_stock,
+    inspect_image,
+    make_brand_card,
+)
+
+FLUX_URL = "https://api.cloudflare.com/client/v4/accounts/{acct}/ai/run/@cf/black-forest-labs/flux-1-schnell"
+
+
+def generate_flux(prompt: str) -> bytes | None:
+    """Génère via Cloudflare Workers AI, en logguant la vraie raison d'un échec."""
+    acct = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
+    tok = os.environ.get("CLOUDFLARE_API_TOKEN")
+    if not (acct and tok):
+        print("    ✗ Cloudflare : credentials absents")
+        return None
+
+    full = f"{IMG_STYLE} Scene: {prompt}"
+    try:
+        r = requests.post(
+            FLUX_URL.format(acct=acct),
+            headers={"Authorization": f"Bearer {tok}"},
+            json={"prompt": full, "steps": 6},
+            timeout=180,
+        )
+    except Exception as e:
+        print(f"    ✗ Cloudflare : exception réseau {type(e).__name__}: {e}")
+        return None
+
+    if not r.ok:
+        print(f"    ✗ Cloudflare : HTTP {r.status_code} — {r.text[:300]}")
+        return None
+
+    try:
+        payload = r.json()
+        image = payload["result"]["image"]
+    except Exception as e:
+        print(f"    ✗ Cloudflare : réponse inattendue ({e}) — {r.text[:200]}")
+        return None
+
+    try:
+        raw = requests.get(image, timeout=60).content if str(image).startswith("http") else base64.b64decode(image)
+    except Exception as e:
+        print(f"    ✗ Cloudflare : récupération de l'image impossible ({e})")
+        return None
+
+    try:
+        data = _to_webp(raw)
+    except Exception as e:
+        print(f"    ✗ conversion WebP impossible : {type(e).__name__}: {e}")
+        return None
+
+    if not inspect_image(data):
+        print("    ✗ image rejetée par le contrôle qualité vision")
+        return None
+    return data
 
 CONTENT = ROOT / "src" / "content"
 PHOTOS = ROOT / "public" / "images" / "photos"
@@ -123,13 +185,16 @@ def process(slug: str, prompt: str) -> bool:
     data = None
     for attempt in range(1, 4):
         print(f"  génération {slug} — essai {attempt}/3")
-        data = generate_image(prompt, slug)
+        data = generate_flux(prompt)
         if data:
             break
 
     if not data:
         print(f"  ⚠ IA indisponible pour {slug}, tentative stock libre")
-        data = fetch_stock(f"{title} montessori", slug)
+        try:
+            data = fetch_stock(f"{title} montessori", slug)
+        except Exception as e:
+            print(f"    ✗ stock libre : {type(e).__name__}: {e}")
 
     if not data:
         print(f"  ⚠ stock libre indisponible pour {slug}, carte de marque")
@@ -146,7 +211,7 @@ def process(slug: str, prompt: str) -> bool:
     return True
 
 
-def diagnose() -> None:
+def _unused_diagnose() -> None:
     """Vérifie chaque fournisseur d'images et affiche l'erreur réelle."""
     import os
     import requests

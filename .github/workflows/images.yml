@@ -1,0 +1,76 @@
+name: Illustrations
+
+on:
+  workflow_dispatch:
+    inputs:
+      slugs:
+        description: 'Slugs séparés par des virgules (vide = tous ceux qui ont un prompt)'
+        required: false
+      regenerate_og:
+        description: 'Régénérer les cartes Open Graph après génération'
+        type: boolean
+        default: true
+
+concurrency:
+  group: images
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: pip install -r scripts/requirements.txt
+      - run: npm ci
+
+      - name: Generate illustrations
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          SLUGS: ${{ inputs.slugs }}
+        run: |
+          if [ -n "$SLUGS" ]; then
+            ARGS=""
+            for s in $(echo "$SLUGS" | tr ',' ' '); do ARGS="$ARGS --slug $s"; done
+            python scripts/regen_images.py $ARGS
+          else
+            python scripts/regen_images.py --all
+          fi
+
+      - name: Regenerate Open Graph cards
+        if: ${{ inputs.regenerate_og }}
+        run: npm run og
+
+      - name: Validate build
+        run: |
+          npm run build
+          npm run check:site
+
+      - name: Commit and push
+        run: |
+          git config user.name "bot-montessori"
+          git config user.email "bot@guidemontessori.fr"
+          git add src/content public/images/photos public/og
+          for f in src/data/used_images.json src/data/image_credits.json; do
+            [ -f "$f" ] && git add "$f"
+          done
+          git diff --cached --quiet && exit 0
+          git commit -m "content: illustrations des articles sans photo"
+          git push

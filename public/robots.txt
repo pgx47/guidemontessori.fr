@@ -1,4 +1,66 @@
+# Découverte LLM : https://www.guidemontessori.fr/llms.txt
+
 User-agent: *
 Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: CCBot
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /cdn-cgi/
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
 
 Sitemap: https://www.guidemontessori.fr/sitemap-index.xml

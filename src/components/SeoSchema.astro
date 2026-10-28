@@ -6,46 +6,145 @@ interface Props {
   title?: string;
   description?: string;
   url?: string;
+  path?: string;
   image?: string;
   publishDate?: Date;
   updatedDate?: Date;
+  dateModified?: Date;
   author?: string;
   faq?: { question: string; answer: string }[];
   breadcrumbs?: { name: string; url: string }[];
+  articleSection?: string;
+  wordCount?: number;
+  keywords?: string[];
+  pageType?: string;
+  items?: { name: string; url: string }[];
 }
 
-const { type, title, description, url, image, publishDate, updatedDate, author, faq, breadcrumbs } = Astro.props;
+const {
+  type,
+  title,
+  description,
+  url,
+  path,
+  image,
+  publishDate,
+  updatedDate,
+  dateModified,
+  author,
+  faq,
+  breadcrumbs,
+  articleSection,
+  wordCount,
+  keywords,
+  pageType = 'WebPage',
+  items,
+} = Astro.props;
+
 const abs = (p?: string) => (p ? new URL(p, SITE.url).toString() : undefined);
-const publisher = { '@type': 'Organization', name: SITE.name, url: SITE.url };
 
-const graph: Record<string, unknown>[] =
-  type === 'website'
-    ? [{ '@type': 'WebSite', name: SITE.name, url: SITE.url, inLanguage: 'fr-FR', publisher }]
-    : [
-        {
-          '@type': 'Article',
-          headline: title,
-          description,
-          image: abs(image),
-          datePublished: publishDate?.toISOString(),
-          dateModified: (updatedDate ?? publishDate)?.toISOString(),
-          author: { '@type': 'Organization', name: author ?? SITE.author },
-          publisher,
-          mainEntityOfPage: abs(url),
-          inLanguage: 'fr-FR',
-        },
-      ];
+const pageUrl = abs(path ?? url) ?? SITE.url;
 
-if (faq?.length)
-  graph.push({
-    '@type': 'FAQPage',
-    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
-  });
+const orgId = `${SITE.url}/#organization`;
+const websiteId = `${SITE.url}/#website`;
+const webpageId = `${pageUrl}#webpage`;
+const articleId = `${pageUrl}#article`;
+const breadcrumbId = `${pageUrl}#breadcrumb`;
+const faqId = `${pageUrl}#faq`;
+const itemListId = `${pageUrl}#itemlist`;
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@id': orgId,
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url,
+    logo: { '@type': 'ImageObject', url: `${SITE.url}/icon-512.png`, width: 512, height: 512 },
+    sameAs: [],
+  },
+  {
+    '@id': websiteId,
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: SITE.url,
+    inLanguage: 'fr-FR',
+    publisher: { '@id': orgId },
+  },
+];
+
+const webpage: Record<string, unknown> = {
+  '@id': webpageId,
+  '@type': pageType,
+  name: title,
+  description,
+  url: pageUrl,
+  isPartOf: { '@id': websiteId },
+  inLanguage: 'fr-FR',
+};
+
+if (breadcrumbs?.length) webpage.breadcrumb = { '@id': breadcrumbId };
+if (image) webpage.primaryImageOfPage = { '@type': 'ImageObject', url: abs(image) };
+
+graph.push(webpage);
+
+if (type === 'article') {
+  const article: Record<string, unknown> = {
+    '@id': articleId,
+    '@type': 'Article',
+    headline: title,
+    description,
+    datePublished: publishDate?.toISOString(),
+    dateModified: (dateModified ?? updatedDate ?? publishDate)?.toISOString(),
+    author: author
+      ? /r[ée]daction|équipe|equipe/i.test(author)
+        ? { '@type': 'Organization', name: author }
+        : { '@type': 'Person', name: author }
+      : { '@id': orgId },
+    publisher: { '@id': orgId },
+    mainEntityOfPage: { '@id': webpageId },
+    isPartOf: { '@id': websiteId },
+    inLanguage: 'fr-FR',
+  };
+  if (image) article.image = { '@type': 'ImageObject', url: abs(image) };
+  if (articleSection) article.articleSection = articleSection;
+  if (typeof wordCount === 'number') article.wordCount = wordCount;
+  if (keywords?.length) article.keywords = keywords.join(', ');
+  graph.push(article);
+}
 
 if (breadcrumbs?.length)
   graph.push({
+    '@id': breadcrumbId,
     '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbs.map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: abs(b.url) })),
+    itemListElement: breadcrumbs.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: b.name,
+      item: abs(b.url),
+    })),
+  });
+
+if (faq?.length)
+  graph.push({
+    '@id': faqId,
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  });
+
+if (items?.length)
+  graph.push({
+    '@id': itemListId,
+    '@type': 'ItemList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      url: abs(it.url),
+    })),
   });
 
 const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });

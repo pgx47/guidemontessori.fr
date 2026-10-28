@@ -4,9 +4,21 @@ import BookCard from '../components/BookCard.astro';
 import { booksFor } from '../data/books';
 
 const books = booksFor('parent');
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Lectures pour Parents',
+  itemListElement: books.map((b, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: b.title,
+  })),
+};
 ---
 
-<BaseLayout title={'Lectures pour Parents | Livres Montessori Essentiels'} description={'Découvrez notre sélection des meilleurs livres sur la pédagogie Montessori pour les parents. De Maria Montessori aux guides pratiques modernes.'} keywords={['livres montessori', 'éducation parents', 'Maria Montessori livres', 'pédagogie bienveillante']}>
+<BaseLayout title={"Livres Montessori pour les parents : comprendre la pédagogie"} description={"Les livres Montessori indispensables aux parents : comprendre la pédagogie, aménager la maison et accompagner l'autonomie de l'enfant au quotidien."} keywords={['livres montessori', 'éducation parents', 'Maria Montessori livres', 'pédagogie bienveillante']}>
+<script type="application/ld+json" slot="head" set:html={JSON.stringify(itemList)} />
 <div class="py-12 bg-warm">
     <div class="max-w-4xl mx-auto px-4">
         {/* Header */}

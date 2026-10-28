@@ -5,6 +5,7 @@ import ShareButtons from '../components/ShareButtons.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { render } from 'astro:content';
 import { SITE, formatDate, affiliateUrl } from '../site.config';
+import { ogImagePath } from '../lib/og';
 import type { Entry } from '../lib/content';
 
 interface Props {
@@ -18,16 +19,25 @@ const { title, description, keywords, image, emoji, publishDate, updatedDate, au
 const url = new URL(Astro.url.pathname, SITE.url).toString();
 const { headings } = await render(entry);
 const toc = headings.filter((h) => h.depth === 2);
+
+const wordCount = (entry.body ?? '')
+  .replace(/<[^>]*>/g, ' ')
+  .split(/\s+/)
+  .filter(Boolean).length;
+
+const ogCard = ogImagePath(Astro.url.pathname);
+// Illustration : carte OG générée en priorité (locale, 1200×630, légère), sinon image de l'article.
+const heroImage = ogCard ?? image;
 ---
 
 <BaseLayout title={title} description={description} keywords={keywords} image={image} type="article" publishDate={publishDate} updatedDate={updatedDate}>
   <SeoSchema
     slot="head"
     type="article"
+    path={Astro.url.pathname}
     title={title}
     description={description}
-    url={Astro.url.pathname}
-    image={image}
+    image={ogCard ?? image}
     publishDate={publishDate}
     updatedDate={updatedDate}
     author={author}
@@ -37,19 +47,44 @@ const toc = headings.filter((h) => h.depth === 2);
       { name: section.label, url: section.href },
       { name: title, url: Astro.url.pathname },
     ]}
+    articleSection={section.label}
+    wordCount={wordCount}
+    keywords={keywords}
   />
-  <article class="min-h-screen py-12" style="background-color: #fffcf8">
+  <article class="min-h-screen py-12" style="background-color: #fffcf8" itemscope itemtype="https://schema.org/Article">
     <div class="mx-auto max-w-3xl px-4">
       <nav class="mb-8 text-sm text-gray-500" aria-label="Fil d'Ariane">
-        <a href="/" class="hover:text-sage-600">Accueil</a>{' / '}<a href={section.href} class="hover:text-sage-600">{section.label}</a>{' / '}<span class="text-gray-700">{title}</span>
+        <ol class="flex flex-wrap items-center" itemscope itemtype="https://schema.org/BreadcrumbList">
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="/" itemprop="item" class="hover:text-sage-600"><span itemprop="name">Accueil</span></a><span aria-hidden="true"> / </span><meta itemprop="position" content="1" />
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href={section.href} itemprop="item" class="hover:text-sage-600"><span itemprop="name">{section.label}</span></a><span aria-hidden="true"> / </span><meta itemprop="position" content="2" />
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name" class="text-gray-700">{title}</span><meta itemprop="position" content="3" />
+          </li>
+        </ol>
       </nav>
 
       <header class="mb-10 text-center">
-        <div class="mb-4 text-6xl">{emoji}</div>
-        <h1 class="mb-4 font-serif text-3xl font-bold text-gray-900 md:text-4xl">{title}</h1>
+        {!heroImage && <div class="mb-4 text-6xl">{emoji}</div>}
+        <h1 class="mb-4 font-serif text-3xl font-bold text-gray-900 md:text-4xl" itemprop="headline">{title}</h1>
+        {heroImage && (
+          <img
+            src={heroImage}
+            alt={title}
+            width="1200"
+            height="675"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="mx-auto mb-8 aspect-[16/9] w-full rounded-2xl object-cover"
+          />
+        )}
         <p class="text-sm text-gray-500">
-          Publié le <time datetime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
-          {updatedDate && <>{' · Mis à jour le '}<time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time></>}
+          Publié le <time itemprop="datePublished" datetime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
+          {updatedDate && <>{' · Mis à jour le '}<time itemprop="dateModified" datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time></>}
           {` · ${author}`}
         </p>
       </header>

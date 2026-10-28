@@ -1,4 +1,5 @@
 ---
+import fs from 'node:fs';
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '../site.config';
 
@@ -9,9 +10,43 @@ interface Props {
   showDate?: boolean;
 }
 
-const { entry, border = 'border-orange-100', fallbackBg = 'linear-gradient(135deg, #fde2c8, #f9d4b0)', showDate = false } = Astro.props;
+const { entry, border = 'border-orange-100', fallbackBg = '#f5f0e8', showDate = false } = Astro.props;
 const { title, description, image, emoji, publishDate } = entry.data;
 const href = `/${entry.collection === 'news' ? 'actualites' : 'articles'}/${entry.id}/`;
+
+const collectionPath = entry.collection === 'news' ? 'actualites' : 'articles';
+const ogPath = `/og/${collectionPath}/${entry.id}.jpg`;
+
+const imageStr = typeof image === 'string' ? image : '';
+const isRemote = /^https?:\/\//i.test(imageStr);
+const isLocal = imageStr.startsWith('/');
+const localExists = isLocal && fs.existsSync(`public${imageStr}`);
+const ogExists = fs.existsSync(`public${ogPath}`);
+
+// Image locale (existe sur le disque) -> <picture> WebP + <img>.
+const renderLocal = isLocal && localExists;
+// URL distante -> <img> tel quel (normalisation des entités HTML).
+const renderRemote = isRemote;
+// Aucune image locale : on préfère la carte OG générée (stable, hébergée chez nous)
+// à un hotlink distant (presse, disponibilité et droits non maîtrisés).
+const renderOg = !renderLocal && ogExists;
+
+const remoteSrc = renderRemote ? imageStr.replace(/&amp;/g, '&') : '';
+
+let webpSrcset = '';
+if (renderLocal) {
+  const base = imageStr.replace(/\.(png|jpe?g|webp)$/i, '');
+  const webp = `${base}.webp`;
+  const webp640 = `${base}-640.webp`;
+  const parts: string[] = [];
+  if (fs.existsSync(`public${webp}`)) parts.push(`${webp} 1200w`);
+  if (fs.existsSync(`public${webp640}`)) parts.push(`${webp640} 640w`);
+  webpSrcset = parts.join(', ');
+}
+const hasWebp = webpSrcset.length > 0;
+
+// Repli typographique : initiale de catégorie (l'emoji n'est qu'un dernier recours).
+const fallbackGlyph = entry.collection === 'news' ? 'A' : 'G';
 ---
 
 <a
@@ -20,12 +55,27 @@ const href = `/${entry.collection === 'news' ? 'actualites' : 'articles'}/${entr
   style="background-color: #fffcf8"
 >
   {
-    image ? (
+    renderLocal ? (
       <div class="aspect-[16/10] overflow-hidden">
-        <img src={image} alt={title} loading="lazy" decoding="async" width="640" height="400" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        {
+          hasWebp ? (
+            <picture class="block h-full w-full">
+              <source type="image/webp" srcset={webpSrcset} sizes="(min-width: 768px) 33vw, 100vw" />
+              <img src={imageStr} alt={title} width="640" height="400" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </picture>
+          ) : (
+            <img src={imageStr} alt={title} width="640" height="400" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          )
+        }
+      </div>
+    ) : renderOg || renderRemote ? (
+      <div class="aspect-[16/10] overflow-hidden">
+        <img src={renderOg ? ogPath : remoteSrc} alt={title} width="640" height="400" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
       </div>
     ) : (
-      <div class="flex h-44 items-center justify-center text-5xl" style={`background: ${fallbackBg}`}>{emoji}</div>
+      <div class="flex aspect-[16/10] items-center justify-center" style={`background: ${fallbackBg}`}>
+        <span class="font-serif text-7xl font-bold text-sage-600/40" aria-hidden="true">{fallbackGlyph || emoji}</span>
+      </div>
     )
   }
   <div class="p-5">

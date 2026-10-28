@@ -38,6 +38,16 @@ Style :
 - Insert un encadré "> 💡 **L'œil de l'éducateur** :" (astuce maison) et un encadré "> ⚠️ **Erreur fréquente** :" dans chaque guide, en blockquote Markdown.
 - Cite Maria Montessori seulement avec des citations réelles et connues.
 
+Contraintes SEO (strictes) :
+- Tous les accents et diacritiques français doivent être corrects : « pédagogie », « matériel », « activité », « crèche », « développement », « préparation », « éducation ». Les formes non accentuées (« pedagogie », « materiel », « activite », « creche », « developpement », « preparation », « education ») sont strictement interdites.
+- title : 50 à 70 caractères, mot-clé principal au début.
+- description : 140 à 160 caractères, mot-clé dans les 60 premiers caractères, sans « Découvrez ».
+- keywords : 4 à 6, en minuscules, accentués.
+- Le corps doit contenir 4 à 6 titres ## (alimentent le sommaire et la hiérarchie sémantique).
+- Le corps doit inclure 3 à 5 liens internes vers des articles existants, avec des ancres descriptives (exploite la liste fournie).
+- faq : 3 à 5 questions/réponses (alimente le schema FAQPage).
+- N'invente aucun produit : utilise uniquement les ASIN fournis.
+
 Format du corps (champ body) : Markdown pur, sans titre H1, sections en ## et ###, paragraphes courts, au moins un tableau Markdown comparatif pour un guide.
 Pour placer un produit, écris seul sur sa ligne le marqueur [[PRODUIT:n]] (n = index 0-based dans la liste fournie). Chaque produit fourni doit apparaître une fois.
 N'utilise ni HTML, ni accolades { }, ni chevrons < >."""
@@ -49,12 +59,12 @@ TOOL = {
         "type": "object",
         "required": ["title", "description", "slug", "keywords", "emoji", "body", "faq", "products"],
         "properties": {
-            "title": {"type": "string", "description": "Titre SEO 40-70 caractères, mot-clé principal au début."},
-            "description": {"type": "string", "description": "Meta description 120-160 caractères, incitative."},
+            "title": {"type": "string", "description": "Titre SEO 50-70 caractères, mot-clé principal au début, accents français corrects."},
+            "description": {"type": "string", "description": "Meta description 140-160 caractères, factuelle, mot-clé dans les 60 premiers caractères, sans « Découvrez »."},
             "slug": {"type": "string", "description": "kebab-case ascii, 3-7 mots."},
-            "keywords": {"type": "array", "items": {"type": "string"}, "minItems": 3, "maxItems": 8},
+            "keywords": {"type": "array", "items": {"type": "string"}, "minItems": 4, "maxItems": 6, "description": "4 à 6 mots-clés en minuscules, accentués, dont le mot-clé principal et la ville."},
             "emoji": {"type": "string", "description": "Un seul emoji représentatif."},
-            "body": {"type": "string", "description": "Corps Markdown (1200-1800 mots pour un guide, 400-700 pour une news)."},
+            "body": {"type": "string", "description": "Corps Markdown (1200-1800 mots pour un guide, 400-700 pour une news) : 4 à 6 titres ## et 3 à 5 liens internes vers des articles existants, avec ancres descriptives."},
             "faq": {
                 "type": "array",
                 "minItems": 3,
@@ -71,7 +81,7 @@ TOOL = {
             },
             "products": {
                 "type": "array",
-                "description": "Un élément par produit fourni, dans le même ordre.",
+                "description": "Un élément par produit fourni, dans le même ordre. Aucun produit inventé : uniquement les ASIN fournis.",
                 "items": {
                     "type": "object",
                     "required": ["pointsForts", "pointsFaibles"],
@@ -321,13 +331,14 @@ def generate_image(prompt: str, slug: str) -> bytes | None:
         return None
 
 
-def article_image(prompt: str, slug: str, query: str | None = None) -> str | None:
+def article_image(prompt: str, slug: str, title: str, emoji: str, query: str | None = None) -> str:
     for attempt in range(3):
         if data := generate_image(prompt, slug):
             return store_image(data, slug)
     if data := fetch_stock(query or prompt, slug):
         return store_image(data, slug)
-    return None
+    print(f"⚠ image générée localement (carte de marque) pour {slug}")
+    return make_brand_card(slug, title, emoji)
 
 
 def store_image(data: bytes, slug: str) -> str | None:
@@ -352,6 +363,76 @@ def store_image(data: bytes, slug: str) -> str | None:
     IMAGES_DIR.mkdir(parents=True, exist_ok=True)
     (IMAGES_DIR / fname).write_bytes(data)
     return f"/images/generated/{fname}"
+
+
+def make_brand_card(slug: str, title: str, emoji: str) -> str:
+    """Carte de marque locale 1200x675 (dégradé + bandeau) quand aucune image n'est dispo."""
+    from PIL import Image, ImageDraw, ImageFont
+    W, H = 1200, 675
+    top, bottom = (245, 240, 232), (232, 221, 208)  # #f5f0e8 -> #e8ddd0
+    banner_h = 90
+    im = Image.new("RGB", (W, H), top)
+    draw = ImageDraw.Draw(im)
+    for y in range(H):
+        t = y / (H - 1)
+        draw.line([(0, y), (W, y)], fill=tuple(int(top[i] + (bottom[i] - top[i]) * t) for i in range(3)))
+    draw.rectangle([(0, H - banner_h), (W, H)], fill=(207, 77, 94))  # terracotta #CF4D5E
+
+    def _font(size: int, bold: bool = False):
+        try:
+            return ImageFont.truetype("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf", size)
+        except OSError:
+            return ImageFont.load_default()
+
+    # Emoji si une police compatible est disponible (best-effort, try/except)
+    if emoji:
+        for emoji_font_name in ("NotoColorEmoji.ttf", "NotoEmoji-Regular.ttf", "Segoe UI Emoji.ttf", "Apple Color Emoji.ttf"):
+            try:
+                ef = ImageFont.truetype(emoji_font_name, 80)
+                bbox = draw.textbbox((0, 0), emoji, font=ef)
+                draw.text(((W - (bbox[2] - bbox[0])) / 2, 70), emoji, font=ef, fill=(70, 70, 70))
+                break
+            except Exception:
+                continue
+
+    # Titre wrappé sur 3 lignes max, centré
+    title_font = _font(48, bold=True)
+    max_width = W - 160
+    words = title.split()
+    lines, cur = [], ""
+    for word in words:
+        trial = f"{cur} {word}".strip()
+        if not cur or draw.textbbox((0, 0), trial, font=title_font)[2] <= max_width:
+            cur = trial
+        else:
+            lines.append(cur)
+            cur = word
+        if len(lines) == 3:
+            break
+    if len(lines) < 3 and cur:
+        lines.append(cur)
+    for i, ln in enumerate(lines):
+        while ln and draw.textbbox((0, 0), ln + "…", font=title_font)[2] > max_width:
+            ln = ln[:-1]
+        if ln != lines[i]:
+            lines[i] = ln + "…"
+    line_h = 58
+    total_h = len(lines) * line_h
+    start_y = (H - banner_h - total_h) // 2
+    for i, ln in enumerate(lines):
+        bb = draw.textbbox((0, 0), ln, font=title_font)
+        draw.text(((W - (bb[2] - bb[0])) / 2, start_y + i * line_h), ln, font=title_font, fill=(60, 60, 60))
+
+    # Bandeau : « GuideMontessori.fr » en blanc
+    brand = "GuideMontessori.fr"
+    brand_font = _font(40, bold=True)
+    bb = draw.textbbox((0, 0), brand, font=brand_font)
+    draw.text(((W - (bb[2] - bb[0])) / 2, H - banner_h + (banner_h - (bb[3] - bb[1])) / 2), brand, font=brand_font, fill=(255, 255, 255))
+
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    out = IMAGES_DIR / f"{slug}-fallback.webp"
+    im.save(out, "WEBP", quality=82, method=6)
+    return f"/images/generated/{slug}-fallback.webp"
 
 
 def make_pin(img_path: Path, slug: str, title: str) -> None:
@@ -380,8 +461,12 @@ def make_pin(img_path: Path, slug: str, title: str) -> None:
 def render_mdx(a: dict, topic: dict, kind: str, today: str, slug: str) -> str:
     products = topic.get("products", [])
     image = topic.get("image")
-    if not image and a.get("imagePrompt"):
-        image = article_image(a["imagePrompt"], slug, topic.get("keyword"))
+    if not image:
+        if a.get("imagePrompt"):
+            image = article_image(a["imagePrompt"], slug, a["title"], a.get("emoji", ""), topic.get("keyword"))
+        else:
+            print(f"⚠ image générée localement (carte de marque) pour {slug}")
+            image = make_brand_card(slug, a["title"], a.get("emoji", ""))
         if image and image.startswith("/images/generated/"):
             make_pin(ROOT / "public" / image.lstrip("/"), slug, a["title"])
     fm = {
@@ -393,9 +478,8 @@ def render_mdx(a: dict, topic: dict, kind: str, today: str, slug: str) -> str:
         "keywords": a["keywords"],
         "emoji": a["emoji"],
         "faq": a["faq"],
+        "image": image,
     }
-    if image:
-        fm["image"] = image
     if products:
         fm["asin"] = products[0]["asin"]
     lines = ["---"] + [f"{k}: {json.dumps(v, ensure_ascii=False)}" for k, v in fm.items()] + ["---", ""]
@@ -486,6 +570,28 @@ def validate(a: dict) -> list[str]:
     return errs
 
 
+def seo_warnings(a: dict) -> None:
+    """Avertissements SEO non bloquants après génération."""
+    title = a.get("title", "")
+    desc = a.get("description", "")
+    body = a.get("body", "")
+    keywords = a.get("keywords", []) or []
+    text = f"{title} {desc} {body} {' '.join(keywords)}"
+    w = []
+    if len(title) > 75:
+        w.append(f"title trop long ({len(title)} car.)")
+    if not 120 <= len(desc) <= 165:
+        w.append(f"description hors bornes ({len(desc)} car.)")
+    if len(re.findall(r"^##\s", body, re.M)) < 4:
+        w.append("moins de 4 titres ## dans le corps")
+    if not re.search(r"\]\(/(articles|actualites)/", body):
+        w.append("aucun lien interne détecté")
+    if re.search(r"\b(developp|materiel|pedagogi|mathemati|preparat|activite|educat)\w*", text, re.I):
+        w.append("accents manquants détectés")
+    for msg in w:
+        print(f"⚠ SEO : {msg}", file=sys.stderr)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--topic", help="mot-clé principal")
@@ -520,6 +626,7 @@ def main() -> int:
         return 1
     if errs := validate(a):
         print("⚠ " + ", ".join(errs), file=sys.stderr)
+    seo_warnings(a)
 
     today = date.today().isoformat()
     slug = slugify(a.get("slug") or a["title"])

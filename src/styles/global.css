@@ -54,21 +54,28 @@
   --bg-cream: #f0ebe2;
 }
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: clip;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
 
-body {
-  @apply text-gray-800 font-sans;
-  background-color: var(--bg-warm);
-}
+  body {
+    @apply text-gray-800 font-sans;
+    background-color: var(--bg-warm);
+  }
 
-h1,
-h2,
-h3,
-h4 {
-  @apply font-serif text-gray-900;
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif text-gray-900;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
 }
 
 /* Section backgrounds - warm and soothing */
@@ -87,46 +94,48 @@ h4 {
 }
 
 /* Article Styling */
-.prose h1:not(.not-prose *) {
-  @apply text-3xl md:text-4xl font-bold mb-6 text-sage-700;
-}
+@layer base {
+  .prose h1:not(.not-prose *) {
+    @apply text-3xl md:text-4xl font-bold mb-6 text-sage-700;
+  }
 
-.prose h2:not(.not-prose *) {
-  @apply text-2xl font-bold mt-10 mb-4 text-sage-600;
-}
+  .prose h2:not(.not-prose *) {
+    @apply text-2xl font-bold mt-10 mb-4 text-sage-600;
+  }
 
-.prose h3:not(.not-prose *) {
-  @apply text-xl font-semibold mt-8 mb-3 text-sage-500;
-}
+  .prose h3:not(.not-prose *) {
+    @apply text-xl font-semibold mt-8 mb-3 text-sage-500;
+  }
 
-.prose p:not(.not-prose *) {
-  @apply mb-4 leading-relaxed text-gray-700;
-}
+  .prose p:not(.not-prose *) {
+    @apply mb-4 leading-relaxed text-gray-700;
+  }
 
-.prose ul:not(.not-prose *),
-.prose ol:not(.not-prose *) {
-  @apply mb-4 pl-6 space-y-2;
-}
+  .prose ul:not(.not-prose *),
+  .prose ol:not(.not-prose *) {
+    @apply mb-4 pl-6 space-y-2;
+  }
 
-.prose li:not(.not-prose *) {
-  @apply text-gray-700;
-}
+  .prose li:not(.not-prose *) {
+    @apply text-gray-700;
+  }
 
-.prose blockquote:not(.not-prose *) {
-  @apply border-l-4 border-sage-400 bg-sage-50 pl-4 py-3 my-6 italic text-gray-600;
-}
+  .prose blockquote:not(.not-prose *) {
+    @apply border-l-4 border-sage-400 bg-sage-50 pl-4 py-3 my-6 italic text-gray-600;
+  }
 
-.prose strong:not(.not-prose *) {
-  @apply font-semibold text-gray-900;
-}
+  .prose strong:not(.not-prose *) {
+    @apply font-semibold text-gray-900;
+  }
 
-.prose a:not(.not-prose *) {
-  @apply text-terracotta-500 underline hover:text-terracotta-600 transition-colors;
+  .prose a:not(.not-prose *) {
+    @apply text-terracotta-500 underline hover:text-terracotta-600 transition-colors;
+  }
 }
 
 /* CTA Button */
 .btn-cta {
-  @apply inline-block bg-terracotta-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-terracotta-600 transition-all duration-300 shadow-md hover:shadow-lg;
+  @apply inline-block bg-terracotta-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-terracotta-700 transition-all duration-300 shadow-md hover:shadow-lg;
 }
 
 /* Card - softer cream background */
@@ -136,48 +145,54 @@ h4 {
 }
 
 /* Beautiful Table Styling */
-.prose table:not(.not-prose *) {
-  @apply w-full border-collapse rounded-lg overflow-hidden shadow-sm my-6;
-}
+@layer base {
+  .prose table:not(.not-prose *) {
+    @apply w-full border-collapse rounded-lg overflow-hidden shadow-sm my-6;
+  }
 
-.prose thead:not(.not-prose *) {
-  background: linear-gradient(135deg, #8FBC8F 0%, #6B9B6B 100%);
-}
+  .prose thead:not(.not-prose *) {
+    /* Dégradé assombri : le blanc sur #8FBC8F ne donnait que 2,15:1 (échec AA).
+       #4A7A4A -> 5,0:1 et #375C37 -> 7,0:1 pour le texte blanc. */
+    background: linear-gradient(135deg, #4A7A4A 0%, #375C37 100%);
+  }
 
-.prose th:not(.not-prose *) {
-  @apply text-white font-semibold py-3 px-4 text-left text-sm;
-}
+  .prose th:not(.not-prose *) {
+    @apply text-white font-semibold py-3 px-4 text-left text-sm;
+  }
 
-.prose tbody tr:not(.not-prose *) {
-  @apply border-b border-gray-100;
-  background-color: #faf6f0;
-}
+  .prose tbody tr:not(.not-prose *) {
+    @apply border-b border-gray-100;
+    background-color: #faf6f0;
+  }
 
-.prose tbody tr:nth-child(even):not(.not-prose *) {
-  background-color: #f7f4ef;
-}
+  .prose tbody tr:nth-child(even):not(.not-prose *) {
+    background-color: #f7f4ef;
+  }
 
-.prose tbody tr:hover:not(.not-prose *) {
-  background-color: #f0ebe4;
-}
+  .prose tbody tr:hover:not(.not-prose *) {
+    background-color: #f0ebe4;
+  }
 
-.prose td:not(.not-prose *) {
-  @apply py-3 px-4 text-sm text-gray-700;
+  .prose td:not(.not-prose *) {
+    @apply py-3 px-4 text-sm text-gray-700;
+  }
 }
 
 
 /* Cute Image Frames */
-.prose img:not(.not-prose *) {
-  @apply rounded-xl border-4 border-white shadow-lg my-8 mx-auto transition-transform duration-300;
-  outline: 2px dashed #e8d0b3;
-  /* Soft pastel outline */
-  outline-offset: -2px;
-}
+@layer base {
+  .prose img:not(.not-prose *) {
+    @apply rounded-xl border-4 border-white shadow-lg my-8 mx-auto transition-transform duration-300;
+    outline: 2px dashed #e8d0b3;
+    /* Soft pastel outline */
+    outline-offset: -2px;
+  }
 
-.prose img:hover:not(.not-prose *) {
-  @apply bg-white;
-  transform: rotate(-1deg) scale(1.02);
-  outline-color: #e8956a;
+  .prose img:hover:not(.not-prose *) {
+    @apply bg-white;
+    transform: rotate(-1deg) scale(1.02);
+    outline-color: #e8956a;
+  }
 }
 @media (max-width: 767px) {
   .prose table:not(.not-prose *) {
@@ -210,9 +225,11 @@ a:focus-visible, summary:focus-visible, button:focus-visible {
 .age-card { display: block; padding: 1.5rem; border: 1px solid var(--color-sand-300); border-radius: 1rem; background: #fffcf8; transition: border-color .2s, box-shadow .2s; }
 .age-card:hover { border-color: var(--color-sage-600); box-shadow: 0 6px 20px #2e412e0a; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; }
-.prose ul:not(.not-prose *) { list-style-type: disc; }
-.prose ol:not(.not-prose *) { list-style-type: decimal; }
-.prose h2, .prose h3 { scroll-margin-top: 6rem; }
+@layer base {
+  .prose ul:not(.not-prose *) { list-style-type: disc; }
+  .prose ol:not(.not-prose *) { list-style-type: decimal; }
+  .prose h2, .prose h3 { scroll-margin-top: 6rem; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }

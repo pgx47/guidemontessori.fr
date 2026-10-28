@@ -2,11 +2,25 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getNews } from '../../lib/content';
+import { SITE } from '../../site.config';
 
 const news = await getNews();
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Actualités Montessori',
+  itemListElement: news.map((n, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: n.data.title,
+    url: `${SITE.url}/actualites/${n.id}/`,
+  })),
+};
 ---
 
-<BaseLayout title="Actualités Montessori" description="Les dernières actualités autour de la pédagogie Montessori : nouveautés matériel, livres, études et conseils pour les parents.">
+<BaseLayout title="Actualités Montessori : écoles, crèches et recherches" description="Les dernières actualités de la pédagogie Montessori : écoles, crèches, études, recherches et initiatives pour la petite enfance, décryptées pour les parents.">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(itemList)} />
   <section class="min-h-screen bg-sand-50 py-16">
     <div class="mx-auto max-w-6xl px-4">
       <div class="mb-12 text-center">

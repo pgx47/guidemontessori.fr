@@ -2,11 +2,25 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getGuides } from '../../lib/content';
+import { SITE } from '../../site.config';
 
 const guides = await getGuides();
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Guides Montessori',
+  itemListElement: guides.map((g, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: g.data.title,
+    url: `${SITE.url}/articles/${g.id}/`,
+  })),
+};
 ---
 
-<BaseLayout title="Tous les Articles" description="Découvrez tous nos guides sur le matériel Montessori : Globe, Lettres Rugueuses, Tour Rose, et bien plus encore.">
+<BaseLayout title="Guides Montessori : matériel, activités et conseils" description="Tous nos guides sur le matériel Montessori : tour rose, lettres rugueuses, vie pratique, globe… pour accompagner l'autonomie de votre enfant à la maison.">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(itemList)} />
   <section class="min-h-screen bg-sand-50 py-16">
     <div class="mx-auto max-w-6xl px-4">
       <div class="mb-12 text-center">

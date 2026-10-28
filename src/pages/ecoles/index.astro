@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ecoles from '../../data/ecoles.json';
 import coords from '../../data/villes_coords.json';
+import { SITE } from '../../site.config';
 
 const byVille = new Map<string, { nom: string; cp: string; ecoles: number; college: number }>();
 for (const e of ecoles) {
@@ -15,6 +16,18 @@ const villes = [...byVille.entries()].sort((a, b) => a[1].nom.localeCompare(b[1]
 const markers = villes
   .filter(([slug]) => coords[slug])
   .map(([slug, v]) => ({ slug, nom: v.nom, n: v.ecoles, lat: coords[slug].lat, lon: coords[slug].lon }));
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Annuaire des écoles Montessori',
+  itemListElement: villes.slice(0, 20).map(([slug, v], i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: v.nom,
+    url: `${SITE.url}/ecoles/${slug}/`,
+  })),
+};
 ---
 
 <BaseLayout
@@ -22,6 +35,7 @@ const markers = villes
   description="Trouvez une école ou crèche Montessori près de chez vous. Carte interactive et annuaire par ville des établissements Montessori en France."
   type="website"
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(itemList)} />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" slot="head" />
 
   <div class="mx-auto max-w-5xl px-4 py-12">

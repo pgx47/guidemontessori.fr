@@ -41,11 +41,33 @@ export default defineConfig({
       serialize(item) {
         const { pathname } = new URL(item.url);
         const lastmod = contentDates.get(pathname);
+
+        let priority = 0.3;
+        let changefreq = 'yearly';
+
+        if (pathname === '/') {
+          priority = 1.0;
+          changefreq = 'weekly';
+        } else if (/^\/(articles|actualites|ecoles)\/$/.test(pathname)) {
+          priority = 0.9;
+          changefreq = 'weekly';
+        } else if (/^\/(lectures-parents|livres-enfants|bons-plans|cadeaux)\/$/.test(pathname)) {
+          priority = 0.7;
+          changefreq = 'monthly';
+        } else if (/^\/(articles|actualites)\/[^/]+\/$/.test(pathname)) {
+          priority = 0.8;
+          changefreq = 'monthly';
+        } else if (/^\/ecoles\/[^/]+\/$/.test(pathname)) {
+          priority = 0.6;
+        } else if (/^\/(mentions-legales|cgv|politique-confidentialite|politique-cookies)\/$/.test(pathname)) {
+          priority = 0.2;
+        }
+
         return {
           ...item,
           ...(lastmod && { lastmod: lastmod.toISOString() }),
-          priority: pathname === '/' ? 1 : /^\/(articles|actualites)\/[^/]+\/$/.test(pathname) ? 0.8 : 0.5,
-          changefreq: /^\/(articles|actualites)\//.test(pathname) ? 'weekly' : 'monthly',
+          priority,
+          changefreq,
         };
       },
     }),

@@ -2,8 +2,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getGuides, getNews } from '../lib/content';
+import { SITE } from '../site.config';
 
 const [guides, news] = await Promise.all([getGuides(), getNews()]);
+
+const guidesItemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Guides Montessori',
+  itemListElement: guides.slice(0, 6).map((g, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: g.data.title,
+    url: `${SITE.url}/articles/${g.id}/`,
+  })),
+};
+
 const ages = [
   { age: '0–12 mois', title: 'Les premières découvertes', text: 'Observer, toucher et explorer à son rythme.', href: '/articles/mobile-munari/', number: '01' },
   { age: '1–3 ans', title: 'Faire par soi-même', text: 'Des gestes simples pour grandir en autonomie.', href: '/articles/vie-pratique/', number: '02' },
@@ -12,7 +26,11 @@ const ages = [
 ];
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="Montessori à la maison : activités et matériel par âge"
+  description="Guides Montessori pour les 0-6 ans : activités par âge, choix du matériel et conseils concrets pour favoriser l'autonomie de votre enfant à la maison."
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(guidesItemList)} />
   <section class="home-hero">
     <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 md:grid-cols-2 md:py-20">
       <div>

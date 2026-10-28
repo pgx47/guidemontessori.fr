@@ -293,9 +293,13 @@ async function main() {
       if (typeof image === 'string' && !/^https?:\/\//i.test(image) && image.startsWith('/')) {
         const localPath = path.join(PUBLIC, image);
         // L'image de l'article EST déjà la carte OG (contenu sans visuel propre) :
-        // réécrire le fichier sur lui-même ferait échouer sharp.
-        if (path.resolve(localPath) === path.resolve(outPath)) {
+        // réécrire le fichier sur lui-même ferait échouer sharp. Mais si la carte
+        // n'a jamais été générée, il faut la créer — sinon `image:` pointe sur un 404.
+        if (path.resolve(localPath) === path.resolve(outPath) && fs.existsSync(outPath)) {
           source = 'card (existante)';
+        } else if (path.resolve(localPath) === path.resolve(outPath)) {
+          await generateBrandCard(outPath, { title, emoji });
+          source = 'card';
         } else if (fs.existsSync(localPath)) {
           await generateOgFromLocalImage(localPath, outPath);
           source = 'photo';

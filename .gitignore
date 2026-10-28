@@ -8,3 +8,5 @@ _legacy/
 __pycache__/
 .venv/
 .playwright-mcp/
+
+.impeccable/

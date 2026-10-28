@@ -8,13 +8,15 @@ Usage :
 Écrit `public/images/photos/<slug>.webp` et met à jour le frontmatter.
 Chaîne : génération IA (Flux/OpenAI) -> stock libre -> carte de marque.
 Nécessite CLOUDFLARE_ACCOUNT_ID/CLOUDFLARE_API_TOKEN ou OPENAI_API_KEY.
+
+Aucune dépendance YAML : le frontmatter est manipulé par regex + json.loads,
+ce qui évite d'ajouter pyyaml aux requirements du workflow.
 """
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
-
-import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -23,8 +25,6 @@ from generate_article import _to_webp, fetch_stock, generate_image, make_brand_c
 CONTENT = ROOT / "src" / "content"
 PHOTOS = ROOT / "public" / "images" / "photos"
 
-# Prompt éditorial par slug. On décrit une scène réelle, sans texte, sans
-# visage identifiable, dans la continuité de la charte du site.
 PROMPTS = {
     "etagere-montessori-jouets-rotation": (
         "A low wooden Montessori shelf at child height in a warm home bedroom, "
@@ -81,18 +81,32 @@ def find_entry(slug: str):
     return None
 
 
-def frontmatter_split(text: str):
+def split_frontmatter(text: str):
     m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
     if not m:
         raise ValueError("frontmatter introuvable")
     return m.group(1), text[m.end():]
 
 
-def write_image(slug: str, data: bytes) -> Path:
-    PHOTOS.mkdir(parents=True, exist_ok=True)
-    out = PHOTOS / f"{slug}.webp"
-    out.write_bytes(_to_webp(data))
-    return out
+def read_str(fm: str, key: str, default: str = "") -> str:
+    m = re.search(rf"^{key}:\s*(.+)$", fm, re.M)
+    if not m:
+        return default
+    raw = m.group(1).strip()
+    try:
+        value = json.loads(raw)
+        if isinstance(value, str):
+            return value
+    except Exception:
+        pass
+    return raw.strip('"').strip("'")
+
+
+def set_str(fm: str, key: str, value: str) -> str:
+    line = f"{key}: {json.dumps(value, ensure_ascii=False)}"
+    if re.search(rf"^{key}:", fm, re.M):
+        return re.sub(rf"^{key}:.*$", lambda _: line, fm, count=1, flags=re.M)
+    return fm.rstrip("\n") + "\n" + line
 
 
 def process(slug: str, prompt: str) -> bool:
@@ -102,10 +116,9 @@ def process(slug: str, prompt: str) -> bool:
         return False
 
     text = path.read_text()
-    fm_raw, body = frontmatter_split(text)
-    fm = yaml.safe_load(fm_raw) or {}
-    title = fm.get("title", slug)
-    emoji = fm.get("emoji", "")
+    fm, body = split_frontmatter(text)
+    title = read_str(fm, "title", slug)
+    emoji = read_str(fm, "emoji", "")
 
     data = None
     for attempt in range(1, 4):
@@ -113,19 +126,22 @@ def process(slug: str, prompt: str) -> bool:
         data = generate_image(prompt, slug)
         if data:
             break
+
     if not data:
-        print(f"  ⚠ génération IA indisponible pour {slug}, tentative stock libre")
+        print(f"  ⚠ IA indisponible pour {slug}, tentative stock libre")
         data = fetch_stock(f"{title} montessori", slug)
+
     if not data:
         print(f"  ⚠ stock libre indisponible pour {slug}, carte de marque")
-        fm["image"] = make_brand_card(slug, title, emoji)
-        path.write_text(f"---\n{yaml.safe_dump(fm, allow_unicode=True, sort_keys=False).strip()}\n---\n{body}")
+        fm = set_str(fm, "image", make_brand_card(slug, title, emoji))
+        path.write_text(f"---\n{fm}\n---\n{body}")
         return False
 
-    out = write_image(slug, data)
-    fm["image"] = f"/images/photos/{slug}.webp"
-    fm.pop("imageSource", None)
-    path.write_text(f"---\n{yaml.safe_dump(fm, allow_unicode=True, sort_keys=False).strip()}\n---\n{body}")
+    PHOTOS.mkdir(parents=True, exist_ok=True)
+    out = PHOTOS / f"{slug}.webp"
+    out.write_bytes(_to_webp(data))
+    fm = set_str(fm, "image", f"/images/photos/{slug}.webp")
+    path.write_text(f"---\n{fm}\n---\n{body}")
     print(f"  ✓ {out.relative_to(ROOT)} ({out.stat().st_size // 1024} Ko)")
     return True
 
@@ -136,7 +152,7 @@ def main() -> int:
     ap.add_argument("--all", action="store_true")
     args = ap.parse_args()
 
-    slugs = list(PROMPTS) if args.all or not args.slug else args.slug
+    slugs = list(PROMPTS) if (args.all or not args.slug) else args.slug
     ok = 0
     for slug in slugs:
         if slug not in PROMPTS:

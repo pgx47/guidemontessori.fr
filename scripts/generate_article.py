@@ -233,10 +233,16 @@ IMG_STYLE = (
 
 
 def inspect_image(data: bytes) -> bool:
-    """Vision QC via deepseek-flash : rejette clipart/emoji/3D. Fallback : accepte."""
+    """Vision QC : rejette clipart/emoji/3D. Accepte si le modèle n'a pas la vision."""
     import base64
     url, key, model, _api = llm_config()
     if _api != "openai":
+        return True
+    # llm_config() renvoie "openai" dès qu'une clé DEEPSEEK/OPENROUTER existe,
+    # mais ce modèle n'a pas forcément la vision : il répondait du texte au
+    # hasard et rejetait 100 % des images. On ne fait le QC qu'avec un modèle
+    # réellement multimodal, sinon on accepte.
+    if not re.search(r"gpt-4|gpt-5|vision|claude|gemini", model, re.I):
         return True
     prompt = (
         "Image destinée à un blog Montessori. Réponds par OUI ou NON uniquement. "

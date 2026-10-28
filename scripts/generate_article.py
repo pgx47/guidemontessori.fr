@@ -203,6 +203,24 @@ def esc(s: str) -> str:
     return s.replace("{", "&#123;").replace("}", "&#125;").replace("<", "&lt;")
 
 
+_ANCHOR_RE = re.compile(r'<a\s+[^>]*href="([^"]+)"[^>]*>(.*?)</a>', re.S)
+
+
+def sanitize_body(s: str) -> str:
+    """Convertit le HTML inline que le modèle produit parfois en Markdown.
+
+    `esc()` échappe tous les `<` pour protéger MDX ; appliqué tel quel à un
+    `<a href>`, il produit un lien mort affiché en texte brut
+    (`&lt;a href="/articles/…">`). On convertit donc AVANT d'échapper.
+    """
+    s = _ANCHOR_RE.sub(r"[\2](\1)", s)
+    s = re.sub(r"<strong>(.*?)</strong>", r"**\1**", s, flags=re.S)
+    s = re.sub(r"<b>(.*?)</b>", r"**\1**", s, flags=re.S)
+    s = re.sub(r"<em>(.*?)</em>", r"*\1*", s, flags=re.S)
+    s = re.sub(r"<i>(.*?)</i>", r"*\1*", s, flags=re.S)
+    return s
+
+
 def jsx_list(items: list[str]) -> str:
     return "{" + json.dumps(items, ensure_ascii=False) + "}"
 
@@ -486,7 +504,7 @@ def render_mdx(a: dict, topic: dict, kind: str, today: str, slug: str) -> str:
     if products:
         lines += ["import AffiliateBox from '../../components/AffiliateBox.astro';", ""]
 
-    body = esc(a["body"].strip())
+    body = esc(sanitize_body(a["body"].strip()))
     used = set()
 
     img_by_asin = {}
@@ -586,6 +604,8 @@ def seo_warnings(a: dict) -> None:
         w.append("moins de 4 titres ## dans le corps")
     if not re.search(r"\]\(/(articles|actualites)/", body):
         w.append("aucun lien interne détecté")
+    if re.search(r"<a\s+[^>]*href=", body):
+        w.append("HTML <a> dans le corps (converti automatiquement en lien Markdown)")
     if re.search(r"\b(developp|materiel|pedagogi|mathemati|preparat|activite|educat)\w*", text, re.I):
         w.append("accents manquants détectés")
     for msg in w:

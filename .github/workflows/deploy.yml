@@ -38,6 +38,26 @@ jobs:
           wranglerVersion: '4.149.0'
           command: pages deploy dist --project-name=guidemontessori --branch=main --commit-dirty=true
 
+      # Les cartes OG et les images sont régénérées à contenu d'URL constant :
+      # sans purge, l'edge continue de servir l'ancienne version (cf. cartes OG
+      # « carte de marque » restées en cache un an avec l'ancien `immutable`).
+      - name: Purge Cloudflare cache
+        if: success()
+        continue-on-error: true
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          ZONE=$(curl -sf -H "Authorization: Bearer $CF_TOKEN" \
+            "https://api.cloudflare.com/client/v4/zones?name=guidemontessori.fr" \
+            | python3 -c 'import json,sys; print(json.load(sys.stdin)["result"][0]["id"])')
+          echo "zone: $ZONE"
+          curl -sf -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE/purge_cache" \
+            -H "Authorization: Bearer $CF_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}' \
+            | python3 -c 'import json,sys; d=json.load(sys.stdin); print("purge:", d["success"]); sys.exit(0 if d["success"] else 1)'
+
       - name: Ping IndexNow
         if: success()
         env:

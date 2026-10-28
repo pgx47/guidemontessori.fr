@@ -479,7 +479,10 @@ def process(slug: str, prompt: str) -> bool:
     out.write_bytes(_to_webp(data))
     fm = set_str(fm, "image", f"/images/photos/{slug}.webp")
     if credit and credit.get("photographer"):
-        fm = set_str(fm, "imageCredit", f"Photo : {credit['photographer']} / Unsplash")
+        # La source réelle est dans le crédit (Pixabay, Openverse, Unsplash…).
+        src_label = "Unsplash" if "Unsplash" in (credit.get("license") or "") else (
+            "Pixabay" if "Pixabay" in (credit.get("license") or "") else "Openverse")
+        fm = set_str(fm, "imageCredit", f"Photo : {credit['photographer']} / {src_label}")
     path.write_text(f"---\n{fm}\n---\n{body}")
     print(f"  ✓ {out.relative_to(ROOT)} ({out.stat().st_size // 1024} Ko)")
     return True

@@ -1,52 +1,28 @@
 # Découverte LLM : https://www.guidemontessori.fr/llms.txt
+#
+# Cloudflare préfixe ce fichier avec un robots.txt managé (Content-Signal :
+# ai-train=no) qui interdit les robots d'entraînement (GPTBot, ClaudeBot,
+# Google-Extended, CCBot, Amazonbot, meta-externalagent…). On ne les réautorise
+# donc pas ici : deux groupes contradictoires pour le même user-agent rendent la
+# consigne ambiguë selon le parseur. Seuls les robots de recherche — y compris
+# de recherche IA, qui citent le site sans l'aspirer pour l'entraînement — sont
+# explicitement autorisés.
 
 User-agent: *
 Allow: /
 Disallow: /cdn-cgi/
 
-User-agent: GPTBot
-Allow: /
-Disallow: /cdn-cgi/
-
 User-agent: OAI-SearchBot
 Allow: /
-Disallow: /cdn-cgi/
 
 User-agent: ChatGPT-User
 Allow: /
-Disallow: /cdn-cgi/
-
-User-agent: ClaudeBot
-Allow: /
-Disallow: /cdn-cgi/
 
 User-agent: Claude-SearchBot
 Allow: /
-Disallow: /cdn-cgi/
 
 User-agent: PerplexityBot
 Allow: /
-Disallow: /cdn-cgi/
-
-User-agent: Google-Extended
-Allow: /
-Disallow: /cdn-cgi/
-
-User-agent: Applebot-Extended
-Allow: /
-Disallow: /cdn-cgi/
-
-User-agent: CCBot
-Allow: /
-Disallow: /cdn-cgi/
-
-User-agent: meta-externalagent
-Allow: /
-Disallow: /cdn-cgi/
-
-User-agent: Amazonbot
-Allow: /
-Disallow: /cdn-cgi/
 
 User-agent: MJ12bot
 Disallow: /

@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AffiliateBox from '../../components/AffiliateBox.astro';
 import ecoles from '../../data/ecoles.json';
 import coords from '../../data/villes_coords.json';
+import { departementOf } from '../../data/departements';
 
 export function getStaticPaths() {
   const villes = [...new Set(ecoles.map((e) => e.slug_ville).filter(Boolean))];
@@ -39,6 +40,9 @@ export function getStaticPaths() {
 }
 
 const { villeName, cp, list, voisines } = Astro.props;
+
+const departement = departementOf(cp);
+const proches = voisines.slice(0, 2);
 
 const ecolesN = list.filter((e) => e.amenity !== 'Collège').length;
 const collegesN = list.length - ecolesN;
@@ -105,6 +109,22 @@ const schema = {
           ? ' Ces collèges appliquent la pédagogie Montessori et sont recensés avec leur adresse.'
           : ' Ces écoles appliquent la pédagogie Montessori et sont recensées avec leur adresse.'}
       {list.length === 1 && ' Vous trouverez ci-dessous sa présentation détaillée, ses points forts et son contact.'}
+    </p>
+    <p class="mb-10 text-sm text-gray-600">
+      {departement && <>La ville se situe dans le département {departement.nom} ({departement.code}).</>}
+      {proches.length > 0 && (
+        <>
+          {' '}Les autres villes couvertes les plus proches sont{' '}
+          {proches.map((v, i) => (
+            <>
+              {i > 0 && (i === proches.length - 1 ? ' et ' : ', ')}
+              <a href={`/ecoles/${v.slug}/`} class="text-sage-600 hover:underline">{v.nom}</a>
+              {` (${Math.round(v.d)} km)`}
+            </>
+          ))}
+          .
+        </>
+      )}
     </p>
 
     <div class="space-y-6">

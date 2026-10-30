@@ -1,5 +1,6 @@
 ---
 import fs from 'node:fs';
+import sharp from 'sharp';
 import type { CollectionEntry } from 'astro:content';
 import { ogCardVersion } from '../lib/og';
 import { formatDate } from '../site.config';
@@ -38,12 +39,21 @@ const remoteSrc = renderRemote ? imageStr.replace(/&amp;/g, '&') : '';
 let webpSrcset = '';
 if (renderLocal) {
   const base = imageStr.replace(/\.(png|jpe?g|webp)$/i, '');
-  const webp = `${base}.webp`;
-  const webp640 = `${base}-640.webp`;
-  const parts: string[] = [];
-  if (fs.existsSync(`public${webp}`)) parts.push(`${webp} 1200w`);
-  if (fs.existsSync(`public${webp640}`)) parts.push(`${webp640} 640w`);
-  webpSrcset = parts.join(', ');
+  const variants = [`${base}-640.webp`, `${base}.webp`];
+  const sized: { path: string; width: number }[] = [];
+  for (const candidate of variants) {
+    if (!fs.existsSync(`public${candidate}`)) continue;
+    try {
+      const meta = await sharp(`public${candidate}`).metadata();
+      if (meta.width) sized.push({ path: candidate, width: meta.width });
+    } catch {
+      // variante illisible : ignorée
+    }
+  }
+  webpSrcset = sized
+    .sort((a, b) => a.width - b.width)
+    .map((v) => `${v.path} ${v.width}w`)
+    .join(', ');
 }
 const hasWebp = webpSrcset.length > 0;
 

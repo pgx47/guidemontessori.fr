@@ -7,6 +7,7 @@ import { render } from 'astro:content';
 import { SITE, formatDate, affiliateUrl } from '../site.config';
 import { ogImagePath } from '../lib/og';
 import type { Entry } from '../lib/content';
+import sharp from 'sharp';
 
 interface Props {
   entry: Entry;
@@ -28,6 +29,25 @@ const wordCount = (entry.body ?? '')
 const ogCard = ogImagePath(Astro.url.pathname);
 // Illustration : carte OG générée en priorité (locale, 1200×630, légère), sinon image de l'article.
 const heroImage = ogCard ?? image;
+
+// Dimensions intrinsèques : évite un décalage de mise en page (CLS) et un recadrage
+// erroné quand la carte OG (1200×630) est affichée dans un cadre 16/9.
+let heroWidth = 1200;
+let heroHeight = 675;
+if (heroImage) {
+  try {
+    const localPath = heroImage.split('?')[0];
+    if (localPath.startsWith('/')) {
+      const meta = await sharp(`public${localPath}`).metadata();
+      if (meta.width && meta.height) {
+        heroWidth = meta.width;
+        heroHeight = meta.height;
+      }
+    }
+  } catch {
+    // image distante ou illisible : on garde le ratio 16/9 par défaut
+  }
+}
 ---
 
 <BaseLayout title={title} description={description} keywords={keywords} image={image} type="article" publishDate={publishDate} updatedDate={updatedDate}>
@@ -74,12 +94,13 @@ const heroImage = ogCard ?? image;
           <img
             src={heroImage}
             alt={title}
-            width="1200"
-            height="675"
+            width={heroWidth}
+            height={heroHeight}
             loading="eager"
             fetchpriority="high"
             decoding="async"
-            class="mx-auto mb-8 aspect-[16/9] w-full rounded-2xl object-cover"
+            class="mx-auto mb-8 w-full rounded-2xl object-cover"
+            style={`aspect-ratio: ${heroWidth} / ${heroHeight}`}
           />
         )}
         <p class="text-sm text-gray-500">

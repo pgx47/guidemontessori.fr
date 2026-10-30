@@ -1,13 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import cadeaux from '../data/cadeaux.json';
-import { SITE } from '../site.config';
+import { amazonUrl, SITE } from '../site.config';
+
+const items = cadeaux.filter((c) => c.nom && c.asin && c.image);
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Idées cadeaux Montessori',
+  numberOfItems: items.length,
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.nom,
+    url: `${SITE.url}/cadeaux/#${item.id}`,
+  })),
+};
 ---
 
 <BaseLayout
   title="Trouveur de cadeaux Montessori : idées par âge et budget"
   description="Trouvez le jouet ou matériel Montessori idéal en bois pour un anniversaire ou une naissance, en trois clics."
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(itemList)} />
   <div class="mx-auto max-w-5xl px-4 py-12">
     <div class="mx-auto mb-10 max-w-2xl text-center">
       <span class="mb-3 inline-block rounded-full border border-terracotta-200 bg-terracotta-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-terracotta-600">
@@ -46,69 +62,144 @@ import { SITE } from '../site.config';
       </div>
     </div>
 
-    <div id="results-grid" class="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3"></div>
+    <div id="results-grid" class="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
+      {items.map((item, index) => (
+        <article
+          id={item.id}
+          data-card
+          data-age={item.age}
+          data-budget={item.budget}
+          data-index={index}
+          class="flex flex-col justify-between overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"
+        >
+          <div class="flex aspect-[4/3] items-center justify-center border-b border-stone-100 bg-[#FBF9F5] p-4">
+            <img
+              src={item.image}
+              alt={item.nom}
+              width="300"
+              height="300"
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-contain transition-transform duration-500"
+            />
+          </div>
+          <div class="flex flex-1 flex-col p-5">
+            <h3 class="mb-1 line-clamp-2 text-base font-bold text-gray-900">{item.nom}</h3>
+            <p class="mb-3 line-clamp-2 text-xs text-gray-600">{item.description}</p>
+            {item.pointsForts?.length > 0 && (
+              <ul class="mb-3 space-y-1 text-xs text-gray-600">
+                {item.pointsForts.slice(0, 2).map((p) => <li>✓ {p}</li>)}
+              </ul>
+            )}
+            <a
+              href={amazonUrl(item.asin)}
+              target="_blank"
+              rel="nofollow sponsored noopener"
+              class="mt-auto rounded-lg bg-terracotta-500 px-4 py-2.5 text-center text-xs font-bold text-white transition-colors hover:bg-terracotta-600"
+            >
+              Voir sur Amazon ↗
+            </a>
+          </div>
+        </article>
+      ))}
+      <div id="empty-state" hidden class="col-span-full rounded-2xl border border-gray-200 bg-white py-12 text-center">
+        <p class="font-medium text-gray-500">Aucun produit ne correspond exactement à ce filtre.</p>
+        <p class="mt-1 text-xs text-gray-400">Essayez d'élargir le budget pour voir d'autres suggestions.</p>
+      </div>
+    </div>
+
+    <div class="mt-8 text-center">
+      <button id="show-more" hidden class="rounded-xl border border-sage-300 px-6 py-2.5 text-sm font-bold text-sage-700 hover:bg-sage-50">
+        Afficher tous les cadeaux
+      </button>
+    </div>
+
+    <section class="mx-auto mt-16 max-w-3xl">
+      <h2 class="mb-4 font-serif text-2xl font-bold text-gray-900">Comment choisir un cadeau Montessori ?</h2>
+      <p class="mb-4 text-gray-700">
+        Un cadeau Montessori n'est pas un jouet « éducatif » de plus : c'est un objet qui laisse à l'enfant
+        la part belle à l'action. Trois critères suffisent à trier une liste d'envies.
+      </p>
+      <ul class="mb-6 space-y-3 text-gray-700">
+        <li><strong>Une seule difficulté à la fois.</strong> Un objet qui mélange couleurs, chiffres et bruit disperse l'attention ; un objet qui fait une chose, et bien, retient l'enfant plus longtemps.</li>
+        <li><strong>Un matériau qui vieillit bien.</strong> Bois brut, tissu, métal ou verre : ces matières donnent un retour sensoriel net et résistent à l'usage quotidien, contrairement au plastique qui casse et se raye.</li>
+        <li><strong>Une taille d'enfant.</strong> Le cadeau doit être manipulable seul, posé à hauteur de l'enfant, sans que l'adulte ait à intervenir.</li>
+      </ul>
+
+      <h3 class="mb-3 font-serif text-xl font-bold text-gray-900">Adapter le cadeau à l'âge</h3>
+      <p class="mb-4 text-gray-700">
+        Avant 1 an, l'enfant découvre son corps et la permanence des objets : hochets légers, mobiles à observer,
+        balles à saisir. Entre 1 et 3 ans, il veut faire comme les grands — verser, transvaser, boutonner :
+        la <a href="/articles/vie-pratique/" class="text-sage-600 hover:underline">vie pratique Montessori</a>
+        est la meilleure entrée. De 3 à 6 ans, il affine ses sens et ses repères : la
+        <a href="/articles/tour-rose/" class="text-sage-600 hover:underline">tour rose</a>,
+        les <a href="/articles/barres-rouges/" class="text-sage-600 hover:underline">barres rouges</a>
+        ou les <a href="/articles/lettres-rugueuses/" class="text-sage-600 hover:underline">lettres rugueuses</a>
+        accompagnent cette période sensible.
+      </p>
+      <p class="mb-4 text-gray-700">
+        Pour un premier anniversaire, un
+        <a href="/articles/mobile-munari/" class="text-sage-600 hover:underline">mobile Munari</a>
+        ou un hochet en bois suffisent : inutile d'accumuler. Un cadeau bien choisi, présenté au bon moment,
+        sert plus qu'une pile de jouets — c'est aussi ce que nous expliquons dans notre guide
+        <a href="/articles/preparation-environnement-montessori/" class="text-sage-600 hover:underline">préparer l'environnement Montessori</a>.
+      </p>
+    </section>
 
     <p class="mt-8 text-center text-xs text-gray-500">
       Sélection mise à jour automatiquement chaque mois. Liens affiliés Amazon — vous soutenez le site sans surcoût.
     </p>
   </div>
 
-  <script define:vars={{ cadeaux, tag: SITE.amazonTag }}>
+  <script>
+    const grid = document.getElementById('results-grid');
+    const cards = [...grid.querySelectorAll('[data-card]')];
+    const emptyState = document.getElementById('empty-state');
+    const showMore = document.getElementById('show-more');
+    const PAGE_SIZE = 12;
     let currentAge = 'all';
     let currentBudget = 'all';
+    let showAll = false;
 
-    function updateSelection() {
-      const container = document.getElementById('results-grid');
-      const filtered = cadeaux.filter((c) =>
-        (currentAge === 'all' || c.age === currentAge) &&
-        (currentBudget === 'all' || c.budget === currentBudget));
-
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full rounded-2xl border border-gray-200 bg-white py-12 text-center">
-            <p class="font-medium text-gray-500">Aucun produit ne correspond exactement à ce filtre.</p>
-            <p class="mt-1 text-xs text-gray-400">Essayez d'élargir le budget pour voir d'autres suggestions.</p>
-          </div>`;
-        return;
+    function applySelection() {
+      let matches = 0;
+      let visible = 0;
+      for (const card of cards) {
+        const match =
+          (currentAge === 'all' || card.dataset.age === currentAge) &&
+          (currentBudget === 'all' || card.dataset.budget === currentBudget);
+        if (match) matches += 1;
+        let show = match;
+        if (match && !showAll) {
+          visible += 1;
+          if (visible > PAGE_SIZE) show = false;
+        }
+        card.hidden = !show;
       }
-
-      const card = (item) => `
-        <div class="flex flex-col justify-between overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-          <div class="flex aspect-[4/3] items-center justify-center border-b border-stone-100 bg-[#FBF9F5] p-4">
-            <img src="${item.image || ''}" alt="" loading="lazy" onerror="this.outerHTML='<span class=\'text-4xl\'>🧸</span>'" class="h-full w-full object-contain transition-transform duration-500" />
-          </div>
-          <div class="flex flex-1 flex-col p-5">
-            <h3 class="mb-1 line-clamp-2 text-base font-bold text-gray-900">${item.nom}</h3>
-            <p class="mb-3 line-clamp-2 text-xs text-gray-600">${item.description}</p>
-            <a href="https://www.amazon.fr/dp/${item.asin}?tag=${tag}" target="_blank" rel="nofollow sponsored noopener"
-               class="mt-auto rounded-lg bg-terracotta-500 px-4 py-2.5 text-center text-xs font-bold text-white transition-colors hover:bg-terracotta-600">
-              Voir sur Amazon ↗
-            </a>
-          </div>
-        </div>`;
-
-      const showAll = container.dataset.all === '1';
-      const shown = showAll ? filtered : filtered.slice(0, 12);
-      container.innerHTML = shown.map(card).join('')
-        + (!showAll && filtered.length > 12 ? `
-        <div class="col-span-full text-center">
-          <button id="load-more" class="rounded-xl border border-sage-300 px-6 py-2.5 text-sm font-bold text-sage-700 hover:bg-sage-50">Afficher les ${filtered.length - 12} autres cadeaux</button>
-        </div>` : '');
-      const lm = document.getElementById('load-more');
-      if (lm) lm.addEventListener('click', () => { container.dataset.all = '1'; updateSelection(); });
+      emptyState.hidden = matches > 0;
+      showMore.hidden = showAll || matches <= PAGE_SIZE;
+      showMore.textContent = `Afficher les ${Math.max(0, matches - PAGE_SIZE)} autres cadeaux`;
     }
 
     for (const group of ['filter-age', 'filter-budget']) {
       document.querySelectorAll(`#${group} button`).forEach((btn) => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', (event) => {
+          const target = event.currentTarget;
           document.querySelectorAll(`#${group} button`).forEach((b) => b.classList.remove('bg-sage-600', 'text-white', 'active'));
-          e.currentTarget.classList.add('bg-sage-600', 'text-white', 'active');
-          if (group === 'filter-age') currentAge = e.currentTarget.dataset.age;
-          else currentBudget = e.currentTarget.dataset.budget;
-          updateSelection();
+          target.classList.add('bg-sage-600', 'text-white', 'active');
+          if (group === 'filter-age') currentAge = target.dataset.age;
+          else currentBudget = target.dataset.budget;
+          showAll = false;
+          applySelection();
         });
       });
     }
-    updateSelection();
+
+    showMore.addEventListener('click', () => {
+      showAll = true;
+      applySelection();
+    });
+
+    applySelection();
   </script>
 </BaseLayout>

@@ -50,7 +50,7 @@
       "keyword": "triangle de pikler",
       "type": "guide",
       "angle": "motricité libre, Pikler vs Montessori, sécurité, âge",
-      "status": "pending",
+      "status": "published",
       "products": [
         {
           "asin": "B0D635D6R9",
@@ -60,7 +60,9 @@
           "asin": "B0DF2D5ZXK",
           "nom": "Tiny Land Pikler Triangle Set, 7-in-1 Foldable Climbing Toys Set for Kids The Fo"
         }
-      ]
+      ],
+      "slug": "triangle-de-pikler-motricite-libre-securite",
+      "publishedAt": "2026-10-30"
     },
     {
       "keyword": "chambre montessori bébé",

@@ -19,6 +19,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          # Historique nécessaire au diff d'IndexNow (ne soumettre que les URLs modifiées).
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -62,6 +64,9 @@ jobs:
         if: success()
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+          # Commit avant le push : couvre les pushes multi-commits. Vide sur
+          # workflow_call -> le script retombe sur HEAD~1.
+          INDEXNOW_BASE: ${{ github.event.before }}
         run: |
           pip install requests
           python scripts/ping_indexnow.py

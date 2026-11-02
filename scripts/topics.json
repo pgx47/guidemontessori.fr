@@ -68,7 +68,7 @@
       "keyword": "chambre montessori bébé",
       "type": "guide",
       "angle": "lit au sol, miroir, mobiles, organisation par zones",
-      "status": "pending",
+      "status": "published",
       "products": [
         {
           "asin": "B09QKVDTMC",
@@ -78,7 +78,9 @@
           "asin": "B0G2TK7386",
           "nom": "Montessori Baby Mobile Set – 6-Piece Handmade Visual Stimulating Mobiles (Munari"
         }
-      ]
+      ],
+      "slug": "chambre-montessori-bebe-lit-miroir-mobiles",
+      "publishedAt": "2026-11-02"
     },
     {
       "keyword": "planche d'équilibre montessori",

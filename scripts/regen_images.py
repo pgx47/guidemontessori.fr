@@ -447,9 +447,9 @@ PROMPTS = {    "etagere-montessori-jouets-rotation": (
         "no text, no identifiable face"
     ),
     "la-seyne-sur-mer-camion-autonomie-enfants": (
-        "A small converted camper van parked on a French town square, its open side showing low wooden "
-        "shelves of simple materials and a small table set up for children's workshops, "
-        "warm afternoon light, no signage, no text, no people"
+        "Inside a small converted van used for children's workshops, low wooden shelves holding simple "
+        "learning materials and a small low table, open sliding door letting in warm afternoon light, "
+        "plain surfaces with no lettering or logos, no text, no people"
     ),
 }
 

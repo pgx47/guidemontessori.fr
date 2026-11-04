@@ -75,58 +75,79 @@ def find_products() -> dict:
     return found
 
 
+def _looks_like_image(value) -> bool:
+    return isinstance(value, str) and value.startswith("http") and any(
+        ext in value.lower() for ext in (".jpg", ".jpeg", ".png", ".webp")
+    )
+
+
 def _image_from(payload) -> str | None:
     """Cherche une URL d'image dans une réponse ScraperAPI (schémas variables)."""
+    if isinstance(payload, list):
+        for item in payload:
+            url = _image_from(item)
+            if url:
+                return url
+        return None
     if not isinstance(payload, dict):
         return None
-    for key in ("image", "image_url", "main_image", "mainImage", "thumbnail"):
-        value = payload.get(key)
-        if isinstance(value, str) and value.startswith("http"):
-            return value
-    images = payload.get("images")
-    if isinstance(images, list):
-        for item in images:
-            if isinstance(item, str) and item.startswith("http"):
-                return item
-            if isinstance(item, dict):
-                for key in ("url", "large", "hiRes", "image"):
-                    value = item.get(key)
-                    if isinstance(value, str) and value.startswith("http"):
-                        return value
+    for key in ("image", "image_url", "main_image", "mainImage", "thumbnail", "hiRes", "large"):
+        if _looks_like_image(payload.get(key)):
+            return payload[key]
+    for key in ("images", "product", "products", "data", "result", "results"):
+        if key in payload:
+            url = _image_from(payload[key])
+            if url:
+                return url
     return None
 
 
-def scrape_image_url(asin: str, nom: str, key: str) -> str | None:
-    """Endpoint produit, puis recherche par nom en repli (ASIN non résolu)."""
+def _get(url: str, params: dict):
     try:
-        r = requests.get(f"{SCRAPER_API}/product",
-                         params={"api_key": key, "asin": asin, "country": COUNTY, "tld": "fr"},
-                         timeout=90)
-        if r.ok:
-            url = _image_from(r.json())
-            if url:
-                return url
-        else:
-            print(f"    ! produit HTTP {r.status_code}", file=sys.stderr)
+        r = requests.get(url, params=params, timeout=90)
     except Exception as e:
-        print(f"    ! produit {type(e).__name__}: {e}", file=sys.stderr)
-
-    if not nom:
+        print(f"    ! {type(e).__name__}: {e}", file=sys.stderr)
+        return None
+    if not r.ok:
+        print(f"    ! HTTP {r.status_code} {url.split('/structured')[1][:40]} {r.text[:120]}", file=sys.stderr)
         return None
     try:
-        r = requests.get(f"{SCRAPER_API}/search",
-                         params={"api_key": key, "query": nom[:120], "country": COUNTY},
-                         timeout=90)
-        if not r.ok:
-            print(f"    ! recherche HTTP {r.status_code}", file=sys.stderr)
-            return None
-        for item in r.json().get("results", []):
-            if str(item.get("asin")) == asin:
-                url = _image_from(item)
-                if url:
-                    return url
-    except Exception as e:
-        print(f"    ! recherche {type(e).__name__}: {e}", file=sys.stderr)
+        return r.json()
+    except Exception:
+        print(f"    ! réponse non JSON : {r.text[:120]}", file=sys.stderr)
+        return None
+
+
+def scrape_image_url(asin: str, nom: str, key: str) -> str | None:
+    """Endpoint produit, puis recherche (par ASIN, puis par nom) en repli."""
+    for params in (
+        {"api_key": key, "asin": asin, "country": COUNTY},
+        {"api_key": key, "asin": asin, "country_code": COUNTY},
+    ):
+        payload = _get(f"{SCRAPER_API}/product", params)
+        if payload:
+            url = _image_from(payload)
+            if url:
+                return url
+            print(f"    ! produit sans image : {str(payload)[:200]}", file=sys.stderr)
+
+    for query in (asin, nom[:120]):
+        if not query:
+            continue
+        payload = _get(f"{SCRAPER_API}/search", {"api_key": key, "query": query, "country": COUNTY})
+        if not payload:
+            continue
+        results = payload.get("results") or []
+        match = next((it for it in results if str(it.get("asin")) == asin), None)
+        if match:
+            url = _image_from(match)
+            if url:
+                return url
+        if query == asin:
+            # La recherche par ASIN renvoie la fiche exacte : la 1re image est la bonne.
+            url = _image_from(results)
+            if url:
+                return url
     return None
 
 

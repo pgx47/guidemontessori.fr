@@ -49,6 +49,12 @@ PIXABAY_QUERIES = {
     "atelier-montessori-rochechouart-aide-moi-a-faire-seul": "children craft table hands",
     "bougeotheque-municipale-bordeaux-petite-enfance": "toddler playing indoor",
     "ecole-montessori-irisia-aix-chantier-cour": "courtyard trees school building",
+    # Actualités publiées avec une carte de marque faute d'illustration.
+    "c-est-qui-maria-montessori-1jour1actu": "montessori classroom wooden materials",
+    "fallettans-cynthia-tattu-pedagogie-montessori": "children hands wooden toys table",
+    "jouets-montessori-rappeles-toxicite": "wooden toys collection table",
+    "mably-college-montessori-saint-louis-portes-ouvertes": "school entrance building france",
+    "maria-montessori-liberte-sans-organisation": "child concentration wooden puzzle",
 }
 
 
@@ -389,6 +395,31 @@ PROMPTS = {
         "A French school courtyard with large plane trees casting dappled light on gravel and paving, "
         "edge of an old stone building in the background, late afternoon light, "
         "no text, no people"
+    ),
+    "c-est-qui-maria-montessori-1jour1actu": (
+        "A bright Montessori classroom at child height, a low wooden shelf holding a few simple "
+        "wooden materials and a small table with a chair, soft daylight, "
+        "calm and uncluttered, no text, no people"
+    ),
+    "fallettans-cynthia-tattu-pedagogie-montessori": (
+        "Close-up of children's hands arranging wooden Montessori materials on a table during a workshop, "
+        "small bowls and sorting trays, warm natural light from a large window, "
+        "no text, no identifiable face"
+    ),
+    "jouets-montessori-rappeles-toxicite": (
+        "A flat-lay of simple natural wooden toys and a fabric doll on a light wooden table, "
+        "soft daylight, calm and neutral composition, "
+        "no text, no people"
+    ),
+    "mably-college-montessori-saint-louis-portes-ouvertes": (
+        "The entrance of a small French school building, pale stone facade and a wooden door "
+        "framed by trees, morning light, quiet street, "
+        "no text, no people"
+    ),
+    "maria-montessori-liberte-sans-organisation": (
+        "A child's hands deeply focused on fitting wooden geometric shapes into a wooden puzzle "
+        "on a table, warm daylight, shallow depth of field, "
+        "no text, no identifiable face"
     ),
 }
 

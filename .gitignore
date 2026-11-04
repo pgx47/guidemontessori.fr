@@ -10,3 +10,6 @@ __pycache__/
 .playwright-mcp/
 
 .impeccable/
+
+# Dérivés WebP générés au build (scripts/generate_og.mjs)
+public/images/articles/*.webp

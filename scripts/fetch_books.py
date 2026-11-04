@@ -7,10 +7,11 @@ from pathlib import Path
 
 import requests
 
+from scraper_api import ScraperExhausted, available, get as scraper_get
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "data" / "books.json"
 TAG = os.environ.get("AMAZON_TAG", "mtssri-21")
-SCRAPER = os.environ.get("SCRAPER_API_KEY")
 
 # (audience, category/level, requête amazon)
 QUERIES = [
@@ -27,8 +28,7 @@ MAX_NEW = 8  # nouveautés max par run pour limiter les appels LLM
 
 
 def scraper_search(q: str) -> list[dict]:
-    r = requests.get("https://api.scraperapi.com/structured/amazon/search",
-                     params={"api_key": SCRAPER, "query": q, "country": "fr"}, timeout=90)
+    r = scraper_get("structured/amazon/search", {"query": q, "country": "fr"}, timeout=90)
     r.raise_for_status()
     out = []
     for it in r.json().get("results", [])[:PER_QUERY]:
@@ -83,8 +83,9 @@ def llm_summarize(books: list[dict]) -> list[dict]:
 
 
 def main() -> int:
-    if not SCRAPER:
-        sys.exit("SCRAPER_API_KEY manquant")
+    if not available():
+        print("Aucune clé ScraperAPI : books.json inchangé", file=sys.stderr)
+        return 0
     existing = {b["id"]: b for b in json.loads(OUT.read_text())} if OUT.exists() else {}
     known_asins = {b.get("asin") for b in existing.values() if b.get("asin")}
     new_books, seen = [], set()
@@ -96,6 +97,9 @@ def main() -> int:
                 seen.add(it["asin"])
                 new_books.append({**it, "category" if audience == "child" else "level": cat,
                                   "targetAudience": audience})
+        except ScraperExhausted:
+            print("⚠ crédits ScraperAPI épuisés sur toutes les clés, on arrête là", file=sys.stderr)
+            break
         except requests.RequestException as e:
             print(f"⚠ '{q}': {e}", file=sys.stderr)
     new_books = new_books[:MAX_NEW]

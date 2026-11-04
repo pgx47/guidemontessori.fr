@@ -14,6 +14,7 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).parent))
 import generate_article as g
+from scraper_api import get as scraper_get
 
 ROOT = Path(__file__).resolve().parent.parent
 STATE = ROOT / "src" / "data" / "news_state.json"
@@ -87,15 +88,13 @@ def _extract_og_image(page_html: str) -> str | None:
 
 def _og_image_from_source(link: str) -> str | None:
     """og:image de l'article source, via ScraperAPI puis fetch direct."""
-    if key := os.environ.get("SCRAPER_API_KEY"):
-        try:
-            r = requests.get("http://api.scraperapi.com",
-                             params={"api_key": key, "url": link, "render": "true"}, timeout=60)
-            if r.ok:
-                if u := _extract_og_image(r.text):
-                    return u
-        except Exception as e:
-            print(f"⚠ scraper og:image : {e}", file=sys.stderr)
+    try:
+        r = scraper_get("", {"url": link, "render": "true"}, timeout=60)
+        if r.ok:
+            if u := _extract_og_image(r.text):
+                return u
+    except Exception as e:
+        print(f"⚠ scraper og:image : {e}", file=sys.stderr)
     try:
         r = requests.get(link, timeout=30, headers={"User-Agent": "guidemontessori/1.0"})
         if r.ok:

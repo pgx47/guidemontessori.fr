@@ -8,6 +8,8 @@ from pathlib import Path
 
 import requests
 
+from scraper_api import ScraperExhausted, available, get as scraper_get
+
 OUT = Path(__file__).resolve().parent.parent / "src" / "data" / "deals.json"
 QUERIES = ["montessori jouets bébé", "matériel montessori", "montessori",
            "tour observation montessori", "triangle pikler", "lit cabane montessori",
@@ -33,9 +35,8 @@ def fmt_price(s: str, n) -> str:
 
 
 def main() -> int:
-    key = os.environ.get("SCRAPER_API_KEY")
-    if not key:
-        print("SCRAPER_API_KEY manquant, deals.json inchangé", file=sys.stderr)
+    if not available():
+        print("Aucune clé ScraperAPI, deals.json inchangé", file=sys.stderr)
         return 0
     tag = os.environ.get("AMAZON_TAG", "mtssri-21")
     deals, seen = [], set()
@@ -43,12 +44,11 @@ def main() -> int:
         if len(deals) >= MAX_DEALS:
             break
         try:
-            r = requests.get(
-                "https://api.scraperapi.com/structured/amazon/search",
-                params={"api_key": key, "query": q, "country": "fr"},
-                timeout=90,
-            )
+            r = scraper_get("structured/amazon/search", {"query": q, "country": "fr"}, timeout=90)
             r.raise_for_status()
+        except ScraperExhausted:
+            print("crédits ScraperAPI épuisés sur toutes les clés, on arrête là", file=sys.stderr)
+            break
         except requests.RequestException as e:
             print(f"échec '{q}': {e}", file=sys.stderr)
             continue

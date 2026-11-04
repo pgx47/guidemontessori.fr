@@ -8,10 +8,11 @@ from pathlib import Path
 
 import requests
 
+from scraper_api import ScraperExhausted, available, get as scraper_get
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "data" / "cadeaux.json"
 TAG = os.environ.get("AMAZON_TAG", "mtssri-21")
-SCRAPER = os.environ.get("SCRAPER_API_KEY")
 
 QUERIES = [
     # 0-12m
@@ -37,8 +38,7 @@ MAX_ITEMS = 70
 
 
 def scraper_search(q: str) -> list[dict]:
-    r = requests.get("https://api.scraperapi.com/structured/amazon/search",
-                     params={"api_key": SCRAPER, "query": q, "country": "fr"}, timeout=90)
+    r = scraper_get("structured/amazon/search", {"query": q, "country": "fr"}, timeout=90)
     r.raise_for_status()
     out = []
     for it in r.json().get("results", [])[:PER_QUERY]:
@@ -103,8 +103,9 @@ Produits :
 
 
 def main() -> int:
-    if not SCRAPER:
-        sys.exit("SCRAPER_API_KEY manquant")
+    if not available():
+        print("Aucune clé ScraperAPI : cadeaux.json inchangé", file=sys.stderr)
+        return 0
     seen, raw = set(), []
     for q in QUERIES:
         try:
@@ -112,6 +113,9 @@ def main() -> int:
                 if it["asin"] not in seen:
                     seen.add(it["asin"])
                     raw.append(it)
+        except ScraperExhausted:
+            print("⚠ crédits ScraperAPI épuisés sur toutes les clés, on arrête là", file=sys.stderr)
+            break
         except requests.RequestException as e:
             print(f"⚠ '{q}' : {e}", file=sys.stderr)
     print(f"{len(raw)} produits scrapés")

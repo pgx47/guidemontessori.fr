@@ -11,7 +11,8 @@ Usage :
   python scripts/fetch_product_images.py --asin B0F995MXGZ
   python scripts/fetch_product_images.py --force         # retélécharge tout
 
-Nécessite SCRAPER_API_KEY (les ASIN déjà en local sont ignorés).
+Nécessite une clé ScraperAPI (SCRAPER_API_KEYS / SCRAPER_API_KEY, rotation
+automatique) ; les ASIN déjà en local sont ignorés.
 """
 import argparse
 import io
@@ -26,11 +27,11 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from generate_article import ROOT  # noqa: E402
+from scraper_api import ScraperExhausted, available, get as scraper_get  # noqa: E402
 
 CONTENT = ROOT / "src" / "content"
 OUT_DIR = ROOT / "public" / "images" / "produits"
 MAP_FILE = ROOT / "src" / "data" / "produits.json"
-SCRAPER_API = "https://api.scraperapi.com/structured/amazon"
 COUNTY = "fr"
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
 
@@ -102,14 +103,16 @@ def _image_from(payload) -> str | None:
     return None
 
 
-def _get(url: str, params: dict):
+def _get(path: str, params: dict):
     try:
-        r = requests.get(url, params=params, timeout=90)
+        r = scraper_get(path, params, timeout=90)
+    except ScraperExhausted:
+        raise
     except Exception as e:
         print(f"    ! {type(e).__name__}: {e}", file=sys.stderr)
         return None
     if not r.ok:
-        print(f"    ! HTTP {r.status_code} {url.split('/structured')[1][:40]} {r.text[:120]}", file=sys.stderr)
+        print(f"    ! HTTP {r.status_code} {path} {r.text[:120]}", file=sys.stderr)
         return None
     try:
         return r.json()
@@ -118,13 +121,13 @@ def _get(url: str, params: dict):
         return None
 
 
-def scrape_image_url(asin: str, nom: str, key: str) -> str | None:
+def scrape_image_url(asin: str, nom: str) -> str | None:
     """Endpoint produit, puis recherche (par ASIN, puis par nom) en repli."""
     for params in (
-        {"api_key": key, "asin": asin, "country": COUNTY},
-        {"api_key": key, "asin": asin, "country_code": COUNTY},
+        {"asin": asin, "country": COUNTY},
+        {"asin": asin, "country_code": COUNTY},
     ):
-        payload = _get(f"{SCRAPER_API}/product", params)
+        payload = _get("structured/amazon/product", params)
         if payload:
             url = _image_from(payload)
             if url:
@@ -134,7 +137,7 @@ def scrape_image_url(asin: str, nom: str, key: str) -> str | None:
     for query in (asin, nom[:120]):
         if not query:
             continue
-        payload = _get(f"{SCRAPER_API}/search", {"api_key": key, "query": query, "country": COUNTY})
+        payload = _get("structured/amazon/search", {"query": query, "country": COUNTY})
         if not payload:
             continue
         results = payload.get("results") or []
@@ -186,7 +189,6 @@ def main() -> int:
     ap.add_argument("--force", action="store_true", help="retélécharge même si l'image existe")
     args = ap.parse_args()
 
-    key = os.environ.get("SCRAPER_API_KEY")
     produits = load_map()
     wanted = find_products()
     if args.asin:
@@ -198,14 +200,18 @@ def main() -> int:
         print("✓ Tous les encarts produit ont une photo.")
         return 0
 
-    if not key:
-        print("SCRAPER_API_KEY absent : rapatriement des photos ignoré", file=sys.stderr)
+    if not available():
+        print("Aucune clé ScraperAPI : rapatriement des photos ignoré", file=sys.stderr)
         return 0
 
     ok = 0
     for asin, nom in wanted.items():
         print(f"→ {asin} {nom[:60]}")
-        url = scrape_image_url(asin, nom, key)
+        try:
+            url = scrape_image_url(asin, nom)
+        except ScraperExhausted:
+            print("crédits ScraperAPI épuisés sur toutes les clés, on arrête là", file=sys.stderr)
+            break
         if not url:
             print(f"  ✗ {asin} : aucune image trouvée", file=sys.stderr)
             continue

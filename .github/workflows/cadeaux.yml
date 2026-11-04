@@ -17,6 +17,7 @@ jobs:
           python-version: '3.12'
       - run: pip install -r scripts/requirements.txt
       - env:
+          SCRAPER_API_KEYS: ${{ secrets.SCRAPER_API_KEYS }}
           SCRAPER_API_KEY: ${{ secrets.SCRAPER_API_KEY }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}

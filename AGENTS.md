@@ -18,3 +18,8 @@ Astro 7 (static) + MDX + Tailwind 4, deployed by Cloudflare Pages on push to `ma
 ## Rules
 - Never commit with `[skip ci]`: Cloudflare Pages would skip the deploy.
 - Only real ASINs in `topics.json` (the LLM must never invent products).
+- Encarts produit : chaque `<AffiliateBox>` doit afficher la photo de l'objet.
+  Photos dans `public/images/produits/<asin>.webp`, référencées par
+  `src/data/produits.json` (`scripts/fetch_product_images.py`), `image=` en
+  secours. Un ASIN qui renvoie « Page introuvable » = produit inventé ou
+  retiré : le remplacer par une référence vérifiée en vente.

@@ -361,8 +361,14 @@ def generate_flux(prompt: str) -> bytes | None:
 CONTENT = ROOT / "src" / "content"
 PHOTOS = ROOT / "public" / "images" / "photos"
 
-PROMPTS = {
-    "etagere-montessori-jouets-rotation": (
+# Sujets pour lesquels une banque d'images ne renvoie que du hors-sujet
+# (pokémon, voitures de course, bureaux vides) : on va droit à l'illustration IA.
+AI_ONLY = {
+    "jouets-montessori-rappeles-toxicite",
+    "mably-college-montessori-saint-louis-portes-ouvertes",
+}
+
+PROMPTS = {    "etagere-montessori-jouets-rotation": (
         "A low wooden Montessori shelf at child height in a warm home bedroom, "
         "three shallow wooden trays with simple natural materials arranged from simple to complex, "
         "bare wood floor, soft morning light from a window, no text, no visible face"
@@ -493,11 +499,14 @@ def process(slug: str, prompt: str) -> bool:
     credit = None
 
     # 1. Vraie photo : Pixabay (clé gratuite) puis Openverse puis Unsplash
-    data, credit = generate_pixabay(slug)
-    if not data:
-        data, credit = generate_openverse(slug)
-    if not data:
-        data, credit = generate_unsplash(slug)
+    #    Sauf pour les sujets où les banques d'images n'ont rien de pertinent
+    #    (jouets/actualité locale) : on passe directement à la génération IA.
+    if slug not in AI_ONLY:
+        data, credit = generate_pixabay(slug)
+        if not data:
+            data, credit = generate_openverse(slug)
+        if not data:
+            data, credit = generate_unsplash(slug)
 
     # 2. Génération IA si Unsplash n'a rien donné
     if not data:

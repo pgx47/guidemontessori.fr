@@ -39,6 +39,7 @@ def main():
         print('No built HTML. Run npm run build first.', file=sys.stderr)
         return 1
     errors = []
+    warnings = []
     amazon = 0
     for path in pages:
         page = Page()
@@ -55,8 +56,10 @@ def main():
         if is_article and is_default_og(page.og_image):
             errors.append(f'{relative}: og:image absente ou par défaut ({page.og_image or "vide"})')
         # Encart produit sans photo : l'emoji 📦 s'affiche à la place de l'objet.
+        # Avertissement (pas une erreur) : un produit peut avoir été retiré de
+        # la vente, et bloquer tout le déploiement du site serait pire.
         if is_article and '📦' in html:
-            errors.append(f'{relative}: encart produit sans image (emoji 📦)')
+            warnings.append(f'{relative}: encart produit sans image (emoji 📦)')
         for anchor in page.links:
             href = anchor.get('href', '')
             url = urlsplit(urljoin(base, href))
@@ -74,7 +77,10 @@ def main():
                     errors.append(f'{relative}: missing sponsored {href}')
     for error in errors:
         print(error, file=sys.stderr)
-    print(f'Site check: {len(pages)} pages, {amazon} Amazon links, {len(errors)} errors.')
+    for warning in warnings:
+        print(f'attention: {warning}', file=sys.stderr)
+    print(f'Site check: {len(pages)} pages, {amazon} Amazon links, '
+          f'{len(errors)} errors, {len(warnings)} avertissements.')
     return 1 if errors else 0
 
 

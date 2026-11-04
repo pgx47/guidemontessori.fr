@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/generate_og.mjs --og-only",
     "dev": "astro dev",
+    "prebuild": "node scripts/generate_og.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",

@@ -157,11 +157,50 @@ async function renderJpegFromBuffer(buffer) {
   return sharp(buffer).jpeg({ quality: 82, mozjpeg: true }).toBuffer();
 }
 
+/** Écrit la carte OG depuis une image (locale ou buffer) en respectant le budget de poids. */
+async function writeOgFromImage(input, outPath) {
+  const render = (quality) =>
+    sharp(input)
+      .resize(OG_W, OG_H, { fit: 'cover', position: 'attention' })
+      .jpeg({ quality, mozjpeg: true })
+      .toFile(outPath);
+  await render(82);
+  // Budget éditorial : on retente avec une qualité plus basse si la carte pèse trop lourd.
+  if (fs.statSync(outPath).size > MAX_OG_KB * 1024) await render(68);
+}
+
 async function generateOgFromLocalImage(srcPath, outPath) {
-  await sharp(srcPath)
-    .resize(OG_W, OG_H, { fit: 'cover', position: 'attention' })
-    .jpeg({ quality: 82, mozjpeg: true })
-    .toFile(outPath);
+  await writeOgFromImage(srcPath, outPath);
+}
+
+/**
+ * Domaines d'images qui nous appartiennent (R2 public). Contrairement aux URLs
+ * tierces, on peut les télécharger pour composer la carte OG : sans cela les
+ * articles illustrés depuis R2 retombaient sur une carte de marque.
+ */
+const OWN_IMAGE_HOSTS = new Set(
+  (process.env.OG_IMAGE_HOSTS || 'guidemontessori.fr,www.guidemontessori.fr,images.guidemontessori.fr')
+    .split(',')
+    .map((h) => h.trim().toLowerCase())
+    .filter(Boolean),
+);
+
+function isOwnImageUrl(value) {
+  try {
+    return OWN_IMAGE_HOSTS.has(new URL(value).hostname.toLowerCase());
+  } catch {
+    return false;
+  }
+}
+
+async function generateOgFromRemoteImage(url, outPath) {
+  const res = await fetch(url, { redirect: 'follow' });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const type = res.headers.get('content-type') || '';
+  if (type && !type.startsWith('image/')) throw new Error(`content-type ${type}`);
+  const buffer = Buffer.from(await res.arrayBuffer());
+  if (buffer.length > 8 * 1024 * 1024) throw new Error('image > 8 Mo');
+  await writeOgFromImage(buffer, outPath);
 }
 
 async function generateBrandCard(outPath, { title, emoji }) {
@@ -308,8 +347,24 @@ async function main() {
           source = 'card';
           generatedCards.push(slug);
         }
+      } else if (typeof image === 'string' && isOwnImageUrl(image)) {
+        // Image hébergée sur notre propre CDN : on l'utilise comme visuel.
+        try {
+          await generateOgFromRemoteImage(image, outPath);
+          source = 'photo (distante)';
+        } catch (e) {
+          console.warn(`  [warn] image distante illisible : ${image} (${e.message})`);
+          if (fs.existsSync(outPath)) {
+            // Build hors ligne : on garde la carte déjà committée.
+            source = 'card (existante)';
+          } else {
+            await generateBrandCard(outPath, { title, emoji });
+            source = 'card';
+            generatedCards.push(slug);
+          }
+        }
       } else {
-        // URL http(s) -> jamais téléchargée ; ou champ absent.
+        // URL http(s) tierce -> jamais téléchargée (droits) ; ou champ absent.
         await generateBrandCard(outPath, { title, emoji });
         source = 'card';
         generatedCards.push(slug);

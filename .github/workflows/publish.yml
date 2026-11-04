@@ -63,6 +63,12 @@ jobs:
             python scripts/generate_article.py --auto
           fi
 
+      - name: Photos des produits cités
+        continue-on-error: true
+        env:
+          SCRAPER_API_KEY: ${{ secrets.SCRAPER_API_KEY }}
+        run: python scripts/fetch_product_images.py
+
       - name: Validate build (schema Zod + MDX)
         run: |
           npm run build
@@ -72,7 +78,7 @@ jobs:
         run: |
           git config user.name "bot-montessori"
           git config user.email "bot@guidemontessori.fr"
-          git add src/content/ scripts/topics.json public/images/generated/
+          git add src/content/ scripts/topics.json src/data/produits.json public/images/generated/ public/images/produits/
           git diff --cached --quiet && exit 0
           git commit -m "content: nouvel article"
           git push

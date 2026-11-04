@@ -42,7 +42,8 @@ def main():
     amazon = 0
     for path in pages:
         page = Page()
-        page.feed(path.read_text())
+        html = path.read_text()
+        page.feed(html)
         relative = path.relative_to(ROOT)
         if page.h1 != 1:
             errors.append(f'{relative}: expected one H1, found {page.h1}')
@@ -53,6 +54,9 @@ def main():
         is_article = len(parts) == 3 and parts[0] in ('articles', 'actualites') and parts[2] == 'index.html'
         if is_article and is_default_og(page.og_image):
             errors.append(f'{relative}: og:image absente ou par défaut ({page.og_image or "vide"})')
+        # Encart produit sans photo : l'emoji 📦 s'affiche à la place de l'objet.
+        if is_article and '📦' in html:
+            errors.append(f'{relative}: encart produit sans image (emoji 📦)')
         for anchor in page.links:
             href = anchor.get('href', '')
             url = urlsplit(urljoin(base, href))

@@ -70,6 +70,12 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.regenerate_og }}
         run: npm run og
 
+      - name: Photos des produits cités
+        continue-on-error: true
+        env:
+          SCRAPER_API_KEY: ${{ secrets.SCRAPER_API_KEY }}
+        run: python scripts/fetch_product_images.py
+
       - name: Validate build
         run: |
           npm run build
@@ -79,10 +85,11 @@ jobs:
         run: |
           git config user.name "bot-montessori"
           git config user.email "bot@guidemontessori.fr"
-          git add src/content public/images/photos public/og
+          git add src/content public/images/photos public/og src/data/produits.json
           for f in src/data/used_images.json src/data/image_credits.json; do
             [ -f "$f" ] && git add "$f"
           done
+          [ -d public/images/produits ] && git add public/images/produits
           git diff --cached --quiet && exit 0
           git commit -m "content: illustrations des articles sans photo"
           git push

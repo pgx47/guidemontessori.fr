@@ -366,6 +366,7 @@ PHOTOS = ROOT / "public" / "images" / "photos"
 AI_ONLY = {
     "jouets-montessori-rappeles-toxicite",
     "mably-college-montessori-saint-louis-portes-ouvertes",
+    "la-seyne-sur-mer-camion-autonomie-enfants",
 }
 
 PROMPTS = {    "etagere-montessori-jouets-rotation": (
@@ -444,6 +445,11 @@ PROMPTS = {    "etagere-montessori-jouets-rotation": (
         "A child's hands deeply focused on fitting wooden geometric shapes into a wooden puzzle "
         "on a table, warm daylight, shallow depth of field, "
         "no text, no identifiable face"
+    ),
+    "la-seyne-sur-mer-camion-autonomie-enfants": (
+        "A small converted camper van parked on a French town square, its open side showing low wooden "
+        "shelves of simple materials and a small table set up for children's workshops, "
+        "warm afternoon light, no signage, no text, no people"
     ),
 }
 
@@ -590,10 +596,22 @@ def _unused_diagnose() -> None:
         print(f"→ Wikimedia : exception {type(e).__name__}")
 
 
+def needs_illustration(slug: str) -> bool:
+    """Article encore illustré par une carte de marque (pas de vraie photo)."""
+    path = find_entry(slug)
+    if not path:
+        return False
+    fm, _ = split_frontmatter(path.read_text())
+    image = read_str(fm, "image")
+    return (not image) or "fallback" in image or "og/default" in image
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--slug", action="append", default=[])
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--missing", action="store_true",
+                    help="uniquement les articles dont l'image est une carte de marque")
     ap.add_argument("--diagnose", action="store_true")
     args = ap.parse_args()
 
@@ -601,7 +619,13 @@ def main() -> int:
         diagnose()
         return 0
 
-    slugs = list(PROMPTS) if (args.all or not args.slug) else args.slug
+    if args.missing:
+        slugs = [s for s in sorted(PROMPTS) if needs_illustration(s)]
+        if not slugs:
+            print("✓ Toutes les illustrations sont en place.")
+            return 0
+    else:
+        slugs = list(PROMPTS) if (args.all or not args.slug) else args.slug
     ok = 0
     for slug in slugs:
         if slug not in PROMPTS:

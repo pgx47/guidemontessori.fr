@@ -4,12 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       slugs:
-        description: 'Slugs séparés par des virgules (vide = tous ceux qui ont un prompt)'
+        description: 'Slugs séparés par des virgules (vide = uniquement ceux sans vraie photo)'
         required: false
       regenerate_og:
         description: 'Régénérer les cartes Open Graph après génération'
         type: boolean
         default: true
+  schedule:
+    # Filet de sécurité hebdomadaire : rattrape tout article resté sur une carte de marque.
+    - cron: '0 5 * * 1'
+  workflow_run:
+    # Juste après une publication automatique : l'article ne doit pas rester
+    # sans illustration plus longtemps qu'un déploiement.
+    workflows: ['Auto Content Publisher', 'Auto News Publisher']
+    types: [completed]
 
 concurrency:
   group: images
@@ -17,6 +25,7 @@ concurrency:
 
 jobs:
   generate:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -54,11 +63,11 @@ jobs:
             for s in $(echo "$SLUGS" | tr ',' ' '); do ARGS="$ARGS --slug $s"; done
             python scripts/regen_images.py $ARGS
           else
-            python scripts/regen_images.py --all
+            python scripts/regen_images.py --missing
           fi
 
       - name: Regenerate Open Graph cards
-        if: ${{ inputs.regenerate_og }}
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.regenerate_og }}
         run: npm run og
 
       - name: Validate build

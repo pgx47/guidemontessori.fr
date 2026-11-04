@@ -436,9 +436,9 @@ PROMPTS = {    "etagere-montessori-jouets-rotation": (
         "no text, no people"
     ),
     "mably-college-montessori-saint-louis-portes-ouvertes": (
-        "The street facade of a small French school building, pale stone walls and a wooden door "
-        "framed by plane trees, morning light, plain walls with no lettering, no signage and no logos, "
-        "no text, no people"
+        "A calm Montessori middle-school classroom interior, wooden tables and chairs at adolescent height, "
+        "low shelves with books and natural materials, a few plants, large windows with soft daylight, "
+        "warm and uncluttered, empty room, no text, no signage, no people"
     ),
     "maria-montessori-liberte-sans-organisation": (
         "A child's hands deeply focused on fitting wooden geometric shapes into a wooden puzzle "

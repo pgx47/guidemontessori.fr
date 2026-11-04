@@ -84,6 +84,8 @@ def _looks_like_image(value) -> bool:
 
 def _image_from(payload) -> str | None:
     """Cherche une URL d'image dans une réponse ScraperAPI (schémas variables)."""
+    if isinstance(payload, str):
+        return payload if _looks_like_image(payload) else None
     if isinstance(payload, list):
         for item in payload:
             url = _image_from(item)
@@ -95,7 +97,8 @@ def _image_from(payload) -> str | None:
     for key in ("image", "image_url", "main_image", "mainImage", "thumbnail", "hiRes", "large"):
         if _looks_like_image(payload.get(key)):
             return payload[key]
-    for key in ("images", "product", "products", "data", "result", "results"):
+    # `high_res_images` avant `images` : même produit, définition supérieure.
+    for key in ("high_res_images", "images", "product", "products", "data", "result", "results"):
         if key in payload:
             url = _image_from(payload[key])
             if url:

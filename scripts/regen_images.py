@@ -436,8 +436,8 @@ PROMPTS = {    "etagere-montessori-jouets-rotation": (
         "no text, no people"
     ),
     "mably-college-montessori-saint-louis-portes-ouvertes": (
-        "The entrance of a small French school building, pale stone facade and a wooden door "
-        "framed by trees, morning light, quiet street, "
+        "The street facade of a small French school building, pale stone walls and a wooden door "
+        "framed by plane trees, morning light, plain walls with no lettering, no signage and no logos, "
         "no text, no people"
     ),
     "maria-montessori-liberte-sans-organisation": (

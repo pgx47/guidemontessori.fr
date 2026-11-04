@@ -13,6 +13,7 @@ from pathlib import Path
 import requests
 
 sys.path.insert(0, str(Path(__file__).parent))
+import amazon_scraper
 import generate_article as g
 from scraper_api import get as scraper_get
 
@@ -87,7 +88,14 @@ def _extract_og_image(page_html: str) -> str | None:
 
 
 def _og_image_from_source(link: str) -> str | None:
-    """og:image de l'article source, via ScraperAPI puis fetch direct."""
+    """og:image de l'article source : Chromium local, ScraperAPI, puis fetch direct."""
+    try:
+        if amazon_scraper.available():
+            url = amazon_scraper.og_image(link)
+            if url:
+                return url
+    except Exception as e:
+        print(f"⚠ scraper local og:image : {e}", file=sys.stderr)
     try:
         r = scraper_get("", {"url": link, "render": "true"}, timeout=60)
         if r.ok:

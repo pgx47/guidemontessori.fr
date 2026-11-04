@@ -10,9 +10,11 @@ Usage :
   python scripts/fetch_product_images.py                 # les ASIN encore sans photo
   python scripts/fetch_product_images.py --asin B0F995MXGZ
   python scripts/fetch_product_images.py --force         # retélécharge tout
+  python scripts/fetch_product_images.py --source scraper # sans crédit ScraperAPI
 
-Nécessite une clé ScraperAPI (SCRAPER_API_KEYS / SCRAPER_API_KEY, rotation
-automatique) ; les ASIN déjà en local sont ignorés.
+Ordre des sources (--source auto, par défaut) : Chromium local
+(`amazon_scraper`) puis ScraperAPI (rotation de clés). Les ASIN déjà en local
+sont ignorés.
 """
 import argparse
 import io
@@ -26,6 +28,7 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import amazon_scraper  # noqa: E402
 from generate_article import ROOT  # noqa: E402
 from scraper_api import ScraperExhausted, available, get as scraper_get  # noqa: E402
 
@@ -186,8 +189,29 @@ def download_webp(url: str, asin: str) -> str | None:
         return None
 
 
+def resolve_image(asin: str, nom: str, source: str = "auto") -> tuple[str | None, bool]:
+    """(url d'image, produit vivant). Scraper local d'abord, API ensuite."""
+    if source in ("auto", "scraper") and amazon_scraper.available():
+        try:
+            data = amazon_scraper.product(asin)
+            if not data["alive"]:
+                return None, False
+            if data["image"]:
+                return data["image"], True
+        except amazon_scraper.Blocked as exc:
+            print(f"    ! scraper local : {exc}", file=sys.stderr)
+        if source == "scraper":
+            return None, True
+
+    if source == "scraper" or not available():
+        return None, True
+    return scrape_image_url(asin, nom), True
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--source", choices=("auto", "scraper", "api"), default="auto",
+                    help="auto : Chromium local puis ScraperAPI")
     ap.add_argument("--asin", action="append", default=[])
     ap.add_argument("--force", action="store_true", help="retélécharge même si l'image existe")
     args = ap.parse_args()
@@ -203,18 +227,24 @@ def main() -> int:
         print("✓ Tous les encarts produit ont une photo.")
         return 0
 
-    if not available():
+    if args.source == "api" and not available():
         print("Aucune clé ScraperAPI : rapatriement des photos ignoré", file=sys.stderr)
+        return 0
+    if args.source != "api" and not amazon_scraper.available() and not available():
+        print("Ni Chromium ni clé ScraperAPI : rapatriement ignoré", file=sys.stderr)
         return 0
 
     ok = 0
     for asin, nom in wanted.items():
         print(f"→ {asin} {nom[:60]}")
         try:
-            url = scrape_image_url(asin, nom)
+            url, alive = resolve_image(asin, nom, args.source)
         except ScraperExhausted:
             print("crédits ScraperAPI épuisés sur toutes les clés, on arrête là", file=sys.stderr)
             break
+        if not alive:
+            print(f"  ✗ {asin} : produit retiré de la vente", file=sys.stderr)
+            continue
         if not url:
             print(f"  ✗ {asin} : aucune image trouvée", file=sys.stderr)
             continue

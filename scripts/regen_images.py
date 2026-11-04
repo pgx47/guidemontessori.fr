@@ -53,7 +53,7 @@ PIXABAY_QUERIES = {
     "c-est-qui-maria-montessori-1jour1actu": "montessori classroom wooden materials",
     "fallettans-cynthia-tattu-pedagogie-montessori": "children hands wooden toys table",
     "jouets-montessori-rappeles-toxicite": "wooden toys collection table",
-    "mably-college-montessori-saint-louis-portes-ouvertes": "school entrance building france",
+    "mably-college-montessori-saint-louis-portes-ouvertes": "montessori classroom interior shelves",
     "maria-montessori-liberte-sans-organisation": "child concentration wooden puzzle",
 }
 
@@ -82,7 +82,20 @@ def generate_pixabay(slug: str):
         print(f"    ✗ Pixabay : HTTP {r.status_code} — {r.text[:120]}")
         return None, None
 
-    for hit in r.json().get("hits", []):
+    hits = r.json().get("hits", [])
+    # Pixabay classe par popularité et ignore une partie des mots : sans ce filtre,
+    # « wooden toys collection table » renvoyait des cartes Pokémon.
+    tokens = [t for t in re.split(r"[^a-z0-9]+", query.lower()) if len(t) > 2]
+
+    def relevant(hit) -> bool:
+        if not tokens:
+            return True
+        tags = str(hit.get("tags", "")).lower()
+        return any(t[:4] in tags for t in tokens)
+
+    for hit in hits:
+        if not relevant(hit):
+            continue
         w, h = hit.get("imageWidth") or 0, hit.get("imageHeight") or 0
         if w < 1600 or h == 0 or not (1.2 <= w / h <= 2.2):
             continue
@@ -122,6 +135,11 @@ UNSPLASH_QUERIES = {
     "apprentissage-vie-pratique-montessori-vaisselle": "child washing dishes hands kitchen",
     "la-tour-pink-montessori-developpement-enfant": "wooden blocks tower pink cubes",
     "ecole-montessori-irisia-aix-chantier-cour": "school courtyard plane trees",
+    "c-est-qui-maria-montessori-1jour1actu": "montessori classroom materials shelf",
+    "fallettans-cynthia-tattu-pedagogie-montessori": "children hands wooden toys table",
+    "jouets-montessori-rappeles-toxicite": "wooden toys natural wood table",
+    "mably-college-montessori-saint-louis-portes-ouvertes": "montessori classroom interior",
+    "maria-montessori-liberte-sans-organisation": "child concentrating wooden puzzle",
 }
 
 

@@ -71,7 +71,10 @@ def check(asin: str, source: str = "auto") -> tuple[str, str]:
             data = amazon_scraper.product(asin)
             if data["alive"]:
                 return "live", data["name"][:70]
-            return "dead", "fiche introuvable"
+            # Le navigateur peut recevoir un 404 de filtrage géographique :
+            # en mode auto on demande confirmation à l'API avant de condamner.
+            if source == "scraper":
+                return "dead", "fiche introuvable (navigateur)"
         except amazon_scraper.Blocked as exc:
             if source == "scraper":
                 return "unknown", f"scraper bloqué : {exc}"

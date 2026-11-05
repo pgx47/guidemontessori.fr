@@ -194,14 +194,16 @@ def resolve_image(asin: str, nom: str, source: str = "auto") -> tuple[str | None
     if source in ("auto", "scraper") and amazon_scraper.available():
         try:
             data = amazon_scraper.product(asin)
-            if not data["alive"]:
-                return None, False
-            if data["image"]:
+            if data["alive"] and data["image"]:
                 return data["image"], True
+            # Un 404 navigateur peut venir d'un filtrage géographique et non
+            # d'un retrait : en mode auto, l'API tranche (et fournit l'image).
+            if source == "scraper":
+                return None, data["alive"]
         except amazon_scraper.Blocked as exc:
             print(f"    ! scraper local : {exc}", file=sys.stderr)
-        if source == "scraper":
-            return None, True
+            if source == "scraper":
+                return None, True
 
     if source == "scraper" or not available():
         return None, True

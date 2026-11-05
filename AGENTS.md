@@ -18,6 +18,11 @@ fiche produit (titre, image HD, prix, dispo, arguments), résultats de recherche
 (les runners GitHub Actions sont filtrés par Amazon). `SCRAPER_API_KEYS`
 (liste séparée par des virgules, rotation automatique) sert de repli en CI.
 
+Piège : le navigateur reçoit parfois une page « Page introuvable » pour un
+produit **encore en vente** (filtrage géographique). Un verdict « mort » du
+scraper doit donc être reconfirmé par l'API (`--source auto` le fait déjà) ;
+ne jamais élaguer les données sur un 404 navigateur seul.
+
 ## Layout
 - Guides → `src/content/guides/*.mdx` → `/articles/<slug>/` (legacy URLs preserved)
 - News → `src/content/news/*.mdx` → `/actualites/<slug>/`

@@ -104,7 +104,7 @@
       "keyword": "activités montessori 18 mois",
       "type": "guide",
       "angle": "vie pratique, motricité fine, langage, matériel fait maison",
-      "status": "pending",
+      "status": "published",
       "products": [
         {
           "asin": "2092787950",
@@ -114,7 +114,9 @@
           "asin": "B0HJNRNSP4",
           "nom": "Montessori avec Jef — Vie pratique 0-3 ans: 24 activités d'autonomie pour bébé, "
         }
-      ]
+      ],
+      "slug": "activites-montessori-18-mois",
+      "publishedAt": "2026-11-06"
     },
     {
       "keyword": "boîte à permanence de l'objet",
@@ -131,6 +133,111 @@
           "nom": "Busy edition Montessori Toys for Babies 6-12 Months Object Permanence Box Wooden"
         }
       ]
+    },
+    {
+      "keyword": "meilleur matelas Montessori pour lit au sol",
+      "type": "guide",
+      "angle": "Comparatif d'achat 2026 : épaisseur, fermeté, respirabilité et sécurité pour un couchage au sol de 0 à 3 ans, avec top 5 modèles et budget par tranche de prix.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "chaise haute évolutive Montessori en bois",
+      "type": "guide",
+      "angle": "Quelle chaise haute choisir pour un bébé de 6 mois à 6 ans : hauteur réglable, repose-pieds, harnais, comparatif des modèles bois et conseils d'installation face à la table familiale.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "table d'activités Montessori 12 mois",
+      "type": "guide",
+      "angle": "Sélection de tables d'activités pour bébé de 1 an : motricité fine, stabilité, normes de sécurité, alternatives DIY et erreurs à éviter avant l'achat.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "coffret lettres rugueuses Montessori",
+      "type": "guide",
+      "angle": "Guide d'achat et d'utilisation : à quel âge introduire les lettres rugueuses, comparatif coffret bois vs feutrine, progression vers l'écriture et la lecture cursive.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "puzzle en bois Montessori 1 an",
+      "type": "guide",
+      "angle": "Premiers encastrements pour bébé de 12 à 18 mois : nombre de pièces, formes, taille, marques fiables et progression vers les puzzles à boutons.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "hochet Montessori 6 mois",
+      "type": "guide",
+      "angle": "Quels hochets pour la période 4-8 mois : matériaux naturels, préhension, dentition, comparatif des incontournables et ce qu'il faut vraiment acheter (ou pas).",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "présentoir à livres Montessori",
+      "type": "guide",
+      "angle": "Aménager un coin lecture : choisir un présentoir frontal à hauteur d'enfant, rotation des livres, modèles muraux vs au sol et budget.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "arche d'éveil Montessori en bois",
+      "type": "guide",
+      "angle": "Arche d'éveil vs tapis d'éveil classique pour un nouveau-né : critères de choix, suspension des mobiles, sécurité et sélection de modèles 0-6 mois.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "table lumineuse Montessori",
+      "type": "guide",
+      "angle": "Guide d'achat et d'activités sensorielles : quel format choisir, accessoires (semoule, formes translucides), sécurité électrique et usages de 2 à 6 ans.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "activités Montessori 3 ans",
+      "type": "guide",
+      "angle": "25 activités à proposer à un enfant de 3 ans à la maison : vie pratique, langage, mathématiques sensorielles, matériel à acheter et celles à faire avec 3 fois rien.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "livre Montessori pour les parents",
+      "type": "guide",
+      "angle": "Par quel livre commencer : comparatif des ouvrages de référence (Montessori de la naissance à 3 ans, pédagogie scientifique), niveau de lecture et utilité concrète.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "bureau Montessori enfant 6 ans",
+      "type": "guide",
+      "angle": "Aménager un espace de travail pour l'entrée au CP : hauteur du plateau, chaise ergonomique, rangements accessibles, comparatif de bureaux en bois et budget.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "sélection jouets Montessori Noël 2025",
+      "type": "news",
+      "angle": "Sélection de Noël par âge (0-1, 2-3, 4-6 ans) avec prix relevés en novembre 2025, jouets en bois à privilégier et fausses étiquettes Montessori à éviter.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "Black Friday 2025 matériel Montessori bonnes affaires",
+      "type": "news",
+      "angle": "Suivi des promotions sur le mobilier et les jouets Montessori : quelles marques bradent vraiment, prix de référence relevés, pièges des faux rabais, calendrier des ventes.",
+      "status": "pending",
+      "products": []
+    },
+    {
+      "keyword": "nouvelle réglementation jouets en bois 2025 parents",
+      "type": "news",
+      "angle": "Ce qui change pour l'achat de jouets en bois et de matériel Montessori : marquage CE, normes sur les peintures et les petits aimants, ce qu'il faut vérifier avant d'acheter.",
+      "status": "pending",
+      "products": []
     }
   ]
 }

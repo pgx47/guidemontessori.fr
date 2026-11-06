@@ -114,3 +114,28 @@ export function departementOf(codePostal?: string): { code: string; nom: string 
   const nom = DEPARTEMENTS[prefix];
   return nom ? { code: prefix, nom } : null;
 }
+
+/**
+ * Départements féminins (le reste est masculin) : sert à écrire
+ * « en Gironde », « dans le Rhône », « dans les Bouches-du-Rhône ».
+ */
+const FEMININS = new Set([
+  'Aisne', 'Ariège', 'Aube', 'Aude', 'Charente', 'Charente-Maritime', 'Corrèze', 'Corse',
+  'Creuse', 'Dordogne', 'Drôme', 'Eure', 'Gironde', 'Indre', 'Indre-et-Loire', 'Isère',
+  'Loire', 'Loire-Atlantique', 'Haute-Loire', 'Lozère', 'Marne', 'Haute-Marne', 'Mayenne',
+  'Meurthe-et-Moselle', 'Meuse', 'Moselle', 'Nièvre', 'Oise', 'Orne', 'Saône-et-Loire',
+  'Sarthe', 'Savoie', 'Haute-Savoie', 'Seine-Maritime', 'Seine-et-Marne', 'Somme',
+  'Vendée', 'Vienne', 'Haute-Vienne', 'Yonne', 'Ardèche',
+]);
+
+const PLURIELS = /^(Alpes|Ardennes|Bouches|Côtes|Deux-Sèvres|Landes|Pyrénées|Vosges|Hauts-|Hautes-)/;
+
+/** Retourne la locution à insérer avant le nom du département. */
+export function dansLeDepartement(nom: string): string {
+  if (nom === 'Paris') return 'à Paris';
+  if (PLURIELS.test(nom)) return `dans les ${nom}`;
+  if (/^Haute-/.test(nom)) return `en ${nom}`;
+  const voyelle = /^[AEIOUYÉÈÂÊÎÔÛ]/.test(nom);
+  if (FEMININS.has(nom)) return voyelle ? `dans l'${nom}` : `en ${nom}`;
+  return voyelle ? `dans l'${nom}` : `dans le ${nom}`;
+}

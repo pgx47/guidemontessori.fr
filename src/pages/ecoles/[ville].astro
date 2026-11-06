@@ -3,12 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AffiliateBox from '../../components/AffiliateBox.astro';
 import ecoles from '../../data/ecoles.json';
 import coords from '../../data/villes_coords.json';
-import { departementOf } from '../../data/departements';
+import { departementOf, dansLeDepartement } from '../../data/departements';
 
 export function getStaticPaths() {
-  const villes = [...new Set(ecoles.map((e) => e.slug_ville).filter(Boolean))];
-
-  const distance = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => {
+  function distance(a: { lat: number; lon: number }, b: { lat: number; lon: number }) {
     const R = 6371;
     const dLat = ((b.lat - a.lat) * Math.PI) / 180;
     const dLon = ((b.lon - a.lon) * Math.PI) / 180;
@@ -16,30 +14,66 @@ export function getStaticPaths() {
       Math.sin(dLat / 2) ** 2 +
       Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(s));
-  };
+  }
+
+  const villes = [...new Set(ecoles.map((e) => e.slug_ville).filter(Boolean))];
 
   const counts = new Map<string, number>();
   for (const e of ecoles) counts.set(e.slug_ville, (counts.get(e.slug_ville) ?? 0) + 1);
 
+  const nodes = [...new Set(ecoles.map((e) => e.slug_ville).filter(Boolean))]
+    .filter((s) => coords[s])
+    .map((s) => ({
+      slug: s,
+      nom: ecoles.find((e) => e.slug_ville === s)!.ville,
+      cp: ecoles.find((e) => e.slug_ville === s)!.code_postal,
+      ...coords[s],
+      n: counts.get(s) ?? 0,
+    }));
+
   return villes.map((v) => {
     const list = ecoles.filter((e) => e.slug_ville === v);
     const here = coords[v];
-    const voisines = here
-      ? villes
-          .filter((s) => s !== v && coords[s])
-          .map((s) => ({ slug: s, nom: ecoles.find((e) => e.slug_ville === s).ville, n: counts.get(s) ?? 0, d: distance(here, coords[s]) }))
+    const near = here
+      ? nodes
+          .filter((n) => n.slug !== v)
+          .map((n) => ({ slug: n.slug, nom: n.nom, cp: n.cp, n: n.n, d: distance(here, n) }))
           .sort((a, b) => a.d - b.d)
-          .slice(0, 6)
       : [];
+
+    const deptCode = departementOf(list[0].code_postal)?.code;
+    const deptNodes = near.filter((n) => departementOf(n.cp)?.code === deptCode);
+    const deptTotal = deptNodes.reduce((sum, n) => sum + n.n, 0) + list.length;
+    const deptCityCount = deptNodes.length + 1;
+
+    // On n'affiche que les villes du département qui n'apparaissent pas déjà
+    // dans les deux villes les plus proches listées plus haut.
+    const deptExtra = deptNodes
+      .filter((n) => !near.slice(0, 2).some((p) => p.slug === n.slug))
+      .slice(0, 4);
+
+    // Un collège à 250 km n'aide personne : au-delà de 60 km, on se tait.
+    const withType = (type: string) =>
+      near.find((n) => n.d <= 60 && ecoles.some((e) => e.slug_ville === n.slug && e.amenity === type)) ?? null;
 
     return {
       params: { ville: v },
-      props: { villeName: list[0].ville, cp: list[0].code_postal, list, voisines },
+      props: {
+        villeName: list[0].ville,
+        cp: list[0].code_postal,
+        list,
+        voisines: near.slice(0, 6),
+        deptVilles: deptExtra,
+        deptTotal,
+        deptCityCount,
+        nearestCollege: list.some((e) => e.amenity === 'Collège') ? null : withType('Collège'),
+        nearestLycee: list.some((e) => e.amenity === 'Lycée') ? null : withType('Lycée'),
+      },
     };
   });
 }
 
-const { villeName, cp, list, voisines } = Astro.props;
+const { villeName, cp, list, voisines, deptVilles, deptTotal, deptCityCount, nearestCollege, nearestLycee } = Astro.props;
 
 const departement = departementOf(cp);
 const proches = voisines.slice(0, 2);
@@ -49,6 +83,34 @@ const collegesN = list.length - ecolesN;
 const types = [ecolesN ? `${ecolesN} école${ecolesN > 1 ? 's' : ''}` : null, collegesN ? `${collegesN} collège${collegesN > 1 ? 's' : ''}` : null]
   .filter(Boolean)
   .join(' et ');
+
+const km = (d: number) => `${Math.round(d)} km`;
+
+const faq = [
+  {
+    question: `Combien d'écoles Montessori y a-t-il à ${villeName} ?`,
+    answer: `${villeName} compte ${list.length} établissement${list.length > 1 ? 's' : ''} Montessori référencé${
+      list.length > 1 ? 's' : ''
+    } dans cet annuaire (${types}), avec ${list.length > 1 ? 'leurs adresses' : 'son adresse'}.`,
+  },
+  {
+    question: `Y a-t-il un collège Montessori à ${villeName} ?`,
+    answer: collegesN > 0
+      ? `Oui, ${collegesN} collège${collegesN > 1 ? 's' : ''} Montessori ${collegesN > 1 ? 'sont référencés' : 'est référencé'} à ${villeName}.`
+      : nearestCollege
+        ? `Aucun collège Montessori n'est référencé à ${villeName}. Le plus proche recensé se trouve à ${nearestCollege.nom}, à ${km(nearestCollege.d)}.`
+        : `Aucun collège Montessori n'est référencé à ${villeName} ni dans les villes couvertes les plus proches.`,
+  },
+  {
+    question: `Quelles villes proches ont aussi une école Montessori ?`,
+    answer: voisines.length
+      ? `Les villes couvertes les plus proches sont ${voisines
+          .slice(0, 3)
+          .map((v) => `${v.nom} (${km(v.d)}, ${v.n} établissement${v.n > 1 ? 's' : ''})`)
+          .join(', ')}.`
+      : `Aucune autre ville couverte n'est référencée à proximité immédiate.`,
+  },
+];
 
 const title = `Écoles Montessori à ${villeName}`;
 const description = `Annuaire des écoles Montessori à ${villeName}${cp ? ` (${cp})` : ''} : ${list.length} établissement${
@@ -87,6 +149,14 @@ const schema = {
         },
       })),
     },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    },
   ],
 };
 ---
@@ -102,7 +172,7 @@ const schema = {
       Écoles Montessori à {villeName}{cp && <span class="text-gray-500"> ({cp})</span>}
     </h1>
     <p class="mb-10 text-gray-700">
-      {villeName} compte {list.length} établissement{list.length > 1 ? 's' : ''} Montessori référencé{list.length > 1 ? 's' : ''} dans notre annuaire&nbsp;: {types}.
+      {villeName} compte {list.length} établissement{list.length > 1 ? 's' : ''} Montessori référencé{list.length > 1 ? 's' : ''} dans notre annuaire ({types}).
       {ecolesN > 0 && collegesN > 0
         ? ' Écoles primaires et collèges appliquant la pédagogie Montessori y sont recensés avec leur adresse.'
         : collegesN > 0
@@ -111,7 +181,7 @@ const schema = {
       {list.length === 1 && ' Vous trouverez ci-dessous sa présentation détaillée, ses points forts et son contact.'}
     </p>
     <p class="mb-10 text-sm text-gray-600">
-      {departement && <>La ville se situe dans le département {departement.nom} ({departement.code}).</>}
+      {departement && <>La ville se situe {dansLeDepartement(departement.nom)} ({departement.code}).</>}
       {proches.length > 0 && (
         <>
           {' '}Les autres villes couvertes les plus proches sont{' '}
@@ -126,6 +196,76 @@ const schema = {
         </>
       )}
     </p>
+
+    {departement && (
+      <section class="mb-12 rounded-2xl border border-gray-200 bg-gray-50 p-6">
+        <h2 class="mb-3 font-serif text-xl font-bold text-gray-900">
+          Combien d'écoles Montessori {dansLeDepartement(departement.nom)} ?
+        </h2>
+        <p class="mb-3 text-sm leading-relaxed text-gray-700">
+          Notre annuaire recense {deptTotal} établissement{deptTotal > 1 ? 's' : ''} Montessori{' '}
+          {dansLeDepartement(departement.nom)}, réparti{deptTotal > 1 ? 's' : ''} sur {deptCityCount} ville
+          {deptCityCount > 1 ? 's' : ''} couverte{deptCityCount > 1 ? 's' : ''} par ces pages.
+          {' '}{villeName} en compte {list.length}.
+        </p>
+        {deptVilles.length > 0 && (
+          <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {deptVilles.map((v) => (
+              <li>
+                <a
+                  href={`/ecoles/${v.slug}/`}
+                  class="flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm transition-colors hover:border-sage-300 hover:bg-sage-50"
+                >
+                  <span class="font-semibold text-gray-800">Écoles Montessori à {v.nom}</span>
+                  <span class="shrink-0 text-xs text-gray-500">
+                    {v.n} étab. · {Math.round(v.d)} km
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    )}
+
+    {collegesN === 0 && nearestCollege && (
+      <p class="mb-10 text-sm text-gray-700">
+        Aucun collège Montessori n'est référencé à {villeName}. Le plus proche recensé se trouve à{' '}
+        <a href={`/ecoles/${nearestCollege.slug}/`} class="text-sage-600 hover:underline">{nearestCollege.nom}</a>, à {km(nearestCollege.d)}.
+      </p>
+    )}
+
+    {list.length > 1 && (
+      <section class="mb-12">
+        <h2 class="mb-4 font-serif text-xl font-bold text-gray-900">
+          Les établissements de {villeName} en un coup d'œil
+        </h2>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-sm">
+            <thead>
+              <tr class="border-b border-gray-300 text-left text-gray-600">
+                <th class="py-2 pr-4 font-semibold">Établissement</th>
+                <th class="py-2 pr-4 font-semibold">Type</th>
+                <th class="py-2 font-semibold">Adresse</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.map((e) => (
+                <tr class="border-b border-gray-200 align-top">
+                  <td class="py-3 pr-4 font-medium text-gray-900">{e.nom}</td>
+                  <td class="py-3 pr-4 text-gray-700">
+                    {e.amenity === 'Collège' ? 'Collège' : e.amenity === 'Lycée' ? 'Lycée' : e.amenity === 'kindergarten' ? 'Maternelle' : 'École'}
+                  </td>
+                  <td class="py-3 text-gray-700">
+                    {e.adresse ? `${e.adresse}, ` : ''}{e.ville}{e.code_postal ? ` ${e.code_postal}` : ''}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
 
     <div class="space-y-6">
       {list.map((e) => (
@@ -174,6 +314,18 @@ const schema = {
         </section>
       )
     }
+
+    <section class="mt-14">
+      <h2 class="mb-4 font-serif text-xl font-bold text-gray-900">Questions fréquentes à {villeName}</h2>
+      <dl class="space-y-4">
+        {faq.map((f) => (
+          <div class="rounded-xl border border-gray-200 bg-white p-5">
+            <dt class="font-semibold text-gray-900">{f.question}</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-gray-700">{f.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
 
     <aside class="mt-12 rounded-2xl border border-terracotta-200 bg-terracotta-50 p-6">
       <h2 class="mb-2 text-lg font-bold text-gray-900">🎒 Préparez sa rentrée en école Montessori</h2>

@@ -112,10 +112,39 @@ const faq = [
   },
 ];
 
-const title = `Écoles Montessori à ${villeName}`;
-const description = `Annuaire des écoles Montessori à ${villeName}${cp ? ` (${cp})` : ''} : ${list.length} établissement${
+const MARQUEURS: [string, string][] = [
+  ['bilingue', 'bilingue'],
+  ['bilingual', 'bilingue'],
+  ['international', 'internationale'],
+  ['maternelle', 'maternelle'],
+];
+const seul = list.length === 1 ? list[0] : null;
+const nomLower = seul ? seul.nom.toLowerCase() : '';
+const marqueur = seul ? MARQUEURS.find(([cle]) => nomLower.includes(cle))?.[1] : undefined;
+const estAssociation = /association/i.test(nomLower);
+
+const title =
+  seul && marqueur && !estAssociation
+    ? `École Montessori ${marqueur} à ${villeName}${cp ? ` (${cp})` : ''}`
+    : `Écoles Montessori à ${villeName}`;
+
+const prefixe = `École Montessori${marqueur ? ` ${marqueur}` : ''} à ${villeName}${cp ? ` (${cp})` : ''} : `;
+const suffixe = ' Adresse et infos pratiques.';
+const phraseEcole = seul ? (seul.description_ia || '').split('. ')[0].replace(/\.$/, '') : '';
+const budget = 200 - prefixe.length - suffixe.length - 2;
+const phraseCourte =
+  phraseEcole.length > budget ? `${phraseEcole.slice(0, budget).replace(/\s+\S*$/, '')}…` : phraseEcole;
+const descriptionCiblee =
+  seul && !estAssociation && phraseCourte.length > 20
+    ? `${prefixe}${phraseCourte}${phraseCourte.endsWith('…') ? '' : '.'}${suffixe}`
+    : '';
+
+const descriptionGenerique = `Annuaire des écoles Montessori à ${villeName}${cp ? ` (${cp})` : ''} : ${list.length} établissement${
   list.length > 1 ? 's' : ''
 } référencé${list.length > 1 ? 's' : ''} (${types}), adresses et présentation.`;
+
+const description =
+  descriptionCiblee.length >= 50 && descriptionCiblee.length <= 200 ? descriptionCiblee : descriptionGenerique;
 
 const schema = {
   '@context': 'https://schema.org',

@@ -5,6 +5,15 @@
 /admin/* /articles/ 301
 
 /sitemap.xml /sitemap-index.xml 301
+
+# Anciennes URL signalees en 404 par Search Console (couverture > Introuvable).
+# Les deux formes sont listees : Pages ne normalise le slash final que si la
+# page existe, donc /articles/vie-prairie (sans slash) ne 404 pas en 301.
+# Le domaine images.guidemontessori.fr (bucket R2) renvoie aussi un 404 sur "/" :
+# ce n'est pas une page indexable, a traiter par une Redirect Rule de zone si besoin.
 /articles/vie-prairie/ /articles/vie-pratique/ 301
+/articles/vie-prairie /articles/vie-pratique/ 301
 /articles/vie-praptique/ /articles/vie-pratique/ 301
+/articles/vie-praptique /articles/vie-pratique/ 301
 /articles/bougeotheque-municipale-bordeaux-petite-enfance/ /actualites/bougeotheque-municipale-bordeaux-petite-enfance/ 301
+/articles/bougeotheque-municipale-bordeaux-petite-enfance /actualites/bougeotheque-municipale-bordeaux-petite-enfance/ 301

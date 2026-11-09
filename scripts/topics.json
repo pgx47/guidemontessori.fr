@@ -122,7 +122,7 @@
       "keyword": "boîte à permanence de l'objet",
       "type": "guide",
       "angle": "fonctionnement, âge, présentation, progression",
-      "status": "pending",
+      "status": "published",
       "products": [
         {
           "asin": "B0BPC7SZ4S",
@@ -132,7 +132,9 @@
           "asin": "B0BNH8STQ3",
           "nom": "Busy edition Montessori Toys for Babies 6-12 Months Object Permanence Box Wooden"
         }
-      ]
+      ],
+      "slug": "boite-permanence-objet-montessori",
+      "publishedAt": "2026-11-09"
     },
     {
       "keyword": "meilleur matelas Montessori pour lit au sol",

@@ -7,7 +7,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, unquote, urljoin, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent / 'dist'
-TAG = os.environ.get('PUBLIC_AMAZON_TAG', '').strip() or 'mtssri-21'
+TAG = os.environ.get('PUBLIC_AMAZON_TAG', '').strip() or '4751233-21'
 
 
 class Page(HTMLParser):

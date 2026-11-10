@@ -4,7 +4,7 @@ Demande : jours fixes, vérifier le fonctionnement du site, l'affiliation Amazon
 
 - Remplacer le tirage aléatoire des guides par lundi, mercredi et vendredi ; conserver les actualités mercredi et samedi.
 - Corriger les trois destinations internes inexistantes et vérifier toutes les pages et liens internes.
-- Unifier le tag Amazon mtssri-21, ajouter sponsored aux liens MDX et contrôler les redirections historiques.
+- Unifier le tag Amazon 4751233-21, ajouter sponsored aux liens MDX et contrôler les redirections historiques.
 - Vérifier les filtres cadeaux et annuaire, le chargement GA4 et l'accès effectif aux rapports.
 - Diagnostiquer les intégrations Google via le compte de service existant, sans afficher de données privées dans les logs publics.
 - Exécuter les tests et le build, revue du diff puis déploiement et vérification en production.

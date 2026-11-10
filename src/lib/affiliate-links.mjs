@@ -1,4 +1,4 @@
-export const DEFAULT_AMAZON_TAG = 'mtssri-21';
+export const DEFAULT_AMAZON_TAG = '4751233-21';
 
 export function normalizeAmazonUrl(href, tag = DEFAULT_AMAZON_TAG) {
   try {

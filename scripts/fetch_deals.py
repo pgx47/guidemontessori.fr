@@ -38,7 +38,7 @@ def main() -> int:
     if not available():
         print("Aucune clé ScraperAPI, deals.json inchangé", file=sys.stderr)
         return 0
-    tag = os.environ.get("AMAZON_TAG", "mtssri-21")
+    tag = os.environ.get("AMAZON_TAG", "4751233-21")
     deals, seen = [], set()
     for q in QUERIES:
         if len(deals) >= MAX_DEALS:

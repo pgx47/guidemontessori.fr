@@ -12,7 +12,7 @@ from scraper_api import ScraperExhausted, available, get as scraper_get
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "data" / "cadeaux.json"
-TAG = os.environ.get("AMAZON_TAG", "mtssri-21")
+TAG = os.environ.get("AMAZON_TAG", "4751233-21")
 
 QUERIES = [
     # 0-12m

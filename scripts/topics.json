@@ -158,8 +158,10 @@
       "keyword": "table d'activités Montessori 12 mois",
       "type": "guide",
       "angle": "Sélection de tables d'activités pour bébé de 1 an : motricité fine, stabilité, normes de sécurité, alternatives DIY et erreurs à éviter avant l'achat.",
-      "status": "pending",
-      "products": []
+      "status": "published",
+      "products": [],
+      "slug": "table-activites-montessori-12-mois",
+      "publishedAt": "2026-11-16"
     },
     {
       "keyword": "coffret lettres rugueuses Montessori",

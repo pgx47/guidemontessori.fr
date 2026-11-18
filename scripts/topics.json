@@ -167,8 +167,10 @@
       "keyword": "coffret lettres rugueuses Montessori",
       "type": "guide",
       "angle": "Guide d'achat et d'utilisation : à quel âge introduire les lettres rugueuses, comparatif coffret bois vs feutrine, progression vers l'écriture et la lecture cursive.",
-      "status": "pending",
-      "products": []
+      "status": "published",
+      "products": [],
+      "slug": "coffret-lettres-rugueuses-montessori",
+      "publishedAt": "2026-11-18"
     },
     {
       "keyword": "puzzle en bois Montessori 1 an",

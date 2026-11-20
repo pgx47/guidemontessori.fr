@@ -176,8 +176,10 @@
       "keyword": "puzzle en bois Montessori 1 an",
       "type": "guide",
       "angle": "Premiers encastrements pour bébé de 12 à 18 mois : nombre de pièces, formes, taille, marques fiables et progression vers les puzzles à boutons.",
-      "status": "pending",
-      "products": []
+      "status": "published",
+      "products": [],
+      "slug": "puzzle-bois-montessori-1-an",
+      "publishedAt": "2026-11-20"
     },
     {
       "keyword": "hochet Montessori 6 mois",

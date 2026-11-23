@@ -185,8 +185,10 @@
       "keyword": "hochet Montessori 6 mois",
       "type": "guide",
       "angle": "Quels hochets pour la période 4-8 mois : matériaux naturels, préhension, dentition, comparatif des incontournables et ce qu'il faut vraiment acheter (ou pas).",
-      "status": "pending",
-      "products": []
+      "status": "published",
+      "products": [],
+      "slug": "hochet-montessori-6-mois",
+      "publishedAt": "2026-11-23"
     },
     {
       "keyword": "présentoir à livres Montessori",

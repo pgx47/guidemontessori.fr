@@ -194,8 +194,10 @@
       "keyword": "présentoir à livres Montessori",
       "type": "guide",
       "angle": "Aménager un coin lecture : choisir un présentoir frontal à hauteur d'enfant, rotation des livres, modèles muraux vs au sol et budget.",
-      "status": "pending",
-      "products": []
+      "status": "published",
+      "products": [],
+      "slug": "presentoir-a-livres-montessori",
+      "publishedAt": "2026-11-25"
     },
     {
       "keyword": "arche d'éveil Montessori en bois",

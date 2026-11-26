@@ -179,5 +179,16 @@ const legal = [
         </div>
       </div>
   </footer>
+  <script>
+    // Cloudflare Scrape Shield réécrit les `href="mailto:"` en
+    // /cdn-cgi/l/email-protection#…, une route que Cloudflare Pages ne sert pas
+    // (404 vérifié le 26/11/2026). On reconstruit donc le lien dans le
+    // navigateur : le HTML servi ne contient plus aucun mailto à réécrire.
+    document.querySelectorAll<HTMLAnchorElement>('a[data-mailto]').forEach((a) => {
+      const { mailtoUser, mailtoDomain, mailtoQuery } = a.dataset;
+      const address = mailtoUser ? `${mailtoUser}@${mailtoDomain}` : '';
+      a.href = 'mail' + 'to:' + address + (mailtoQuery ? `?${mailtoQuery}` : '');
+    });
+  </script>
   </body>
 </html>

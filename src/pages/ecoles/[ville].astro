@@ -76,6 +76,10 @@ export function getStaticPaths() {
 const { villeName, cp, list, voisines, deptVilles, deptTotal, deptCityCount, nearestCollege, nearestLycee } = Astro.props;
 
 const departement = departementOf(cp);
+// Paris : les pages /ecoles/paris-15e/ décrivent un arrondissement, pas une ville.
+const estParis = departement?.code === '75';
+const uniteDept = estParis ? 'arrondissement' : 'ville';
+const accDept = deptCityCount > 1 ? (estParis ? 'couverts' : 'couvertes') : estParis ? 'couvert' : 'couverte';
 const proches = voisines.slice(0, 2);
 
 const ecolesN = list.filter((e) => e.amenity !== 'Collège').length;
@@ -210,7 +214,13 @@ const schema = {
       {list.length === 1 && ' Vous trouverez ci-dessous sa présentation détaillée, ses points forts et son contact.'}
     </p>
     <p class="mb-10 text-sm text-gray-600">
-      {departement && <>La ville se situe {dansLeDepartement(departement.nom)} ({departement.code}).</>}
+      {departement && (
+        <>
+          {estParis
+            ? <>{villeName} est un arrondissement de Paris ({departement.code}).</>
+            : <>La ville se situe {dansLeDepartement(departement.nom)} ({departement.code}).</>}
+        </>
+      )}
       {proches.length > 0 && (
         <>
           {' '}Les autres villes couvertes les plus proches sont{' '}
@@ -233,8 +243,8 @@ const schema = {
         </h2>
         <p class="mb-3 text-sm leading-relaxed text-gray-700">
           Notre annuaire recense {deptTotal} établissement{deptTotal > 1 ? 's' : ''} Montessori{' '}
-          {dansLeDepartement(departement.nom)}, réparti{deptTotal > 1 ? 's' : ''} sur {deptCityCount} ville
-          {deptCityCount > 1 ? 's' : ''} couverte{deptCityCount > 1 ? 's' : ''} par ces pages.
+          {dansLeDepartement(departement.nom)}, réparti{deptTotal > 1 ? 's' : ''} sur {deptCityCount} {uniteDept}
+          {deptCityCount > 1 ? 's' : ''} {accDept} par ces pages.
           {' '}{villeName} en compte {list.length}.
         </p>
         {deptVilles.length > 0 && (

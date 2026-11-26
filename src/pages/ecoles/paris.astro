@@ -1,0 +1,210 @@
+---
+/**
+ * Hub Paris.
+ *
+ * L'annuaire officiel renvoie « Paris » pour certains établissements et
+ * « Paris 15e Arrondissement » pour d'autres. Sans ce hub, /ecoles/paris/
+ * dupliquait les fiches déjà présentes dans les pages d'arrondissement
+ * (et /ecoles/paris-2e-arrondissement/ concurrençait /ecoles/paris-2e/).
+ * Les établissements sont désormais rattachés à leur arrondissement
+ * (scripts/fetch_ecoles.py, canonical_paris) et cette page joue le rôle
+ * de page mère : elle liste, elle ne duplique pas les présentations.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ecoles from '../../data/ecoles.json';
+
+const PARIS_SLUG = /^paris-(\d+)(?:er|e)$/;
+
+type Etablissement = (typeof ecoles)[number];
+
+const arrondissementOf = (e: Etablissement): number =>
+  Number(PARIS_SLUG.exec(e.slug_ville ?? '')?.[1] ?? 0);
+
+const etablissements = ecoles
+  .filter((e) => PARIS_SLUG.test(e.slug_ville ?? ''))
+  .sort((a, b) => arrondissementOf(a) - arrondissementOf(b) || a.nom.localeCompare(b.nom, 'fr'));
+
+const groupes = [...new Set(etablissements.map(arrondissementOf))]
+  .sort((a, b) => a - b)
+  .map((n) => ({
+    n,
+    slug: n === 1 ? 'paris-1er' : `paris-${n}e`,
+    nom: n === 1 ? 'Paris 1er' : `Paris ${n}e`,
+    list: etablissements.filter((e) => arrondissementOf(e) === n),
+  }));
+
+const total = etablissements.length;
+const nbArrondissements = groupes.length;
+const nbColleges = etablissements.filter((e) => e.amenity === 'Collège').length;
+const nbLycees = etablissements.filter((e) => e.amenity === 'Lycée').length;
+const nbEcoles = total - nbColleges - nbLycees;
+
+const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? 's' : ''}`;
+const inventaire = [nbEcoles ? pluriel(nbEcoles, 'école') : null, nbColleges ? pluriel(nbColleges, 'collège') : null, nbLycees ? pluriel(nbLycees, 'lycée') : null]
+  .filter(Boolean)
+  .join(', ');
+
+const plusGros = [...groupes].sort((a, b) => b.list.length - a.list.length)[0];
+
+const typeLabel = (e: Etablissement) =>
+  e.amenity === 'Collège' ? 'Collège' : e.amenity === 'Lycée' ? 'Lycée' : 'École';
+const typeSchema = (e: Etablissement) =>
+  e.amenity === 'Collège' ? 'MiddleSchool' : e.amenity === 'Lycée' ? 'HighSchool' : 'School';
+
+const title = `Écoles Montessori à Paris — ${total} établissements par arrondissement`;
+const description = `Annuaire des écoles Montessori à Paris : ${total} établissements (${inventaire}) répartis dans ${nbArrondissements} arrondissements.`;
+
+const arrondissementsColleges = groupes
+  .filter((g) => g.list.some((e) => e.amenity === 'Collège'))
+  .map((g) => (g.n === 1 ? '1er' : `${g.n}e`));
+const listeColleges =
+  arrondissementsColleges.length > 1
+    ? `${arrondissementsColleges.slice(0, -1).join(', ')} et ${arrondissementsColleges.at(-1)}`
+    : arrondissementsColleges[0];
+
+const faq = [
+  {
+    question: "Combien d'écoles Montessori y a-t-il à Paris ?",
+    answer: `Paris compte ${total} établissements Montessori référencés dans cet annuaire (${inventaire}), répartis dans ${nbArrondissements} arrondissements.`,
+  },
+  {
+    question: 'Quel arrondissement de Paris concentre le plus d’écoles Montessori ?',
+    answer: plusGros
+      ? `${plusGros.nom} en compte ${plusGros.list.length}, ce qui en fait l'arrondissement le mieux couvert par notre annuaire.`
+      : "Aucun arrondissement n'est encore couvert.",
+  },
+  {
+    question: 'Y a-t-il un collège Montessori à Paris ?',
+    answer: nbColleges
+      ? `Oui, ${pluriel(nbColleges, 'collège')} Montessori ${nbColleges > 1 ? 'sont référencés' : 'est référencé'} à Paris (${listeColleges} arrondissement${arrondissementsColleges.length > 1 ? 's' : ''}).`
+      : "Aucun collège Montessori n'est référencé à Paris dans notre annuaire.",
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://www.guidemontessori.fr/' },
+        { '@type': 'ListItem', position: 2, name: 'Écoles', item: 'https://www.guidemontessori.fr/ecoles/' },
+        { '@type': 'ListItem', position: 3, name: 'Paris', item: 'https://www.guidemontessori.fr/ecoles/paris/' },
+      ],
+    },
+    {
+      '@type': 'ItemList',
+      name: 'Écoles Montessori à Paris',
+      numberOfItems: total,
+      itemListElement: etablissements.map((e, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': typeSchema(e),
+          name: e.nom,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: e.adresse || undefined,
+            postalCode: e.code_postal || undefined,
+            addressLocality: 'Paris',
+            addressCountry: 'FR',
+          },
+        },
+      })),
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faq.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    },
+  ],
+};
+---
+
+<BaseLayout title={title} description={description} type="website">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(schema)} />
+
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <nav class="mb-6 text-xs text-gray-500" aria-label="Fil d'Ariane">
+      <a href="/" class="hover:text-sage-600">Accueil</a> &rsaquo; <a href="/ecoles/" class="hover:text-sage-600">Écoles</a> &rsaquo; Paris
+    </nav>
+
+    <h1 class="mb-3 text-3xl font-bold text-gray-900">
+      Écoles Montessori à Paris <span class="text-gray-500">(75)</span>
+    </h1>
+    <p class="mb-10 text-gray-700">
+      Paris compte {total} établissements Montessori référencés dans notre annuaire ({inventaire}), répartis dans {nbArrondissements} arrondissements.
+      Chaque arrondissement dispose de sa page détaillée : adresse, type d'établissement et présentation.
+    </p>
+
+    <section class="mb-12">
+      <h2 class="mb-4 font-serif text-xl font-bold text-gray-900">Les arrondissements couverts</h2>
+      <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        {groupes.map((g) => (
+          <li>
+            <a
+              href={`/ecoles/${g.slug}/`}
+              class="flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm transition-colors hover:border-sage-300 hover:bg-sage-50"
+            >
+              <span class="font-semibold text-gray-800">Écoles Montessori à {g.nom}</span>
+              <span class="shrink-0 text-xs text-gray-500">{g.list.length} étab.</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 font-serif text-xl font-bold text-gray-900">Tous les établissements Montessori à Paris</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-gray-300 text-left text-gray-600">
+              <th class="py-2 pr-4 font-semibold">Établissement</th>
+              <th class="py-2 pr-4 font-semibold">Type</th>
+              <th class="py-2 pr-4 font-semibold">Arrondissement</th>
+              <th class="py-2 font-semibold">Adresse</th>
+            </tr>
+          </thead>
+          <tbody>
+            {etablissements.map((e) => (
+              <tr class="border-b border-gray-200 align-top">
+                <td class="py-3 pr-4 font-medium text-gray-900">{e.nom}</td>
+                <td class="py-3 pr-4 text-gray-700">{typeLabel(e)}</td>
+                <td class="py-3 pr-4 text-gray-700">
+                  <a href={`/ecoles/${e.slug_ville}/`} class="text-sage-600 hover:underline">
+                    {e.ville}
+                  </a>
+                </td>
+                <td class="py-3 text-gray-700">
+                  {e.adresse ? `${e.adresse}, ` : ''}{e.code_postal}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 font-serif text-xl font-bold text-gray-900">Questions fréquentes à Paris</h2>
+      <dl class="space-y-4">
+        {faq.map((f) => (
+          <div class="rounded-xl border border-gray-200 bg-white p-5">
+            <dt class="font-semibold text-gray-900">{f.question}</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-gray-700">{f.answer}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <p class="mt-10 text-center text-sm">
+      <a href="/ecoles/" class="text-sage-600 hover:underline">← Voir toutes les villes</a>
+      {' · '}
+      <a href="/articles/" class="text-sage-600 hover:underline">Guides Montessori</a>
+    </p>
+  </div>
+</BaseLayout>

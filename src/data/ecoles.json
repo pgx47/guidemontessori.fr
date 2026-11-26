@@ -1600,70 +1600,6 @@
     ]
   },
   {
-    "osm_id": "75107-college-prive-ellipse-montessori",
-    "nom": "Collège privé Ellipse Montessori",
-    "ville": "Paris",
-    "code_postal": "75007",
-    "adresse": "3 rue Amélie",
-    "site": "",
-    "amenity": "Collège",
-    "slug_ville": "paris",
-    "description_ia": "Ce collège privé Montessori du 7e arrondissement de Paris accueille les adolescents dans un cadre urbain central et stimulant. La pédagogie Montessori y est adaptée à l'âge du collège, avec des activités autonomes et un accompagnement individualisé. Les élèves y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
-    "avantages": [
-      "Une pédagogie Montessori adaptée à l'âge du collège",
-      "Un accompagnement individualisé des élèves",
-      "Une localisation centrale dans le 7e arrondissement"
-    ]
-  },
-  {
-    "osm_id": "75115-e-m-pr-ma-petite-ecole-montessori-7-rue-villafranca",
-    "nom": "E.M.PR MA PETITE ECOLE MONTESSORI 7 rue Villafranca",
-    "ville": "Paris",
-    "code_postal": "75015",
-    "adresse": "7 rue Villafranca",
-    "site": "",
-    "amenity": "Ecole",
-    "slug_ville": "paris",
-    "description_ia": "Dans le 15e arrondissement de Paris, cette école Montessori accueille les enfants dans un cadre intime et chaleureux. Les principes Montessori y guident les apprentissages : autonomie, manipulation de matériel sensoriel et respect du rythme individuel. L'équipe veille à créer un climat serein et bienveillant, propice à l'épanouissement de chaque enfant.",
-    "avantages": [
-      "Un cadre intime et chaleureux à taille humaine",
-      "Une pédagogie fondée sur l'autonomie et la manipulation",
-      "Un climat serein propice à l'épanouissement"
-    ]
-  },
-  {
-    "osm_id": "75105-e-m-pr-montessori-small-world",
-    "nom": "E.M.PR MONTESSORI SMALL WORLD",
-    "ville": "Paris",
-    "code_postal": "75005",
-    "adresse": "11 rue Flatters",
-    "site": "",
-    "amenity": "Ecole",
-    "slug_ville": "paris",
-    "description_ia": "Cette école Montessori du 5e arrondissement de Paris accueille les enfants dans un cadre urbain stimulant, au cœur du Quartier latin. La pédagogie Montessori y est appliquée avec du matériel concret et des activités autonomes. Les enfants y apprennent à leur rythme, dans un esprit d'entraide et de respect mutuel.",
-    "avantages": [
-      "Une localisation centrale dans le Quartier latin",
-      "Des activités autonomes adaptées à chaque âge",
-      "Un esprit d'entraide et de respect mutuel"
-    ]
-  },
-  {
-    "osm_id": "75119-e-p-pr-montessori-21-paris-jaures-74-quai-de-la-loire",
-    "nom": "E.P.PR MONTESSORI 21 PARIS JAURES 74 quai de la Loire",
-    "ville": "Paris",
-    "code_postal": "75019",
-    "adresse": "74 quai de la Loire",
-    "site": "",
-    "amenity": "Ecole",
-    "slug_ville": "paris",
-    "description_ia": "Située dans le 19e arrondissement de Paris, cette école Montessori accueille les enfants dans un cadre urbain animé, au bord du canal. La pédagogie Montessori y est mise en œuvre avec du matériel concret et des activités autonomes. Les enfants y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
-    "avantages": [
-      "Une localisation accessible au cœur du 19e arrondissement",
-      "Un matériel Montessori concret et progressif",
-      "Un cadre structuré respectueux du rythme de l'enfant"
-    ]
-  },
-  {
     "osm_id": "75113-e-m-pr-montessori-la-baleine-5-rue-buot",
     "nom": "E.M.PR MONTESSORI LA BALEINE 5 rue Buot",
     "ville": "Paris 13e",
@@ -1776,6 +1712,22 @@
     ]
   },
   {
+    "osm_id": "75115-e-m-pr-ma-petite-ecole-montessori-7-rue-villafranca",
+    "nom": "E.M.PR MA PETITE ECOLE MONTESSORI 7 rue Villafranca",
+    "ville": "Paris 15e",
+    "code_postal": "75015",
+    "adresse": "7 rue Villafranca",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-15e",
+    "description_ia": "Dans le 15e arrondissement de Paris, cette école Montessori accueille les enfants dans un cadre intime et chaleureux. Les principes Montessori y guident les apprentissages : autonomie, manipulation de matériel sensoriel et respect du rythme individuel. L'équipe veille à créer un climat serein et bienveillant, propice à l'épanouissement de chaque enfant.",
+    "avantages": [
+      "Un cadre intime et chaleureux à taille humaine",
+      "Une pédagogie fondée sur l'autonomie et la manipulation",
+      "Un climat serein propice à l'épanouissement"
+    ]
+  },
+  {
     "osm_id": "75115-e-p-pr-montessori-48-rue-dantzig",
     "nom": "E.P.PR MONTESSORI 48 rue Dantzig",
     "ville": "Paris 15e",
@@ -1824,6 +1776,22 @@
     ]
   },
   {
+    "osm_id": "75119-e-p-pr-montessori-21-paris-jaures-74-quai-de-la-loire",
+    "nom": "E.P.PR MONTESSORI 21 PARIS JAURES 74 quai de la Loire",
+    "ville": "Paris 19e",
+    "code_postal": "75019",
+    "adresse": "74 quai de la Loire",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-19e",
+    "description_ia": "Située dans le 19e arrondissement de Paris, cette école Montessori accueille les enfants dans un cadre urbain animé, au bord du canal. La pédagogie Montessori y est mise en œuvre avec du matériel concret et des activités autonomes. Les enfants y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
+    "avantages": [
+      "Une localisation accessible au cœur du 19e arrondissement",
+      "Un matériel Montessori concret et progressif",
+      "Un cadre structuré respectueux du rythme de l'enfant"
+    ]
+  },
+  {
     "osm_id": "75119-e-p-pr-montessori-plaisir-d-enfance-56-rue-du-pre-saint-gervais",
     "nom": "E.P.PR MONTESSORI PLAISIR D'ENFANCE 56 rue du Pré Saint Gervais",
     "ville": "Paris 19e",
@@ -1858,17 +1826,49 @@
   {
     "osm_id": "75102-lycee-general-prive-montessori",
     "nom": "Lycée général privé Montessori",
-    "ville": "Paris 2e Arrondissement",
+    "ville": "Paris 2e",
     "code_postal": "75002",
     "adresse": "113 boulevard de Sébastopol",
     "site": "",
     "amenity": "Lycée",
-    "slug_ville": "paris-2e-arrondissement",
+    "slug_ville": "paris-2e",
     "description_ia": "Ce lycée général privé se situe dans le 2e arrondissement de Paris et se réclame de la pédagogie Montessori. Il propose un cadre de travail exigeant et structuré, attentif à l'autonomie et à la responsabilisation des élèves, dans un environnement urbain central offrant un accès aisé aux transports et aux ressources culturelles de la capitale.",
     "avantages": [
       "Un cadre de travail exigeant et structuré, favorable à la responsabilisation",
       "Une localisation centrale à Paris, bien desservie par les transports",
       "Un environnement urbain riche en ressources culturelles et éducatives"
+    ]
+  },
+  {
+    "osm_id": "75105-e-m-pr-montessori-small-world",
+    "nom": "E.M.PR MONTESSORI SMALL WORLD",
+    "ville": "Paris 5e",
+    "code_postal": "75005",
+    "adresse": "11 rue Flatters",
+    "site": "",
+    "amenity": "Ecole",
+    "slug_ville": "paris-5e",
+    "description_ia": "Cette école Montessori du 5e arrondissement de Paris accueille les enfants dans un cadre urbain stimulant, au cœur du Quartier latin. La pédagogie Montessori y est appliquée avec du matériel concret et des activités autonomes. Les enfants y apprennent à leur rythme, dans un esprit d'entraide et de respect mutuel.",
+    "avantages": [
+      "Une localisation centrale dans le Quartier latin",
+      "Des activités autonomes adaptées à chaque âge",
+      "Un esprit d'entraide et de respect mutuel"
+    ]
+  },
+  {
+    "osm_id": "75107-college-prive-ellipse-montessori",
+    "nom": "Collège privé Ellipse Montessori",
+    "ville": "Paris 7e",
+    "code_postal": "75007",
+    "adresse": "3 rue Amélie",
+    "site": "",
+    "amenity": "Collège",
+    "slug_ville": "paris-7e",
+    "description_ia": "Ce collège privé Montessori du 7e arrondissement de Paris accueille les adolescents dans un cadre urbain central et stimulant. La pédagogie Montessori y est adaptée à l'âge du collège, avec des activités autonomes et un accompagnement individualisé. Les élèves y évoluent dans un environnement structuré, respectueux de leur rythme et de leur curiosité.",
+    "avantages": [
+      "Une pédagogie Montessori adaptée à l'âge du collège",
+      "Un accompagnement individualisé des élèves",
+      "Une localisation centrale dans le 7e arrondissement"
     ]
   },
   {

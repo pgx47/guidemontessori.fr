@@ -5,12 +5,23 @@ import coords from '../../data/villes_coords.json';
 import { SITE } from '../../site.config';
 
 const byVille = new Map<string, { nom: string; cp: string; ecoles: number; college: number }>();
+// Paris est un cas particulier : les établissements sont rattachés à leur
+// arrondissement (/ecoles/paris-15e/…), mais l'annuaire doit présenter une
+// seule entrée « Paris » qui pointe vers le hub /ecoles/paris/.
+const PARIS_SLUG = /^paris-\d+(?:er|e)$/;
 for (const e of ecoles) {
   if (!e.slug_ville) continue;
-  const v = byVille.get(e.slug_ville) || { nom: e.ville, cp: e.code_postal, ecoles: 0, college: 0 };
+  const paris = PARIS_SLUG.test(e.slug_ville);
+  const cle = paris ? 'paris' : e.slug_ville;
+  const v = byVille.get(cle) || {
+    nom: paris ? 'Paris' : e.ville,
+    cp: paris ? '75000' : e.code_postal,
+    ecoles: 0,
+    college: 0,
+  };
   v.ecoles += 1;
   if (e.amenity === 'Collège') v.college += 1;
-  byVille.set(e.slug_ville, v);
+  byVille.set(cle, v);
 }
 const villes = [...byVille.entries()].sort((a, b) => a[1].nom.localeCompare(b[1].nom, 'fr'));
 const markers = villes

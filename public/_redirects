@@ -17,3 +17,9 @@
 /articles/vie-praptique /articles/vie-pratique/ 301
 /articles/bougeotheque-municipale-bordeaux-petite-enfance/ /actualites/bougeotheque-municipale-bordeaux-petite-enfance/ 301
 /articles/bougeotheque-municipale-bordeaux-petite-enfance /actualites/bougeotheque-municipale-bordeaux-petite-enfance/ 301
+
+# Paris : deux slugs concurrencaient le meme arrondissement (2e).
+# Les fiches sont desormais rattachees a leur arrondissement par
+# scripts/fetch_ecoles.py (canonical_paris), et /ecoles/paris/ est un hub.
+/ecoles/paris-2e-arrondissement/ /ecoles/paris-2e/ 301
+/ecoles/paris-2e-arrondissement /ecoles/paris-2e/ 301

@@ -2,6 +2,7 @@
 """Annuaire écoles : OSM/Overpass -> enrichissement DeepSeek -> src/data/ecoles.json."""
 import json
 import os
+import re
 import sys
 import unicodedata
 from pathlib import Path
@@ -47,6 +48,28 @@ def infer_ville(e: dict) -> None:
         e["ville"] = parts[-1] if len(parts) > 1 else ""
     if e["ville"]:
         e["slug_ville"] = slugify(e["ville"])
+
+
+# Paris : l'annuaire renvoie tantôt « Paris », tantôt « Paris 15e Arrondissement ».
+# Sans normalisation on obtenait 10 pages concurrentes (/ecoles/paris/ dupliquant
+# les arrondissements) et deux slugs pour le 2e. On rattache chaque établissement
+# à son arrondissement, et /ecoles/paris/ devient un hub (src/pages/ecoles/paris.astro).
+PARIS_CP = re.compile(r"75(\d{3})")
+
+
+def canonical_paris(e: dict) -> None:
+    slug = e.get("slug_ville") or ""
+    if not slug.startswith("paris"):
+        return
+    match = PARIS_CP.fullmatch(e.get("code_postal") or "")
+    if not match:
+        return
+    arrondissement = int(match.group(1))
+    if not 1 <= arrondissement <= 20:
+        return
+    suffix = "er" if arrondissement == 1 else "e"
+    e["slug_ville"] = f"paris-{arrondissement}{suffix}"
+    e["ville"] = f"Paris {arrondissement}{suffix}"
 
 
 def enrich(new: list[dict]) -> dict:
@@ -120,6 +143,8 @@ def main() -> int:
             e["description_ia"] = ""
             e["avantages"] = []
         existing[e["osm_id"]] = e
+    for e in existing.values():
+        canonical_paris(e)
     out = sorted(existing.values(), key=lambda e: (e.get("slug_ville") or "zzz", e["nom"]))
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
     villes = {e["slug_ville"] for e in out if e.get("slug_ville")}

@@ -203,8 +203,10 @@
       "keyword": "arche d'éveil Montessori en bois",
       "type": "guide",
       "angle": "Arche d'éveil vs tapis d'éveil classique pour un nouveau-né : critères de choix, suspension des mobiles, sécurité et sélection de modèles 0-6 mois.",
-      "status": "pending",
-      "products": []
+      "status": "published",
+      "products": [],
+      "slug": "arche-eveil-montessori-bois",
+      "publishedAt": "2026-11-27"
     },
     {
       "keyword": "table lumineuse Montessori",
